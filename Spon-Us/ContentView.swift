@@ -16,7 +16,7 @@ struct ContentView: View {
             Text("브랜돌 디자인시스템")
                 .korFont(.D3KrBd)
             Text("브랜돌 디자인시스템")
-                .font(.D3EnBd)
+                .font(.D3KrBd)
                 .background(Color.statusGreenSub)
                 
         }
