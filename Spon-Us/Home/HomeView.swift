@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct HomeView: View {
     @State var homeViewModel = HomeViewModel()
     var body: some View {
@@ -20,6 +21,7 @@ struct HomeView: View {
         }.background(Color.bgSecondary)
     }
 }
+
 
 struct StatusBarView: View {
     var homeViewModel: HomeViewModel
@@ -51,8 +53,10 @@ struct StatusBarView: View {
             }.padding([.top, .trailing], 20)
             
         }.frame(height: 56)
+            .padding(.bottom, 20)
     }
 }
+
 
 struct CardGuestView: View {
     var homeViewModel: HomeViewModel
