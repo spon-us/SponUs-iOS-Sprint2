@@ -371,9 +371,7 @@ struct HomeListView: View {
             .padding(.horizontal, 20)
             .scrollIndicators(.hidden)
     }
-    
 }
-
 
 #Preview {
     HomeView()
