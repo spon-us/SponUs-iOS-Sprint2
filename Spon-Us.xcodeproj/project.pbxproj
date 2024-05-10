@@ -8,28 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
-		DFBE0B782BE601C400246814 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B772BE601C400246814 /* ContentView.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
 		DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B842BE60B4100246814 /* FontManager.swift */; };
-		DFBE0B902BE61A4600246814 /* SUIT-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B882BE60F4C00246814 /* SUIT-Light.otf */; };
 		DFBE0B912BE61A4800246814 /* SUIT-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B8A2BE60F5C00246814 /* SUIT-Regular.otf */; };
-		DFBE0B922BE61A4B00246814 /* SUIT-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B8C2BE60F6600246814 /* SUIT-SemiBold.otf */; };
 		DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B932BE6227D00246814 /* ColorManager.swift */; };
+		DFBE0B9C2BEB147900246814 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B9B2BEB147900246814 /* HomeView.swift */; };
+		DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B9D2BEB14F000246814 /* HomeViewModel.swift */; };
+		DFBE0BA02BEB570B00246814 /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B9F2BEB570B00246814 /* SUIT-Bold.otf */; };
+		DFBE0BA22BEB571E00246814 /* SUIT-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0BA12BEB571D00246814 /* SUIT-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
-		DFBE0B772BE601C400246814 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DFBE0B792BE601C500246814 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DFBE0B842BE60B4100246814 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
-		DFBE0B882BE60F4C00246814 /* SUIT-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Light.otf"; sourceTree = "<group>"; };
 		DFBE0B8A2BE60F5C00246814 /* SUIT-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Regular.otf"; sourceTree = "<group>"; };
-		DFBE0B8C2BE60F6600246814 /* SUIT-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-SemiBold.otf"; sourceTree = "<group>"; };
 		DFBE0B8E2BE6170E00246814 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DFBE0B932BE6227D00246814 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		DFBE0B9B2BEB147900246814 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DFBE0B9D2BEB14F000246814 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		DFBE0B9F2BEB570B00246814 /* SUIT-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Bold.otf"; sourceTree = "<group>"; };
+		DFBE0BA12BEB571D00246814 /* SUIT-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Medium.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +64,10 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				DFBE0B9A2BEB12F000246814 /* Home */,
 				DFBE0B952BE6228100246814 /* Color */,
 				DFBE0B832BE60B3500246814 /* Font */,
 				DFBE0B752BE601C400246814 /* Spon_UsApp.swift */,
-				DFBE0B772BE601C400246814 /* ContentView.swift */,
 				DFBE0B8E2BE6170E00246814 /* Info.plist */,
 				DFBE0B792BE601C500246814 /* Assets.xcassets */,
 				DFBE0B7B2BE601C500246814 /* Preview Content */,
@@ -85,9 +87,9 @@
 			isa = PBXGroup;
 			children = (
 				DFBE0B842BE60B4100246814 /* FontManager.swift */,
-				DFBE0B882BE60F4C00246814 /* SUIT-Light.otf */,
 				DFBE0B8A2BE60F5C00246814 /* SUIT-Regular.otf */,
-				DFBE0B8C2BE60F6600246814 /* SUIT-SemiBold.otf */,
+				DFBE0BA12BEB571D00246814 /* SUIT-Medium.otf */,
+				DFBE0B9F2BEB570B00246814 /* SUIT-Bold.otf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -98,6 +100,15 @@
 				DFBE0B932BE6227D00246814 /* ColorManager.swift */,
 			);
 			path = Color;
+			sourceTree = "<group>";
+		};
+		DFBE0B9A2BEB12F000246814 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DFBE0B9B2BEB147900246814 /* HomeView.swift */,
+				DFBE0B9D2BEB14F000246814 /* HomeViewModel.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,10 +169,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFBE0B902BE61A4600246814 /* SUIT-Light.otf in Resources */,
 				DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */,
+				DFBE0BA22BEB571E00246814 /* SUIT-Medium.otf in Resources */,
 				DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */,
-				DFBE0B922BE61A4B00246814 /* SUIT-SemiBold.otf in Resources */,
+				DFBE0BA02BEB570B00246814 /* SUIT-Bold.otf in Resources */,
 				DFBE0B912BE61A4800246814 /* SUIT-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,9 +184,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFBE0B782BE601C400246814 /* ContentView.swift in Sources */,
+				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
 				DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */,
+				DFBE0B9C2BEB147900246814 /* HomeView.swift in Sources */,
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
