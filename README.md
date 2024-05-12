@@ -62,3 +62,4 @@ feat/#3-HomeView-UI
 1. task 브랜치가 기존 이슈 브랜치로 모두 다 머지 되면 기존 이슈 브랜치는 develop 브랜치 방향으로 PR 올리기
 1. Draft PR 올려야 된다면 PR명 앞에 `[Draft PR-#브랜치번호]` 붙여서 올리기
 1. 코드 리뷰를 받고 피드백을 토대로 코드를 수정한 후 확인받기
+1. **마지막으로! ⭐️Squash and Merge⭐️**
