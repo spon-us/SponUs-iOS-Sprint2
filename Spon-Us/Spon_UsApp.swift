@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import UIKit
+
 
 @main
 struct Spon_UsApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            ContentView()
         }
     }
 }

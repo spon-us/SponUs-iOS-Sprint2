@@ -18,9 +18,7 @@ struct HomeView: View {
             }
             HomeSelectionTabView(homeViewModel: homeViewModel)
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
-            ScrollView {
-                
-            }.padding(.top, -1)
+            HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
     }
 }
@@ -295,6 +293,87 @@ struct HomeCategorySelectionTab: View {
         }.scrollIndicators(.hidden)
     }
 }
+
+struct HomeListCell: View {
+    var homeListCellViewModel: HomeListCellViewModel
+    var body: some View {
+        
+        VStack(spacing: 0) {
+            ZStack {
+                Image(.rectangle1363)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Image(.icBookmark)
+                            .renderingMode(.template)
+                            .padding(.top, 12)
+                            .padding(.trailing, 12)
+                            .foregroundStyle(
+                                homeListCellViewModel.isBookmarked ? Color.textBrand :  Color.textSecondary
+                            )
+                            .onTapGesture {
+                                withAnimation {
+                                    homeListCellViewModel.isBookmarked.toggle()
+                                }
+                            }
+                    }
+                    Spacer()
+                }
+            }
+            HStack(spacing: 0) {
+                Text(homeListCellViewModel.companyName)
+                    .korFont(.T4KrBd)
+                    .foregroundStyle(Color.textPrimary)
+                Spacer()
+            }.padding(.top, 12)
+                .padding(.leading, 20)
+            
+            HStack(spacing: 0) {
+                Text("제안하기")
+                    .korFont(.B2KrMd)
+                    .foregroundStyle(Color.textSecondary)
+                Image(.icRight)
+                    .renderingMode(.template)
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                    .foregroundStyle(Color.textSecondary)
+                Spacer()
+            }.padding(.top, 7)
+                .padding(.bottom, 16)
+                .padding(.leading, 20)
+        }.background(Color.bgWhite)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .overlay(
+                RoundedRectangle(cornerRadius: 24)
+                    .stroke(Color.line200, lineWidth: 1)
+            )
+    }
+}
+
+struct HomeListView: View {
+    var homeViewModel: HomeViewModel
+    
+    let columns: [GridItem] = [
+        GridItem(.flexible(), spacing: 15),
+        GridItem(.flexible()),
+    ]
+    
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(1..<21) { index in
+                    HomeListCell(homeListCellViewModel: HomeListCellViewModel(companyName: "무신사", imageURL: ""))
+                }
+            }
+        }.padding(.top, 15)
+            .padding(.horizontal, 20)
+            .scrollIndicators(.hidden)
+    }
+    
+}
+
 
 #Preview {
     HomeView()
