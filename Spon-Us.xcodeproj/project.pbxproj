@@ -19,6 +19,14 @@
 		DFBE0BA22BEB571E00246814 /* SUIT-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0BA12BEB571D00246814 /* SUIT-Medium.otf */; };
 		DFBE0BA52BF1089A00246814 /* HomeListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BA42BF1089A00246814 /* HomeListCellViewModel.swift */; };
 		DFBE0BA72BF1A6B200246814 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BA62BF1A6B200246814 /* ContentView.swift */; };
+		DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BA92BF2F81C00246814 /* CompanyProfileView.swift */; };
+		DFBE0BAD2BF30CC500246814 /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BAC2BF30CC500246814 /* CustomBackButton.swift */; };
+		DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BAE2BF3123F00246814 /* CustomNavigationTitle.swift */; };
+		DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BB02BF314CC00246814 /* CompanyProfileViewModel.swift */; };
+		DFBE0BB32BF315EC00246814 /* EnumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BB22BF315EC00246814 /* EnumManager.swift */; };
+		DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BD32BF4922500246814 /* CompanyCompletedModal.swift */; };
+		DFBE0BD62BF4B1B100246814 /* CompanyExceededViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BD52BF4B1B100246814 /* CompanyExceededViewModel.swift */; };
+		DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BD72BF4B7A000246814 /* CompanyUnavailableModal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +44,14 @@
 		DFBE0BA12BEB571D00246814 /* SUIT-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Medium.otf"; sourceTree = "<group>"; };
 		DFBE0BA42BF1089A00246814 /* HomeListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListCellViewModel.swift; sourceTree = "<group>"; };
 		DFBE0BA62BF1A6B200246814 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DFBE0BA92BF2F81C00246814 /* CompanyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileView.swift; sourceTree = "<group>"; };
+		DFBE0BAC2BF30CC500246814 /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
+		DFBE0BAE2BF3123F00246814 /* CustomNavigationTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationTitle.swift; sourceTree = "<group>"; };
+		DFBE0BB02BF314CC00246814 /* CompanyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileViewModel.swift; sourceTree = "<group>"; };
+		DFBE0BB22BF315EC00246814 /* EnumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumManager.swift; sourceTree = "<group>"; };
+		DFBE0BD32BF4922500246814 /* CompanyCompletedModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCompletedModal.swift; sourceTree = "<group>"; };
+		DFBE0BD52BF4B1B100246814 /* CompanyExceededViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyExceededViewModel.swift; sourceTree = "<group>"; };
+		DFBE0BD72BF4B7A000246814 /* CompanyUnavailableModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyUnavailableModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +84,9 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				DFBE0BB22BF315EC00246814 /* EnumManager.swift */,
+				DFBE0BAB2BF30B3800246814 /* CustomComponents */,
+				DFBE0BA82BF2F4B800246814 /* Profile */,
 				DFBE0B9A2BEB12F000246814 /* Home */,
 				DFBE0B952BE6228100246814 /* Color */,
 				DFBE0B832BE60B3500246814 /* Font */,
@@ -123,6 +142,51 @@
 				DFBE0BA42BF1089A00246814 /* HomeListCellViewModel.swift */,
 			);
 			path = List;
+			sourceTree = "<group>";
+		};
+		DFBE0BA82BF2F4B800246814 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				DFBE0BB52BF32A5F00246814 /* Club */,
+				DFBE0BB42BF32A5400246814 /* Company */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		DFBE0BAB2BF30B3800246814 /* CustomComponents */ = {
+			isa = PBXGroup;
+			children = (
+				DFBE0BAC2BF30CC500246814 /* CustomBackButton.swift */,
+				DFBE0BAE2BF3123F00246814 /* CustomNavigationTitle.swift */,
+			);
+			path = CustomComponents;
+			sourceTree = "<group>";
+		};
+		DFBE0BB42BF32A5400246814 /* Company */ = {
+			isa = PBXGroup;
+			children = (
+				DFBE0BD22BF4920C00246814 /* Modal */,
+				DFBE0BA92BF2F81C00246814 /* CompanyProfileView.swift */,
+				DFBE0BB02BF314CC00246814 /* CompanyProfileViewModel.swift */,
+			);
+			path = Company;
+			sourceTree = "<group>";
+		};
+		DFBE0BB52BF32A5F00246814 /* Club */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Club;
+			sourceTree = "<group>";
+		};
+		DFBE0BD22BF4920C00246814 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				DFBE0BD32BF4922500246814 /* CompanyCompletedModal.swift */,
+				DFBE0BD52BF4B1B100246814 /* CompanyExceededViewModel.swift */,
+				DFBE0BD72BF4B7A000246814 /* CompanyUnavailableModal.swift */,
+			);
+			path = Modal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,11 +262,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */,
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
+				DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
 				DFBE0BA72BF1A6B200246814 /* ContentView.swift in Sources */,
 				DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */,
+				DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */,
+				DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */,
 				DFBE0BA52BF1089A00246814 /* HomeListCellViewModel.swift in Sources */,
+				DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */,
+				DFBE0BB32BF315EC00246814 /* EnumManager.swift in Sources */,
+				DFBE0BAD2BF30CC500246814 /* CustomBackButton.swift in Sources */,
+				DFBE0BD62BF4B1B100246814 /* CompanyExceededViewModel.swift in Sources */,
 				DFBE0B9C2BEB147900246814 /* HomeView.swift in Sources */,
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 			);
