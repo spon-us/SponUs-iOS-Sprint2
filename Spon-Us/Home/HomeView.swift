@@ -20,6 +20,9 @@ struct HomeView: View {
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
+            .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileVIew) {
+                CompanyProfileView()
+            }
     }
 }
 
@@ -154,14 +157,14 @@ struct HomeSelectionTabView: View {
 struct HomeCategorySelectionCell: View {
     var homeViewModel: HomeViewModel
     let title: String
-    let category: HomeCompanyClubSelection
-    let companySelection: HomeCompanyCategory?
-    let clubSelection: HomeClubCategory?
+    let category: CompanyClubSelection
+    let companySelection: CompanyCategory?
+    let clubSelection: ClubCategory?
     var isCompanyMatched: Bool {
-        homeViewModel.homeCompanyCategory == companySelection
+        homeViewModel.companyCategory == companySelection
     }
     var isClubMatched: Bool {
-        homeViewModel.homeClubCategory == clubSelection
+        homeViewModel.clubCategory == clubSelection
     }
     var body: some View {
         if companySelection != nil {
@@ -204,43 +207,43 @@ struct HomeCategorySelectionTab: View {
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "전체", category: .company, companySelection: .all, clubSelection: nil)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeCompanyCategory = .all
+                                homeViewModel.companyCategory = .all
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "식품", category: .company, companySelection: .food, clubSelection: nil)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeCompanyCategory = .food
+                                homeViewModel.companyCategory = .food
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "건강", category: .company, companySelection: .health, clubSelection: nil)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeCompanyCategory = .health
+                                homeViewModel.companyCategory = .health
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "생활", category: .company, companySelection: .lifestyle, clubSelection: nil)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeCompanyCategory = .lifestyle
+                                homeViewModel.companyCategory = .lifestyle
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "교육", category: .company, companySelection: .education, clubSelection: nil)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeCompanyCategory = .education
+                                homeViewModel.companyCategory = .education
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "뷰티", category: .company, companySelection: .beauty, clubSelection: nil)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeCompanyCategory = .beauty
+                                homeViewModel.companyCategory = .beauty
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "기타", category: .company, companySelection: .others, clubSelection: nil)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeCompanyCategory = .others
+                                homeViewModel.companyCategory = .others
                             }
                         }
                 }
@@ -248,43 +251,43 @@ struct HomeCategorySelectionTab: View {
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "전체", category: .club, companySelection: nil, clubSelection: .all)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeClubCategory = .all
+                                homeViewModel.clubCategory = .all
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "기획/아이디어", category: .club, companySelection: nil, clubSelection: .planningAndIdeas)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeClubCategory = .planningAndIdeas
+                                homeViewModel.clubCategory = .planningAndIdeas
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "광고/마케팅", category: .club, companySelection: nil, clubSelection: .advertisingAndMarketing)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeClubCategory = .advertisingAndMarketing
+                                homeViewModel.clubCategory = .advertisingAndMarketing
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "디자인", category: .club, companySelection: nil, clubSelection: .design)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeClubCategory = .design
+                                homeViewModel.clubCategory = .design
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "사진/영상", category: .club, companySelection: nil, clubSelection: .photographyAndVideo)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeClubCategory = .photographyAndVideo
+                                homeViewModel.clubCategory = .photographyAndVideo
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "IT/소프트웨어", category: .club, companySelection: nil, clubSelection: .iTAndSoftware)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeClubCategory = .iTAndSoftware
+                                homeViewModel.clubCategory = .iTAndSoftware
                             }
                         }
                     HomeCategorySelectionCell(homeViewModel: homeViewModel, title: "기타", category: .club, companySelection: nil, clubSelection: .others)
                         .onTapGesture {
                             withAnimation {
-                                homeViewModel.homeClubCategory = .others
+                                homeViewModel.clubCategory = .others
                             }
                         }
                 }
@@ -365,15 +368,16 @@ struct HomeListView: View {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(1..<21) { index in
                     HomeListCell(homeListCellViewModel: HomeListCellViewModel(companyName: "무신사", imageURL: ""))
+                        .onTapGesture {
+                            homeViewModel.goToCompanyProfileVIew = true
+                        }
                 }
             }
         }.padding(.top, 15)
             .padding(.horizontal, 20)
             .scrollIndicators(.hidden)
     }
-    
 }
-
 
 #Preview {
     HomeView()
