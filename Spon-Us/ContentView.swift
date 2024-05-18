@@ -32,7 +32,7 @@ struct ContentView: View {
                         }
                     }
                     .tag(1)
-                Text("북마크")
+                BookmarkView()
                     .tabItem {
                         VStack {
                             Image(.icBookmark)
