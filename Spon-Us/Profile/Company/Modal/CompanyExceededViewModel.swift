@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CompanyExceededModal: View {
+struct CompanyExceededViewModel: View {
     @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack(spacing: 0) {
@@ -69,5 +69,5 @@ struct CompanyExceededModal: View {
 }
 
 #Preview {
-    CompanyExceededModal()
+    CompanyExceededViewModel()
 }

@@ -32,7 +32,7 @@ struct ContentView: View {
                         }
                     }
                     .tag(1)
-                BookmarkView()
+                Text("북마크")
                     .tabItem {
                         VStack {
                             Image(.icBookmark)
@@ -42,7 +42,8 @@ struct ContentView: View {
                         }
                     }
                     .tag(2)
-                Text("마이")
+                MyPageView()
+                    .environmentObject(NavigationPathFinder.shared)
                     .tabItem {
                         VStack {
                             Image(.icMy)
