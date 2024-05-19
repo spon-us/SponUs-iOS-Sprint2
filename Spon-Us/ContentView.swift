@@ -42,7 +42,8 @@ struct ContentView: View {
                         }
                     }
                     .tag(2)
-                Text("마이")
+                MyPageView()
+                    .environmentObject(NavigationPathFinder.shared)
                     .tabItem {
                         VStack {
                             Image(.icMy)
