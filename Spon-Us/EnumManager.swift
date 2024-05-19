@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import SwiftUI
 
 enum CompanyClubSelection {
     case club, company
 }
 
-enum CompanyCategory: String, CaseIterable {
+enum CompanyCategory: String {
     case all = "전체"
     case food = "식품"
     case health = "건강"
@@ -22,7 +21,7 @@ enum CompanyCategory: String, CaseIterable {
     case others = "기타"
 }
 
-enum ClubCategory: String, CaseIterable {
+enum ClubCategory: String {
     case all = "전체"
     case planningAndIdeas = "기획/아이디어"
     case advertisingAndMarketing = "광고/마케팅"
@@ -36,8 +35,4 @@ enum CoworkCategory: String {
     case linkedProject = "연계프로젝트"
     case partnership = "제휴"
     case sponsorship = "협찬"
-}
-
-enum ProfileStatus {
-    case available, exceeded, unavailable
 }

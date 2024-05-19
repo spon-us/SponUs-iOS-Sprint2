@@ -18,6 +18,7 @@ struct CompanyUnavailableModal: View {
                 } label: {
                     Image(.icX)
                 }.padding([.top, .trailing], 12)
+                    
             }
             HStack(spacing: 0) {
                 Image(.icGuest)

@@ -1,5 +1,5 @@
 //
-//  CompanyProfileView.swift
+//  CompanyProfileVIew.swift
 //  Spon-Us
 //
 //  Created by 박현수 on 5/14/24.
@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct CompanyProfileView: View {
-    @State var companyProfileViewModel = CompanyProfileViewModel()
+    @State var companyProfileViewModel =  CompanyProfileViewModel()
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                CompanyProfileCardView(companyProfileViewModel: companyProfileViewModel)
+                ProfileCardView(companyProfileViewModel: companyProfileViewModel)
                 Spacer()
             }
             .padding(.horizontal, 20)
@@ -39,7 +39,7 @@ struct CompanyProfileView: View {
     }
 }
 
-struct CompanyProfileCardView: View {
+struct ProfileCardView: View {
     var companyProfileViewModel: CompanyProfileViewModel
     var body: some View {
         VStack(spacing: 0) {
@@ -49,7 +49,7 @@ struct CompanyProfileCardView: View {
                 .aspectRatio(contentMode: .fit)
             
             HStack(spacing: 0) {
-                Text(companyProfileViewModel.companyName)
+                Text(companyProfileViewModel.companyname)
                     .korFont(.H3KrBd)
                     .padding(.top, 20)
                     .padding(.leading, 28)
@@ -112,55 +112,29 @@ struct CompanyProfileCardView: View {
                         .foregroundStyle(Color.textSecondary)
                         .padding(.leading, 28)
                     ScrollView(.horizontal) {
-                        HStack(spacing: 0) {
-                            ForEach(0 ..< companyProfileViewModel.sponsoredGoods.count, id: \.self) { index in
-                                Text(companyProfileViewModel.sponsoredGoods[index])
-                                    .korFont(.T4KrMd)
-                                    .foregroundStyle(Color.textPrimary)
-                                if (index != companyProfileViewModel.sponsoredGoods.count - 1) {
-                                    Ellipse().frame(width: 4, height: 4)
-                                        .foregroundStyle(Color.line200)
-                                        .padding(.horizontal, 8)
-                                }
-                            }
-                        }
+                        Text(companyProfileViewModel.sponsoredGoods)
+                            .korFont(.T4KrMd)
+                            .foregroundStyle(Color.textPrimary)
+                          
                     }.frame(height: 24)
                         .padding(.leading, 24)
                         .padding(.trailing, 28)
                         .scrollIndicators(.hidden)
                 }.padding(.top, 4)
             }
-            if companyProfileViewModel.profileStatus != .unavailable {
-                HStack(spacing: 0) {
-                    Image(.icBookmark)
-                        .renderingMode(.template)
-                        .foregroundStyle(companyProfileViewModel.isBookmarked ? Color.textBrand : Color.textDisabled)
-                        .padding(14)
-                        .background(Color.bgTertiary)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .onTapGesture {
-                            withAnimation {
-                                companyProfileViewModel.isBookmarked.toggle()
-                            }
-                        }
-                    Button {
+
+            HStack(spacing: 0) {
+                Image(.icBookmark)
+                    .renderingMode(.template)
+                    .foregroundStyle(companyProfileViewModel.isBookmarked ? Color.textBrand : Color.textDisabled)
+                    .padding(14)
+                    .background(Color.bgTertiary)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .onTapGesture {
                         withAnimation {
-                            companyProfileViewModel.isSuggestModalPresented = true
+                            companyProfileViewModel.isBookmarked.toggle()
                         }
-                    } label: {
-                        Text("제안하기")
-                            .korFont(.But1KrBd)
-                            .padding(.vertical, 14)
-                            .foregroundStyle(Color.textWhite)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.textBrand)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                    }.padding(.leading, 8)
-                        .padding(.trailing, 28)
-                }
-                .padding([.vertical, .leading], 28)
-            }
-            else {
+                    }
                 Button {
                     withAnimation {
                         companyProfileViewModel.isSuggestModalPresented = true
@@ -169,13 +143,15 @@ struct CompanyProfileCardView: View {
                     Text("제안하기")
                         .korFont(.But1KrBd)
                         .padding(.vertical, 14)
-                        .foregroundStyle(Color.textDisabled)
+                        .foregroundStyle(Color.textWhite)
                         .frame(maxWidth: .infinity)
-                        .background(Color.bgTertiary)
+                        .background(Color.textBrand)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                 }.padding(.leading, 8)
-                    .padding(28)
+                    .padding(.trailing, 28)
             }
+            .padding([.vertical, .leading], 28)
+            
         }.background(Color.bgWhite)
             .clipShape(RoundedRectangle(cornerRadius: 40))
             .overlay(
