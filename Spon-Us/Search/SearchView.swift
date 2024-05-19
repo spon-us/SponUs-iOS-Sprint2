@@ -12,10 +12,10 @@ struct SearchView: View {
     @State private var recentSearches: [String] = ["무신사", "코카콜라", "해커스", "스포너스"]
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             SearchBarView(searchData: $searchData, recentSearches: $recentSearches)
             
-            VStack {
+            VStack(spacing: 0) {
                 if recentSearches.isEmpty {
                     Spacer().frame(height: 44)
                 } else {
@@ -37,13 +37,14 @@ struct SearchView: View {
                         })
                     }
                     .padding(.trailing, 20)
+                    .padding(.top, 14)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
+                        HStack(spacing: 4) {
                             ForEach(recentSearches, id: \.self) { search in
-                                HStack {
+                                HStack(spacing: 0) {
                                     Text(search)
-                                        .korFont(.B2KrMd)
+                                        .korFont(.B1KrMd)
                                         .foregroundStyle(Color.textSecondary)
                                         .onTapGesture {
                                             searchData = search
@@ -54,7 +55,7 @@ struct SearchView: View {
                                             recentSearches.remove(at: index)
                                         }
                                     }, label: {
-                                        Image(systemName: "xmark")
+                                        Image(.icDelete)
                                             .frame(width: 24, height: 24)
                                             .foregroundColor(.gray)
                                     })
@@ -69,8 +70,9 @@ struct SearchView: View {
                                 )
                             }
                         }
-                        .padding(.vertical, 10)
                     }
+                    .padding(.top, 12)
+                    .padding(.bottom, 16)
                 }
                 Spacer()
             }
@@ -112,6 +114,7 @@ struct SearchBarView: View {
             )
             .padding(.trailing, 20)
         }
+        .frame(height: 56)
     }
 }
 
