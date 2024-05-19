@@ -76,6 +76,7 @@ struct SearchView: View {
             }
             .padding(.leading, 20)
         }
+        .background(Color.bgSecondary)
     }
 }
 
