@@ -29,6 +29,13 @@
 		DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BD32BF4922500246814 /* CompanyCompletedModal.swift */; };
 		DFBE0BD62BF4B1B100246814 /* CompanyExceededViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BD52BF4B1B100246814 /* CompanyExceededViewModel.swift */; };
 		DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BD72BF4B7A000246814 /* CompanyUnavailableModal.swift */; };
+		DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BDB2BF5B60C00246814 /* ClubProfileView.swift */; };
+		DFBE0BDE2BF5B67D00246814 /* ClubProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BDD2BF5B67D00246814 /* ClubProfileViewModel.swift */; };
+		DFBE0BE32BF630F300246814 /* CharWrappingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BE22BF630F300246814 /* CharWrappingExtension.swift */; };
+		DFBE0BE62BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BE52BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift */; };
+		DFBE0BE92BF70B8200246814 /* ClubCompletedModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BE82BF70B8200246814 /* ClubCompletedModal.swift */; };
+		DFBE0BEB2BF70BB900246814 /* ClubExceededModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BEA2BF70BB900246814 /* ClubExceededModal.swift */; };
+		DFBE0BED2BF70BE200246814 /* ClubUnvailableModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BEC2BF70BE200246814 /* ClubUnvailableModal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +63,13 @@
 		DFBE0BD32BF4922500246814 /* CompanyCompletedModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCompletedModal.swift; sourceTree = "<group>"; };
 		DFBE0BD52BF4B1B100246814 /* CompanyExceededViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyExceededViewModel.swift; sourceTree = "<group>"; };
 		DFBE0BD72BF4B7A000246814 /* CompanyUnavailableModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyUnavailableModal.swift; sourceTree = "<group>"; };
+		DFBE0BDB2BF5B60C00246814 /* ClubProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubProfileView.swift; sourceTree = "<group>"; };
+		DFBE0BDD2BF5B67D00246814 /* ClubProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubProfileViewModel.swift; sourceTree = "<group>"; };
+		DFBE0BE22BF630F300246814 /* CharWrappingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharWrappingExtension.swift; sourceTree = "<group>"; };
+		DFBE0BE52BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCardNewsDummyModel.swift; sourceTree = "<group>"; };
+		DFBE0BE82BF70B8200246814 /* ClubCompletedModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubCompletedModal.swift; sourceTree = "<group>"; };
+		DFBE0BEA2BF70BB900246814 /* ClubExceededModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubExceededModal.swift; sourceTree = "<group>"; };
+		DFBE0BEC2BF70BE200246814 /* ClubUnvailableModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubUnvailableModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +111,7 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				DFBE0BE12BF630E000246814 /* Extention */,
 				DFBE0BB22BF315EC00246814 /* EnumManager.swift */,
 				DFBE0BAB2BF30B3800246814 /* CustomComponents */,
 				DFBE0BA82BF2F4B800246814 /* Profile */,
@@ -189,6 +204,10 @@
 		DFBE0BB52BF32A5F00246814 /* Club */ = {
 			isa = PBXGroup;
 			children = (
+				DFBE0BE72BF70B6800246814 /* Modal */,
+				DFBE0BE42BF6ECC700246814 /* PortfolioCardNews */,
+				DFBE0BDB2BF5B60C00246814 /* ClubProfileView.swift */,
+				DFBE0BDD2BF5B67D00246814 /* ClubProfileViewModel.swift */,
 			);
 			path = Club;
 			sourceTree = "<group>";
@@ -199,6 +218,32 @@
 				DFBE0BD32BF4922500246814 /* CompanyCompletedModal.swift */,
 				DFBE0BD52BF4B1B100246814 /* CompanyExceededViewModel.swift */,
 				DFBE0BD72BF4B7A000246814 /* CompanyUnavailableModal.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		DFBE0BE12BF630E000246814 /* Extention */ = {
+			isa = PBXGroup;
+			children = (
+				DFBE0BE22BF630F300246814 /* CharWrappingExtension.swift */,
+			);
+			path = Extention;
+			sourceTree = "<group>";
+		};
+		DFBE0BE42BF6ECC700246814 /* PortfolioCardNews */ = {
+			isa = PBXGroup;
+			children = (
+				DFBE0BE52BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift */,
+			);
+			path = PortfolioCardNews;
+			sourceTree = "<group>";
+		};
+		DFBE0BE72BF70B6800246814 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				DFBE0BE82BF70B8200246814 /* ClubCompletedModal.swift */,
+				DFBE0BEA2BF70BB900246814 /* ClubExceededModal.swift */,
+				DFBE0BEC2BF70BE200246814 /* ClubUnvailableModal.swift */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -278,6 +323,8 @@
 			files = (
 				DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */,
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
+				DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */,
+				DFBE0BEB2BF70BB900246814 /* ClubExceededModal.swift in Sources */,
 				DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */,
 				1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
@@ -287,11 +334,16 @@
 				DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */,
 				DFBE0BA52BF1089A00246814 /* HomeListCellViewModel.swift in Sources */,
 				DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */,
+				DFBE0BE62BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift in Sources */,
 				DFBE0BB32BF315EC00246814 /* EnumManager.swift in Sources */,
 				DFBE0BAD2BF30CC500246814 /* CustomBackButton.swift in Sources */,
+				DFBE0BDE2BF5B67D00246814 /* ClubProfileViewModel.swift in Sources */,
+				DFBE0BE92BF70B8200246814 /* ClubCompletedModal.swift in Sources */,
 				DFBE0BD62BF4B1B100246814 /* CompanyExceededViewModel.swift in Sources */,
 				DFBE0B9C2BEB147900246814 /* HomeView.swift in Sources */,
 				1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */,
+				DFBE0BE32BF630F300246814 /* CharWrappingExtension.swift in Sources */,
+				DFBE0BED2BF70BE200246814 /* ClubUnvailableModal.swift in Sources */,
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

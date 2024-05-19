@@ -15,5 +15,6 @@ final class HomeViewModel {
     var companyClubSelection = CompanyClubSelection.company
     var companyCategory = CompanyCategory.all
     var clubCategory = ClubCategory.all
-    var goToCompanyProfileVIew = false
+    var goToCompanyProfileView = false
+    var goToClubProfileView = false
 }

@@ -1,13 +1,13 @@
 //
-//  CompanyExceededViewModel.swift
+//  ClubExceededModal.swift
 //  Spon-Us
 //
-//  Created by 박현수 on 5/15/24.
+//  Created by 박현수 on 5/17/24.
 //
 
 import SwiftUI
 
-struct CompanyExceededModal: View {
+struct ClubExceededModal: View {
     @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack(spacing: 0) {
@@ -35,7 +35,7 @@ struct CompanyExceededModal: View {
                 Spacer()
             }
             HStack(spacing: 0) {
-                Text("하루 최대 5회까지 제안이 가능해요")
+                Text("내일 다시 방문하면 제안이 가능해요.")
                     .korFont(.T4KrMd)
                     .foregroundStyle(Color.textSecondary)
                     .padding(.leading, 32)
@@ -69,5 +69,5 @@ struct CompanyExceededModal: View {
 }
 
 #Preview {
-    CompanyExceededModal()
+    ClubExceededModal()
 }
