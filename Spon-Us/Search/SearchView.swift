@@ -16,31 +16,28 @@ struct SearchView: View {
             SearchBarView(searchData: $searchData, recentSearches: $recentSearches)
             
             VStack {
-                HStack {
-                    Text("최근 검색어")
-                        .korFont(.T2KrBd)
-                        .foregroundStyle(Color.textPrimary)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        recentSearches.removeAll()
-                    }, label: {
-                        Text("전체삭제")
-                            .korFont(.B2KrMd)
-                            .foregroundStyle(Color.textTertiary)
-                            .padding(10)
-                            .frame(width: 68, alignment: .center)
-                    })
-                }
-                .padding(.trailing, 20)
-                
                 if recentSearches.isEmpty {
-                    Text("최근 검색어가 없습니다.")
-                        .korFont(.B2KrMd)
-                        .foregroundStyle(Color.textTertiary)
-                        .padding(.top, 10)
+                    Spacer().frame(height: 44)
                 } else {
+                    HStack {
+                        Text("최근 검색어")
+                            .korFont(.T2KrBd)
+                            .foregroundStyle(Color.textPrimary)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            recentSearches.removeAll()
+                        }, label: {
+                            Text("전체삭제")
+                                .korFont(.B2KrMd)
+                                .foregroundStyle(Color.textTertiary)
+                                .padding(10)
+                                .frame(width: 68, alignment: .center)
+                        })
+                    }
+                    .padding(.trailing, 20)
+                    
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
                             ForEach(recentSearches, id: \.self) { search in
