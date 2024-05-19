@@ -7,12 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-		3BD5325A2BF6E10B00152A77 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD532592BF6E10B00152A77 /* MyPageView.swift */; };
-
 		1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD672BF6251C00E333AD /* BookmarkView.swift */; };
 		1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */; };
-
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
@@ -43,12 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-
-		3BD532592BF6E10B00152A77 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-
 		1EFADD672BF6251C00E333AD /* BookmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
 		1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
-
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
 		DFBE0B792BE601C500246814 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,14 +83,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-
-		3BD532582BF6E0FB00152A77 /* MyPage */ = {
-			isa = PBXGroup;
-			children = (
-				3BD532592BF6E10B00152A77 /* MyPageView.swift */,
-			);
-			path = MyPage;
-
 		1EFADD692BF6251C00E333AD /* Bookmark */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,7 +90,6 @@
 				1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */,
 			);
 			path = Bookmark;
-
 			sourceTree = "<group>";
 		};
 		DFBE0B692BE601C400246814 = {
@@ -130,7 +113,6 @@
 			children = (
 				DFBE0BE12BF630E000246814 /* Extention */,
 				DFBE0BB22BF315EC00246814 /* EnumManager.swift */,
-				3BD532582BF6E0FB00152A77 /* MyPage */,
 				DFBE0BAB2BF30B3800246814 /* CustomComponents */,
 				DFBE0BA82BF2F4B800246814 /* Profile */,
 				1EFADD692BF6251C00E333AD /* Bookmark */,
@@ -351,7 +333,6 @@
 				DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */,
 				DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */,
 				DFBE0BA52BF1089A00246814 /* HomeListCellViewModel.swift in Sources */,
-				3BD5325A2BF6E10B00152A77 /* MyPageView.swift in Sources */,
 				DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */,
 				DFBE0BE62BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift in Sources */,
 				DFBE0BB32BF315EC00246814 /* EnumManager.swift in Sources */,
