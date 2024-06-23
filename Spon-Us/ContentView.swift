@@ -22,7 +22,7 @@ struct ContentView: View {
                         }
                     }
                     .tag(0)
-                Text("검색")
+                SearchView()
                     .tabItem {
                         VStack {
                             Image(.icSearch)
