@@ -64,7 +64,7 @@ struct BookmarkView: View {
             .padding(.all, 20)
             
             BookmarkListView(homeViewModel: homeViewModel)
-                .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileVIew) {
+                .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
                     CompanyProfileView()
                 }
         }
@@ -85,7 +85,7 @@ struct BookmarkListView: View {
                 ForEach(1..<10) { index in
                     BookmarkListCell(bookmarkListCellViewModel: BookmarkListCellViewModel(companyName: "무신사", imageURL: ""))
                         .onTapGesture {
-                            homeViewModel.goToCompanyProfileVIew = true
+                            homeViewModel.goToCompanyProfileView = true
                         }
                 }
             }
