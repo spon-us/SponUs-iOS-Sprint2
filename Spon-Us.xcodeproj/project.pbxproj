@@ -102,13 +102,13 @@
 				1EFADD772BF89D3300E333AD /* SearchView.swift */,
 			);
 			path = Search;
+		};
 		3B74D7772BF9E69600B3B750 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
 				3B74D7782BF9E6A600B3B750 /* MyPageView.swift */,
 			);
 			path = MyPage;
-
 			sourceTree = "<group>";
 		};
 		DFBE0B692BE601C400246814 = {
