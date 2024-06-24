@@ -229,7 +229,3 @@ struct MyPageCell: View {
     MyPageView()
         .environmentObject(NavigationPathFinder.shared)
 }
-
-#Preview {
-    MyPageView()
-}
