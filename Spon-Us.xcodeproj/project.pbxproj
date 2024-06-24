@@ -11,6 +11,17 @@
 		1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD672BF6251C00E333AD /* BookmarkView.swift */; };
 		1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */; };
 		3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B74D7782BF9E6A600B3B750 /* MyPageView.swift */; };
+		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
+		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
+		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
+		80CF29E42C298B8D00CACA53 /* AgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E32C298B8D00CACA53 /* AgreeView.swift */; };
+		80CF29E62C29943C00CACA53 /* DetailAgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */; };
+		80CF29EA2C29AB7100CACA53 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E92C29AB7100CACA53 /* TokenManager.swift */; };
+		80CF29EC2C29B56F00CACA53 /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */; };
+		80CF29F82C29CBC900CACA53 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29F72C29CBC900CACA53 /* CombineMoya */; };
+		80CF29FA2C29CBC900CACA53 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29F92C29CBC900CACA53 /* Moya */; };
+		80CF29FC2C29CBC900CACA53 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29FB2C29CBC900CACA53 /* ReactiveMoya */; };
+		80CF29FE2C29CBC900CACA53 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29FD2C29CBC900CACA53 /* RxMoya */; };
 		DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074942C286FAF00321E05 /* SponusAPI.swift */; };
 		DF4074982C286FCC00321E05 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF4074972C286FCC00321E05 /* CombineMoya */; };
 		DF40749A2C286FCC00321E05 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = DF4074992C286FCC00321E05 /* Moya */; };
@@ -50,6 +61,13 @@
 		1EFADD672BF6251C00E333AD /* BookmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
 		1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		3B74D7782BF9E6A600B3B750 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		80C320A92C284CE7004C0882 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		80C320AB2C284CFE004C0882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		80CF29E32C298B8D00CACA53 /* AgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeView.swift; sourceTree = "<group>"; };
+		80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAgreeView.swift; sourceTree = "<group>"; };
+		80CF29E92C29AB7100CACA53 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		DF4074942C286FAF00321E05 /* SponusAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponusAPI.swift; sourceTree = "<group>"; };
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
@@ -87,9 +105,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80CF29FC2C29CBC900CACA53 /* ReactiveMoya in Frameworks */,
 				DF40749A2C286FCC00321E05 /* Moya in Frameworks */,
 				DF4074982C286FCC00321E05 /* CombineMoya in Frameworks */,
+				80CF29FA2C29CBC900CACA53 /* Moya in Frameworks */,
 				DF40749E2C286FCC00321E05 /* RxMoya in Frameworks */,
+				80CF29F82C29CBC900CACA53 /* CombineMoya in Frameworks */,
+				80CF29FE2C29CBC900CACA53 /* RxMoya in Frameworks */,
 				DF40749C2C286FCC00321E05 /* ReactiveMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -122,6 +144,27 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		80C320A82C284C59004C0882 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				80C320A92C284CE7004C0882 /* OnBoardingView.swift */,
+				80C320AB2C284CFE004C0882 /* LoginView.swift */,
+				80CF29E12C29851600CACA53 /* LoginViewModel.swift */,
+				80CF29E32C298B8D00CACA53 /* AgreeView.swift */,
+				80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
+		80CF29E82C29AB6200CACA53 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				80CF29E92C29AB7100CACA53 /* TokenManager.swift */,
+				80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		DF4074932C286FA100321E05 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +192,8 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				80CF29E82C29AB6200CACA53 /* Auth */,
+				80C320A82C284C59004C0882 /* OnBoarding */,
 				DF4074932C286FA100321E05 /* Network */,
 				3B74D7772BF9E69600B3B750 /* MyPage */,
 				DFBE0BE12BF630E000246814 /* Extention */,
@@ -310,6 +355,10 @@
 				DF4074992C286FCC00321E05 /* Moya */,
 				DF40749B2C286FCC00321E05 /* ReactiveMoya */,
 				DF40749D2C286FCC00321E05 /* RxMoya */,
+				80CF29F72C29CBC900CACA53 /* CombineMoya */,
+				80CF29F92C29CBC900CACA53 /* Moya */,
+				80CF29FB2C29CBC900CACA53 /* ReactiveMoya */,
+				80CF29FD2C29CBC900CACA53 /* RxMoya */,
 			);
 			productName = "Spon-Us";
 			productReference = DFBE0B722BE601C400246814 /* Spon-Us.app */;
@@ -340,7 +389,7 @@
 			);
 			mainGroup = DFBE0B692BE601C400246814;
 			packageReferences = (
-				DF4074962C286FCC00321E05 /* XCRemoteSwiftPackageReference "Moya" */,
+				80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = DFBE0B732BE601C400246814 /* Products */;
 			projectDirPath = "";
@@ -371,10 +420,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80CF29E62C29943C00CACA53 /* DetailAgreeView.swift in Sources */,
 				DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */,
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
 				DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */,
 				DFBE0BEB2BF70BB900246814 /* ClubExceededModal.swift in Sources */,
+				80CF29EC2C29B56F00CACA53 /* AuthPlugin.swift in Sources */,
 				DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */,
 				1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
@@ -382,6 +433,7 @@
 				DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */,
 				DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */,
 				DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */,
+				80CF29EA2C29AB7100CACA53 /* TokenManager.swift in Sources */,
 				DFBE0BA52BF1089A00246814 /* HomeListCellViewModel.swift in Sources */,
 				DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */,
 				DFBE0BE62BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift in Sources */,
@@ -392,12 +444,16 @@
 				DFBE0BE92BF70B8200246814 /* ClubCompletedModal.swift in Sources */,
 				1E5498892C2903310008C10A /* SearchView.swift in Sources */,
 				DFBE0BD62BF4B1B100246814 /* CompanyExceededViewModel.swift in Sources */,
+				80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */,
 				DFBE0B9C2BEB147900246814 /* HomeView.swift in Sources */,
+				80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */,
 				1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */,
+				80CF29E42C298B8D00CACA53 /* AgreeView.swift in Sources */,
 				DFBE0BE32BF630F300246814 /* CharWrappingExtension.swift in Sources */,
 				DFBE0BED2BF70BE200246814 /* ClubUnvailableModal.swift in Sources */,
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 				DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */,
+				80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +663,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
 		DF4074962C286FCC00321E05 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -618,6 +682,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		80CF29F72C29CBC900CACA53 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+		80CF29F92C29CBC900CACA53 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		80CF29FB2C29CBC900CACA53 /* ReactiveMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = ReactiveMoya;
+		};
+		80CF29FD2C29CBC900CACA53 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
+		};
 		DF4074972C286FCC00321E05 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DF4074962C286FCC00321E05 /* XCRemoteSwiftPackageReference "Moya" */;
