@@ -21,6 +21,12 @@
 		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
 		80CF29E42C298B8D00CACA53 /* AgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E32C298B8D00CACA53 /* AgreeView.swift */; };
 		80CF29E62C29943C00CACA53 /* DetailAgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */; };
+		80CF29EA2C29AB7100CACA53 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E92C29AB7100CACA53 /* TokenManager.swift */; };
+		80CF29EC2C29B56F00CACA53 /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */; };
+		80CF29EF2C29B5CF00CACA53 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29EE2C29B5CF00CACA53 /* CombineMoya */; };
+		80CF29F12C29B5CF00CACA53 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29F02C29B5CF00CACA53 /* Moya */; };
+		80CF29F32C29B5CF00CACA53 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29F22C29B5CF00CACA53 /* ReactiveMoya */; };
+		80CF29F52C29B5CF00CACA53 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29F42C29B5CF00CACA53 /* RxMoya */; };
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
@@ -60,6 +66,8 @@
 		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		80CF29E32C298B8D00CACA53 /* AgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeView.swift; sourceTree = "<group>"; };
 		80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAgreeView.swift; sourceTree = "<group>"; };
+		80CF29E92C29AB7100CACA53 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		DF4074942C286FAF00321E05 /* SponusAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponusAPI.swift; sourceTree = "<group>"; };
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
@@ -152,6 +160,15 @@
 			path = OnBoarding;
 			sourceTree = "<group>";
 		};
+		80CF29E82C29AB6200CACA53 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				80CF29E92C29AB7100CACA53 /* TokenManager.swift */,
+				80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		DFBE0B692BE601C400246814 = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +188,7 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				80CF29E82C29AB6200CACA53 /* Auth */,
 				80C320A82C284C59004C0882 /* OnBoarding */,
 				DF4074932C286FA100321E05 /* Network */,
 				3B74D7772BF9E69600B3B750 /* MyPage */,
@@ -399,6 +417,7 @@
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
 				DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */,
 				DFBE0BEB2BF70BB900246814 /* ClubExceededModal.swift in Sources */,
+				80CF29EC2C29B56F00CACA53 /* AuthPlugin.swift in Sources */,
 				DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */,
 				1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
@@ -406,6 +425,7 @@
 				DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */,
 				DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */,
 				DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */,
+				80CF29EA2C29AB7100CACA53 /* TokenManager.swift in Sources */,
 				DFBE0BA52BF1089A00246814 /* HomeListCellViewModel.swift in Sources */,
 				DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */,
 				DFBE0BE62BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift in Sources */,

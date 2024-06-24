@@ -11,9 +11,15 @@ import UIKit
 
 @main
 struct Spon_UsApp: App {
+    @StateObject var vm = LoginViewModel()
+    
     var body: some Scene {
-        WindowGroup {
-            OnBoardingView()
-        }
+        WindowGroup() {
+            if (vm.loginSuccess || TokenManager.shared.isAutoLogin ?? false) && !TokenManager.shared.isRefreshTokenExpired() {
+                HomeView()
+            } else {
+                OnBoardingView()
+            }
+        }.environmentObject(vm)
     }
 }
