@@ -11,11 +11,6 @@
 		1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD672BF6251C00E333AD /* BookmarkView.swift */; };
 		1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */; };
 		3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B74D7782BF9E6A600B3B750 /* MyPageView.swift */; };
-		DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074942C286FAF00321E05 /* SponusAPI.swift */; };
-		DF4074982C286FCC00321E05 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF4074972C286FCC00321E05 /* CombineMoya */; };
-		DF40749A2C286FCC00321E05 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = DF4074992C286FCC00321E05 /* Moya */; };
-		DF40749C2C286FCC00321E05 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749B2C286FCC00321E05 /* ReactiveMoya */; };
-		DF40749E2C286FCC00321E05 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749D2C286FCC00321E05 /* RxMoya */; };
 		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
 		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
 		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
@@ -23,6 +18,15 @@
 		80CF29E62C29943C00CACA53 /* DetailAgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */; };
 		80CF29EA2C29AB7100CACA53 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E92C29AB7100CACA53 /* TokenManager.swift */; };
 		80CF29EC2C29B56F00CACA53 /* AuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */; };
+		80CF29F82C29CBC900CACA53 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29F72C29CBC900CACA53 /* CombineMoya */; };
+		80CF29FA2C29CBC900CACA53 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29F92C29CBC900CACA53 /* Moya */; };
+		80CF29FC2C29CBC900CACA53 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29FB2C29CBC900CACA53 /* ReactiveMoya */; };
+		80CF29FE2C29CBC900CACA53 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 80CF29FD2C29CBC900CACA53 /* RxMoya */; };
+		DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074942C286FAF00321E05 /* SponusAPI.swift */; };
+		DF4074982C286FCC00321E05 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF4074972C286FCC00321E05 /* CombineMoya */; };
+		DF40749A2C286FCC00321E05 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = DF4074992C286FCC00321E05 /* Moya */; };
+		DF40749C2C286FCC00321E05 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749B2C286FCC00321E05 /* ReactiveMoya */; };
+		DF40749E2C286FCC00321E05 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749D2C286FCC00321E05 /* RxMoya */; };
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
@@ -101,9 +105,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80CF29FC2C29CBC900CACA53 /* ReactiveMoya in Frameworks */,
 				DF40749A2C286FCC00321E05 /* Moya in Frameworks */,
 				DF4074982C286FCC00321E05 /* CombineMoya in Frameworks */,
+				80CF29FA2C29CBC900CACA53 /* Moya in Frameworks */,
 				DF40749E2C286FCC00321E05 /* RxMoya in Frameworks */,
+				80CF29F82C29CBC900CACA53 /* CombineMoya in Frameworks */,
+				80CF29FE2C29CBC900CACA53 /* RxMoya in Frameworks */,
 				DF40749C2C286FCC00321E05 /* ReactiveMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,14 +144,6 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
-		DF4074932C286FA100321E05 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				DF4074942C286FAF00321E05 /* SponusAPI.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		80C320A82C284C59004C0882 /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +163,14 @@
 				80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		DF4074932C286FA100321E05 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DF4074942C286FAF00321E05 /* SponusAPI.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		DFBE0B692BE601C400246814 = {
@@ -347,6 +355,10 @@
 				DF4074992C286FCC00321E05 /* Moya */,
 				DF40749B2C286FCC00321E05 /* ReactiveMoya */,
 				DF40749D2C286FCC00321E05 /* RxMoya */,
+				80CF29F72C29CBC900CACA53 /* CombineMoya */,
+				80CF29F92C29CBC900CACA53 /* Moya */,
+				80CF29FB2C29CBC900CACA53 /* ReactiveMoya */,
+				80CF29FD2C29CBC900CACA53 /* RxMoya */,
 			);
 			productName = "Spon-Us";
 			productReference = DFBE0B722BE601C400246814 /* Spon-Us.app */;
@@ -377,7 +389,7 @@
 			);
 			mainGroup = DFBE0B692BE601C400246814;
 			packageReferences = (
-				80CF29ED2C29B5CF00CACA53 /* XCRemoteSwiftPackageReference "Moya" */,
+				80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = DFBE0B732BE601C400246814 /* Products */;
 			projectDirPath = "";
@@ -651,6 +663,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
 		DF4074962C286FCC00321E05 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -662,6 +682,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		80CF29F72C29CBC900CACA53 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+		80CF29F92C29CBC900CACA53 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		80CF29FB2C29CBC900CACA53 /* ReactiveMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = ReactiveMoya;
+		};
+		80CF29FD2C29CBC900CACA53 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
+		};
 		DF4074972C286FCC00321E05 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DF4074962C286FCC00321E05 /* XCRemoteSwiftPackageReference "Moya" */;
