@@ -13,7 +13,7 @@ import UIKit
 struct Spon_UsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            OnBoardingView()
         }
     }
 }

@@ -16,6 +16,11 @@
 		DF40749A2C286FCC00321E05 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = DF4074992C286FCC00321E05 /* Moya */; };
 		DF40749C2C286FCC00321E05 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749B2C286FCC00321E05 /* ReactiveMoya */; };
 		DF40749E2C286FCC00321E05 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749D2C286FCC00321E05 /* RxMoya */; };
+		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
+		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
+		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
+		80CF29E42C298B8D00CACA53 /* AgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E32C298B8D00CACA53 /* AgreeView.swift */; };
+		80CF29E62C29943C00CACA53 /* DetailAgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */; };
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
@@ -50,6 +55,11 @@
 		1EFADD672BF6251C00E333AD /* BookmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
 		1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		3B74D7782BF9E6A600B3B750 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		80C320A92C284CE7004C0882 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
+		80C320AB2C284CFE004C0882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		80CF29E32C298B8D00CACA53 /* AgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeView.swift; sourceTree = "<group>"; };
+		80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAgreeView.swift; sourceTree = "<group>"; };
 		DF4074942C286FAF00321E05 /* SponusAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponusAPI.swift; sourceTree = "<group>"; };
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
@@ -130,6 +140,18 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		80C320A82C284C59004C0882 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				80C320A92C284CE7004C0882 /* OnBoardingView.swift */,
+				80C320AB2C284CFE004C0882 /* LoginView.swift */,
+				80CF29E12C29851600CACA53 /* LoginViewModel.swift */,
+				80CF29E32C298B8D00CACA53 /* AgreeView.swift */,
+				80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
 		DFBE0B692BE601C400246814 = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +171,7 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				80C320A82C284C59004C0882 /* OnBoarding */,
 				DF4074932C286FA100321E05 /* Network */,
 				3B74D7772BF9E69600B3B750 /* MyPage */,
 				DFBE0BE12BF630E000246814 /* Extention */,
@@ -371,6 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80CF29E62C29943C00CACA53 /* DetailAgreeView.swift in Sources */,
 				DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */,
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
 				DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */,
@@ -392,12 +416,16 @@
 				DFBE0BE92BF70B8200246814 /* ClubCompletedModal.swift in Sources */,
 				1E5498892C2903310008C10A /* SearchView.swift in Sources */,
 				DFBE0BD62BF4B1B100246814 /* CompanyExceededViewModel.swift in Sources */,
+				80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */,
 				DFBE0B9C2BEB147900246814 /* HomeView.swift in Sources */,
+				80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */,
 				1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */,
+				80CF29E42C298B8D00CACA53 /* AgreeView.swift in Sources */,
 				DFBE0BE32BF630F300246814 /* CharWrappingExtension.swift in Sources */,
 				DFBE0BED2BF70BE200246814 /* ClubUnvailableModal.swift in Sources */,
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 				DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */,
+				80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
