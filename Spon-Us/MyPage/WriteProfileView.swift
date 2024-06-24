@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-enum WriteProfileTab: String, CaseIterable {
+enum WriteProfileTab: String, CaseIterable, Identifiable, TabItem {
     case image = "이미지"
     case name = "이름"
     case introduce = "소개"
@@ -16,6 +16,7 @@ enum WriteProfileTab: String, CaseIterable {
     case link = "링크"
     case field = "분야"
     
+    var id: String { self.rawValue }
 }
 
 struct WriteProfileView: View {
@@ -30,7 +31,7 @@ struct WriteProfileView: View {
             
             VStack(spacing: 0) {
                 
-                WriteProfileTopTabBar(selectedPage: $selectedPage)
+                SponusTopTabBar(selectedPage: $selectedPage)
                     .background(Color.bgSecondary)
                 
                 TabView(selection: $selectedPage) {
@@ -94,13 +95,17 @@ struct WriteProfileTopTabBar: View {
             }
             .padding(.leading, 20)
             .padding(.vertical, 1)
-        }.scrollIndicators(.hidden)
+        }
+        .scrollIndicators(.hidden)
     }
 }
 
 struct ImageTabView: View {
     
     @Binding var selectedPage: WriteProfileTab
+    
+    @State private var selectedImages: [UIImage] = []
+    @State private var isImagePickerPresented = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -116,36 +121,56 @@ struct ImageTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    ZStack(alignment: .topTrailing) {
-                        
-                        HStack(spacing: 0) {
-                            Image("Edit")
-                                .renderingMode(.template)
-                                .foregroundStyle(Color.textBrand)
-                                .padding(.trailing, 2)
+                    Button(action: {
+                        isImagePickerPresented.toggle()
+                    }, label: {
+                        ZStack(alignment: .topTrailing) {
                             
-                            // KR/B2_KR_Bd
-                            Text("첨부하기")
-                                .font(.B2KrBd)
-                                .foregroundStyle(Color.textBrand)
+                            HStack(spacing: 0) {
+                                Image("Edit")
+                                    .renderingMode(.template)
+                                    .foregroundStyle(Color.textBrand)
+                                    .padding(.trailing, 2)
+                                
+                                Text("첨부하기")
+                                    .font(.B2KrBd)
+                                    .foregroundStyle(Color.textBrand)
+                                
+                            }
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 22)
+                                    .fill(Color.bgBrandSecondary)
+                            )
+                            .padding(.trailing, 16)
+                            .padding(.top, 16)
+                            .zIndex(1.0)
                             
+                            if selectedImages.isEmpty {
+                                RoundedRectangle(cornerRadius: 32)
+                                    .inset(by: 0.5)
+                                    .fill(Color.bgWhite)
+                                    .stroke(Color.line200, lineWidth: 1)
+                                    .frame(height: 335)
+                            }
+                            else {
+                                ForEach(selectedImages, id: \.self) { image in
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .clipShape(RoundedRectangle(cornerRadius: 32))
+
+                                }
+                            }
                         }
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 8)
-                        .background(
-                            RoundedRectangle(cornerRadius: 22)
-                                .fill(Color.bgBrandSecondary)
-                        )
-                        .padding(.trailing, 16)
-                        .padding(.top, 16)
-                        .zIndex(1.0)
-                        
-                        RoundedRectangle(cornerRadius: 32)
-                            .inset(by: 0.5)
-                            .fill(Color.bgWhite)
-                            .stroke(Color.line200, lineWidth: 1)
-                            .frame(minHeight: 335)
+                    })
+                    .sheet(isPresented: $isImagePickerPresented) {
+                        ImagePickerView(selectedImages: $selectedImages, selectedImageCount: .single)
                     }
+                    
+                    
+
                     
                     
                 }
@@ -155,7 +180,7 @@ struct ImageTabView: View {
             Button(action: {
                 selectedPage = .name
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: false)
+                SponusButtonLabel(text: "다음", disabledCondition: selectedImages.isEmpty)
             })
             .padding(.horizontal, 20)
             
@@ -199,7 +224,7 @@ struct NameTabView: View {
             }
 
             Button(action: {
-                
+                selectedPage = .introduce
             }, label: {
                 SponusButtonLabel(text: "다음", disabledCondition: text.count == 0 || text.count > limitTextCount)
             })
@@ -232,20 +257,35 @@ struct IntroduceTabView: View {
                         .padding(.bottom, 20)
                     
                     TextEditor(text: $text)
-                        .modifier(SponusTextEditorModifier(text: $text, limitTextCount: 300, placeHolder: "ex. 안녕하세요. 저희는 스포대학교의 마케팅 기획을 하는 동아리 ‘스포대학교' 기획동아리 입니다."))
+                        .modifier(SponusTextEditorModifier(text: $text, limitTextCount: limitTextCount, height: 260, placeHolder: "ex. 안녕하세요. 저희는 스포대학교의 마케팅 기획을 하는 동아리 ‘스포대학교' 기획동아리 입니다."))
                         .padding(.bottom, 8)
                     
-                    Text("(\(text.count)/\(limitTextCount))")
-                        .font(.B2EnMd)
-                        .foregroundStyle(Color.textTertiary)
-                        .padding(.leading, 12)
+                    HStack(spacing: 0) {
+                        
+                        Text("(\(text.count)/\(limitTextCount))")
+                            .font(.B2EnMd)
+                            .foregroundStyle(Color.textTertiary)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            text = ""
+                        }, label: {
+                            Text("전체 삭제")
+                                .font(.B2EnMd)
+                                .foregroundStyle(Color.textTertiary)
+                            
+                        })
+                        
+                    }
+                    .padding(.horizontal, 12)
                     
                 }
                 .padding(.horizontal, 20)
             }
         
             Button(action: {
-                
+                selectedPage = .member
             }, label: {
                 SponusButtonLabel(text: "다음", disabledCondition: text.count == 0 || text.count > limitTextCount)
             })
@@ -294,7 +334,7 @@ struct MemberTabView: View {
             }
             
             Button(action: {
-                
+                selectedPage = .link
             }, label: {
                 SponusButtonLabel(text: "다음", disabledCondition: isButtonDisabled())
                     .padding(.horizontal, 20)
@@ -370,7 +410,7 @@ struct LinkTabView: View {
                 .padding(.horizontal, 20)
             }
             Button(action: {
-                
+                selectedPage = .field
             }, label: {
                 SponusButtonLabel(text: "다음", disabledCondition: false)
             })
@@ -457,6 +497,7 @@ struct SponusTextEditorModifier: ViewModifier {
     
     @Binding var text: String
     var limitTextCount: Int
+    var height: CGFloat
     var placeHolder: String
     
     @State private var isEditing = false // 추가: 편집 중인지 여부를 추적하기 위한 상태 변수
@@ -481,7 +522,7 @@ struct SponusTextEditorModifier: ViewModifier {
                 .font(.T4KrMd)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 20)
-                .frame(maxWidth: .infinity, minHeight: 260)
+                .frame(maxWidth: .infinity, minHeight: height)
                 .background(Color.white)
                 .cornerRadius(16)
                 .overlay(

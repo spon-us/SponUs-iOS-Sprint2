@@ -9,7 +9,9 @@ import SwiftUI
 
 
 enum MyPageRoute: String, Hashable {
-    case editProfile = "프로필 수정"
+    case editProfileCell = "프로필 수정"
+    case writeProfile = "프로필 작성하기"
+    case writePortfolio = "포트폴리오 작성하기"
     case cooperationHistory = "이전 협업 관리"
     case contactUs = "문의하기"
     case privacyRule = "개인정보처리방침"
@@ -17,8 +19,8 @@ enum MyPageRoute: String, Hashable {
     
     @ViewBuilder func view() -> some View {
         switch self {
-        case .editProfile:
-            Text("프로필 수정")
+        case .editProfileCell:
+            EditProfileView()
         case .cooperationHistory:
             Text("이전 협업 관리")
         case .contactUs:
@@ -27,6 +29,10 @@ enum MyPageRoute: String, Hashable {
             Text("개인정보처리방침")
         case .termsOfUse:
             Text("이용약관")
+        case .writeProfile:
+            WriteProfileView()
+        case .writePortfolio:
+            WritePortfolioView()
         }
     }
     
@@ -68,7 +74,7 @@ struct MyPageView: View {
                         Spacer()
                             .frame(height: 16)
                         
-                        MyPageCell(image: "Profile", title: .editProfile)
+                        MyPageCell(image: "Profile", title: .editProfileCell)
                         MyPageCell(image: "Folder", title: .cooperationHistory)
                         MyPageCell(image: "Shield Done", title: .contactUs)
                         MyPageCell(image: "Paper", title: .privacyRule)

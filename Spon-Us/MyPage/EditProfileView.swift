@@ -10,7 +10,7 @@ import SwiftUI
 struct EditProfileView: View {
     
     @State private var selectedSection = ""
-    
+    @EnvironmentObject var navPathFinder: NavigationPathFinder
     
     var body: some View {
         VStack(spacing: 0) {
@@ -41,7 +41,12 @@ struct EditProfileView: View {
             }
             
             Button(action: {
-                
+                if selectedSection == "profile" {
+                    navPathFinder.addPath(route: .writeProfile)
+                }
+                else if selectedSection == "portfolio" {
+                    navPathFinder.addPath(route: .writePortfolio)
+                }
             }, label: {
                 SponusButtonLabel(text: "다음", disabledCondition: selectedSection.isEmpty)
             })

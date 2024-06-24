@@ -12,6 +12,7 @@
 		3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B74D7782BF9E6A600B3B750 /* MyPageView.swift */; };
 		3B82D8962C266D59008E0138 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8952C266D58008E0138 /* EditProfileView.swift */; };
 		3B82D8982C26AE35008E0138 /* WriteProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8972C26AE35008E0138 /* WriteProfileView.swift */; };
+		3B82D89A2C2904DE008E0138 /* WritePortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8992C2904DE008E0138 /* WritePortfolioView.swift */; };
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		3B74D7782BF9E6A600B3B750 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		3B82D8952C266D58008E0138 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		3B82D8972C26AE35008E0138 /* WriteProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteProfileView.swift; sourceTree = "<group>"; };
+		3B82D8992C2904DE008E0138 /* WritePortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritePortfolioView.swift; sourceTree = "<group>"; };
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
 		DFBE0B792BE601C500246814 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				3B74D7782BF9E6A600B3B750 /* MyPageView.swift */,
 				3B82D8952C266D58008E0138 /* EditProfileView.swift */,
 				3B82D8972C26AE35008E0138 /* WriteProfileView.swift */,
+				3B82D8992C2904DE008E0138 /* WritePortfolioView.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */,
 				1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
+				3B82D89A2C2904DE008E0138 /* WritePortfolioView.swift in Sources */,
 				DFBE0BA72BF1A6B200246814 /* ContentView.swift in Sources */,
 				DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */,
 				DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */,
