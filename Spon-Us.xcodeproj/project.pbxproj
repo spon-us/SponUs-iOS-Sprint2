@@ -27,6 +27,7 @@
 		DF40749A2C286FCC00321E05 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = DF4074992C286FCC00321E05 /* Moya */; };
 		DF40749C2C286FCC00321E05 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749B2C286FCC00321E05 /* ReactiveMoya */; };
 		DF40749E2C286FCC00321E05 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749D2C286FCC00321E05 /* RxMoya */; };
+		DF4074A12C2A900A00321E05 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074A02C2A900A00321E05 /* Organization.swift */; };
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
@@ -37,7 +38,6 @@
 		DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B9D2BEB14F000246814 /* HomeViewModel.swift */; };
 		DFBE0BA02BEB570B00246814 /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B9F2BEB570B00246814 /* SUIT-Bold.otf */; };
 		DFBE0BA22BEB571E00246814 /* SUIT-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0BA12BEB571D00246814 /* SUIT-Medium.otf */; };
-		DFBE0BA52BF1089A00246814 /* HomeListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BA42BF1089A00246814 /* HomeListCellViewModel.swift */; };
 		DFBE0BA72BF1A6B200246814 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BA62BF1A6B200246814 /* ContentView.swift */; };
 		DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BA92BF2F81C00246814 /* CompanyProfileView.swift */; };
 		DFBE0BAD2BF30CC500246814 /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BAC2BF30CC500246814 /* CustomBackButton.swift */; };
@@ -69,6 +69,7 @@
 		80CF29E92C29AB7100CACA53 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		DF4074942C286FAF00321E05 /* SponusAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponusAPI.swift; sourceTree = "<group>"; };
+		DF4074A02C2A900A00321E05 /* Organization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
 		DFBE0B792BE601C500246814 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,7 +82,6 @@
 		DFBE0B9D2BEB14F000246814 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		DFBE0B9F2BEB570B00246814 /* SUIT-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Bold.otf"; sourceTree = "<group>"; };
 		DFBE0BA12BEB571D00246814 /* SUIT-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Medium.otf"; sourceTree = "<group>"; };
-		DFBE0BA42BF1089A00246814 /* HomeListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListCellViewModel.swift; sourceTree = "<group>"; };
 		DFBE0BA62BF1A6B200246814 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DFBE0BA92BF2F81C00246814 /* CompanyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileView.swift; sourceTree = "<group>"; };
 		DFBE0BAC2BF30CC500246814 /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
@@ -168,9 +168,18 @@
 		DF4074932C286FA100321E05 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				DF40749F2C2A8FFA00321E05 /* Models */,
 				DF4074942C286FAF00321E05 /* SponusAPI.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		DF40749F2C2A8FFA00321E05 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DF4074A02C2A900A00321E05 /* Organization.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		DFBE0B692BE601C400246814 = {
@@ -244,19 +253,10 @@
 		DFBE0B9A2BEB12F000246814 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				DFBE0BA32BF1088700246814 /* List */,
 				DFBE0B9B2BEB147900246814 /* HomeView.swift */,
 				DFBE0B9D2BEB14F000246814 /* HomeViewModel.swift */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		DFBE0BA32BF1088700246814 /* List */ = {
-			isa = PBXGroup;
-			children = (
-				DFBE0BA42BF1089A00246814 /* HomeListCellViewModel.swift */,
-			);
-			path = List;
 			sourceTree = "<group>";
 		};
 		DFBE0BA82BF2F4B800246814 /* Profile */ = {
@@ -434,7 +434,6 @@
 				DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */,
 				DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */,
 				80CF29EA2C29AB7100CACA53 /* TokenManager.swift in Sources */,
-				DFBE0BA52BF1089A00246814 /* HomeListCellViewModel.swift in Sources */,
 				DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */,
 				DFBE0BE62BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift in Sources */,
 				DFBE0BB32BF315EC00246814 /* EnumManager.swift in Sources */,
@@ -454,6 +453,7 @@
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 				DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */,
 				80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */,
+				DF4074A12C2A900A00321E05 /* Organization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

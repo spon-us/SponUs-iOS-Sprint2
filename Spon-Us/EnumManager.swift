@@ -8,8 +8,9 @@
 import Foundation
 import SwiftUI
 
-enum CompanyClubSelection {
-    case club, company
+enum CompanyClubSelection: String {
+    case club = "CLUB"
+    case company = "COMPANY"
 }
 
 enum CompanyCategory: String, CaseIterable {

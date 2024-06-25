@@ -13,9 +13,9 @@ struct HomeView: View {
     var body: some View {
         VStack(spacing: 0) {
             HomeStatusBarView(homeViewModel: homeViewModel)
-            if homeViewModel.isPortfolioUploaded {
-                HomeCardGuestView(homeViewModel: homeViewModel)
-            }
+//            if homeViewModel.isPortfolioUploaded {
+//                HomeCardGuestView(homeViewModel: homeViewModel)
+//            }
             HomeSelectionTabView(homeViewModel: homeViewModel)
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
             HomeListView(homeViewModel: homeViewModel)
@@ -38,6 +38,7 @@ struct HomeStatusBarView: View {
                 .padding([.top, .leading], 20)
             Spacer()
             Button {
+                homeViewModel.fetchOrganizations(type: .company)
                 // 알림 View로 이동
             } label: {
                 ZStack {
@@ -125,6 +126,7 @@ struct HomeCardGuestView: View {
                 .stroke(Color.line200, lineWidth: 1)
         )
         .padding(.horizontal, 20)
+        .padding(.bottom, 38)
     }
 }
 
@@ -138,6 +140,7 @@ struct HomeSelectionTabView: View {
                 .foregroundStyle(homeViewModel.companyClubSelection == .company ? Color.textPrimary : Color.textDisabled)
                 .padding(.leading, 24)
                 .onTapGesture {
+                    homeViewModel.fetchOrganizations(type: .company)
                     withAnimation {
                         homeViewModel.companyClubSelection = .company
                     }
@@ -147,13 +150,13 @@ struct HomeSelectionTabView: View {
                 .foregroundStyle(homeViewModel.companyClubSelection == .club ? Color.textPrimary : Color.textDisabled)
                 .padding(.leading, 16)
                 .onTapGesture {
+                    homeViewModel.fetchOrganizations(type: .club)
                     withAnimation {
                         homeViewModel.companyClubSelection = .club
                     }
                 }
             Spacer()
-        }.padding(.top, 38)
-            .padding(.bottom, 14)
+        }.padding(.bottom, 14)
     }
 }
 
@@ -208,22 +211,34 @@ struct HomeCategorySelectionTab: View {
             HStack(spacing: 0) {
                 if homeViewModel.companyClubSelection == .company {
                     ForEach(CompanyCategory.allCases, id: \.self) { category in
-                        HomeCategorySelectionCell(homeViewModel: homeViewModel, title: category.rawValue, category: .company, companySelection: category, clubSelection: nil)
-                            .onTapGesture {
-                                withAnimation {
-                                    homeViewModel.companyCategory = category
-                                }
+                        HomeCategorySelectionCell(
+                            homeViewModel: homeViewModel,
+                            title: category.rawValue,
+                            category: .company,
+                            companySelection: category,
+                            clubSelection: nil
+                        )
+                        .onTapGesture {
+                            withAnimation {
+                                homeViewModel.companyCategory = category
                             }
+                        }
                     }
                 }
                 else {
                     ForEach(ClubCategory.allCases, id: \.self) { category in
-                        HomeCategorySelectionCell(homeViewModel: homeViewModel, title: category.rawValue, category: .club, companySelection: nil, clubSelection: category)
-                            .onTapGesture {
-                                withAnimation {
-                                    homeViewModel.clubCategory = category
-                                }
+                        HomeCategorySelectionCell(
+                            homeViewModel: homeViewModel,
+                            title: category.rawValue,
+                            category: .club,
+                            companySelection: nil,
+                            clubSelection: category
+                        )
+                        .onTapGesture {
+                            withAnimation {
+                                homeViewModel.clubCategory = category
                             }
+                        }
                     }
                 }
             }.padding(.leading, 20)
@@ -233,7 +248,7 @@ struct HomeCategorySelectionTab: View {
 }
 
 struct HomeListCell: View {
-    var homeListCellViewModel: HomeListCellViewModel
+    var organizationData: OrganizationModel
     var body: some View {
         
         VStack(spacing: 0) {
@@ -249,11 +264,12 @@ struct HomeListCell: View {
                             .padding(.top, 12)
                             .padding(.trailing, 12)
                             .foregroundStyle(
-                                homeListCellViewModel.isBookmarked ? Color.textBrand :  Color.textSecondary
+                                //                                homeListCellViewModel.isBookmarked ? Color.textBrand :  Color.textSecondary
+                                Color.textSecondary
                             )
                             .onTapGesture {
                                 withAnimation {
-                                    homeListCellViewModel.isBookmarked.toggle()
+                                    //                                    homeListCellViewModel.isBookmarked.toggle()
                                 }
                             }
                     }
@@ -261,7 +277,7 @@ struct HomeListCell: View {
                 }
             }
             HStack(spacing: 0) {
-                Text(homeListCellViewModel.companyName)
+                Text(organizationData.name)
                     .korFont(.T4KrBd)
                     .foregroundStyle(Color.textPrimary)
                 Spacer()
@@ -293,29 +309,61 @@ struct HomeListCell: View {
 struct HomeListView: View {
     var homeViewModel: HomeViewModel
     
+    @State var scrollID: Int?
+    
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible()),
     ]
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(1..<21) { index in
-                    HomeListCell(homeListCellViewModel: HomeListCellViewModel(companyName: "무신사", imageURL: ""))
-                        .onTapGesture {
-                            switch homeViewModel.companyClubSelection {
-                            case .company:
-                                homeViewModel.goToCompanyProfileView = true
-                            case .club:
-                                homeViewModel.goToClubProfileView = true
-                            }
+        ZStack {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 16) {
+                    if homeViewModel.companyClubSelection == .company {
+                        ForEach(homeViewModel.companies, id: \.id) { org in
+                            HomeListCell(organizationData: org)
+                                .onTapGesture {
+                                    homeViewModel.goToCompanyProfileView = true
+                                }
                         }
+                    }
+                    else {
+                        ForEach(homeViewModel.clubs, id: \.id) { org in
+                            HomeListCell(organizationData: org)
+                                .onTapGesture {
+                                    homeViewModel.goToClubProfileView = true
+                                }
+                        }
+                    }
+                }.scrollTargetLayout()
+            }.scrollIndicators(.hidden)
+                .scrollPosition(id: $scrollID)
+            
+            if scrollID != nil && scrollID != 1 {
+                VStack(spacing: 0) {
+                    Spacer()
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                scrollID = 1
+                            }
+                        } label: {
+                            Image(.arrowUp5)
+                                .renderingMode(.template)
+                                .padding(10)
+                                .foregroundStyle(Color.textWhite)
+                                .background(Color.textBrand)
+                                .clipShape(Ellipse())
+                        }
+                    }.padding(.bottom, 15)
                 }
             }
+            
         }.padding(.top, 15)
             .padding(.horizontal, 20)
-            .scrollIndicators(.hidden)
+        
     }
 }
 
