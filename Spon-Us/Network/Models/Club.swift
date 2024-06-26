@@ -1,5 +1,5 @@
 //
-//  GetOrganization.swift
+//  Club.swift
 //  Spon-Us
 //
 //  Created by 박현수 on 6/25/24.
@@ -7,20 +7,13 @@
 
 import Foundation
 
-struct OrganizationResponseModel: Codable {
+struct ClubResponseModel: Codable {
     let statusCode: String
     let message: String
-    let content: OrganizationDataModel
+    let content: ClubModel
 }
 
-struct OrganizationDataModel: Codable {
-    let totalPages: Int
-    let currentPage: Int
-    let pageSize: Int
-    let content: [OrganizationModel]
-}
-
-struct OrganizationModel: Codable {
+struct ClubModel: Codable {
     let id: Int
     let name: String
     let email: String
@@ -29,5 +22,8 @@ struct OrganizationModel: Codable {
     let bookmarkCount: Int
     let viewCount: Int
     let organizationType: String
-    let subType: String
+    let profileStatus: String
+    let role: String
+    let memberCount: Int
+    let clubType: String
 }

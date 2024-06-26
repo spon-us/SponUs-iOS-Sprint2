@@ -9,7 +9,9 @@ import Foundation
 import Moya
 
 enum SponusAPI {
-    case getOrganizations(page: Int, size: Int, organizationType: String)
+    case getOrganizations(organizationType: String)
+    case getCompany(companyId: Int)
+    case getClub(clubId: Int)
 }
 
 extension SponusAPI: TargetType {
@@ -21,12 +23,20 @@ extension SponusAPI: TargetType {
         switch self {
         case .getOrganizations:
             return "/api/v2/organizations"
+        case let .getCompany(companyId):
+            return "/api/v2/companies/\(companyId)"
+        case let .getClub(clubId):
+            return "/api/v2/clubs/\(clubId)"
         }
     }
     
     var method: Moya.Method {
         switch self {
         case .getOrganizations:
+            return .get
+        case .getCompany:
+            return .get
+        case .getClub:
             return .get
         }
     }
@@ -35,21 +45,27 @@ extension SponusAPI: TargetType {
         switch self {
         case .getOrganizations:
             return Data()
+        case .getCompany:
+            return Data()
+        case .getClub:
+            return Data()
         }
     }
     
     var task: Task {
         switch self {
-        case let .getOrganizations(page, size, organizationType):
+        case let .getOrganizations(organizationType):
             let param = [
-                "page": "\(page)",
-                "size": "\(size)",
                 "organizationType": organizationType
             ]
             return .requestParameters(
                 parameters: param,
                 encoding: URLEncoding.default
             )
+        case .getCompany:
+            return .requestPlain
+        case .getClub:
+            return .requestPlain
         }
     }
     
@@ -58,10 +74,18 @@ extension SponusAPI: TargetType {
     }
     
     var headers: [String : String]? {
+        
+        // TODO: 로그인 API 달리면 토큰 바꾸기
+        let auth = ["Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJzdHJpbmciLCJhdXRoIjoiQ0xVQiIsImlhdCI6MTcxOTQwMDk3NywiZXhwIjoxNzIwNDAwOTc3fQ.kTrXPR2ti5EAXKTEH9sbygESfRBIipe_jn3AYCO2Vzk"]
+        
         switch self {
-            // TODO: 로그인 API 달리면 토큰 바꾸기
         case .getOrganizations:
-            return ["Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJzdHJpbmciLCJhdXRoIjoiQ0xVQiIsImlhdCI6MTcxOTMwNTQ4NiwiZXhwIjoxNzIwMzA1NDg2fQ.C8YOjssU_KZHt0KdqfluhI2o-9IVLpEOEz18kKjIPZY"]
+            return auth
+        case .getCompany:
+            return auth
+        case .getClub:
+            return auth
         }
     }
 }
+
