@@ -28,6 +28,8 @@
 		DF40749C2C286FCC00321E05 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749B2C286FCC00321E05 /* ReactiveMoya */; };
 		DF40749E2C286FCC00321E05 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DF40749D2C286FCC00321E05 /* RxMoya */; };
 		DF4074A12C2A900A00321E05 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074A02C2A900A00321E05 /* Organization.swift */; };
+		DF4074A72C2AD9B300321E05 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074A62C2AD9B300321E05 /* Company.swift */; };
+		DF4074A92C2AE07400321E05 /* Club.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074A82C2AE07400321E05 /* Club.swift */; };
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
@@ -70,6 +72,8 @@
 		80CF29EB2C29B56F00CACA53 /* AuthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPlugin.swift; sourceTree = "<group>"; };
 		DF4074942C286FAF00321E05 /* SponusAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponusAPI.swift; sourceTree = "<group>"; };
 		DF4074A02C2A900A00321E05 /* Organization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
+		DF4074A62C2AD9B300321E05 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		DF4074A82C2AE07400321E05 /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
 		DFBE0B792BE601C500246814 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -178,6 +182,8 @@
 			isa = PBXGroup;
 			children = (
 				DF4074A02C2A900A00321E05 /* Organization.swift */,
+				DF4074A62C2AD9B300321E05 /* Company.swift */,
+				DF4074A82C2AE07400321E05 /* Club.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -438,6 +444,8 @@
 				DFBE0BE62BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift in Sources */,
 				DFBE0BB32BF315EC00246814 /* EnumManager.swift in Sources */,
 				DFBE0BAD2BF30CC500246814 /* CustomBackButton.swift in Sources */,
+				DF4074A72C2AD9B300321E05 /* Company.swift in Sources */,
+				DF4074A92C2AE07400321E05 /* Club.swift in Sources */,
 				DFBE0BDE2BF5B67D00246814 /* ClubProfileViewModel.swift in Sources */,
 				3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */,
 				DFBE0BE92BF70B8200246814 /* ClubCompletedModal.swift in Sources */,
@@ -594,8 +602,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -603,9 +611,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spon-us.Spon-Us";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -624,8 +636,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -633,9 +645,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.spon-us.Spon-Us";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

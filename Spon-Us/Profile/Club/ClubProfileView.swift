@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClubProfileView: View {
-    @State var clubProfileViewModel =  ClubProfileViewModel()
+    @State var clubProfileViewModel: ClubProfileViewModel
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -57,7 +57,7 @@ struct ClubProfileCardView: View {
                 .aspectRatio(contentMode: .fit)
             
             HStack(spacing: 0) {
-                Text(clubProfileViewModel.clubName)
+                Text(clubProfileViewModel.clubModel.name)
                     .korFont(.H3KrBd)
                     .padding(.top, 20)
                     .padding(.leading, 28)
@@ -102,7 +102,7 @@ struct ClubProfileCardView: View {
                             clubProfileViewModel.isBookmarked.toggle()
                         }
                     }
-                Text("\(clubProfileViewModel.clubMemberCount)명 활동 중")
+                Text("\(clubProfileViewModel.clubModel.memberCount)명 활동 중")
                     .korFont(.But1KrBd)
                     .padding(.vertical, 14)
                     .foregroundStyle(Color.textBrand)
@@ -134,9 +134,10 @@ struct ClubIntroductionView: View {
         }.padding(.leading, 4)
             .padding(.top, 40)
             .padding(.bottom, 12)
-        Text(clubProfileViewModel.clubIntroduction.forceCharWrapping)
+        Text(clubProfileViewModel.clubModel.description?.forceCharWrapping ?? "아직 소개가 입력되지 않았습니다")
             .korFont(.B2KrMd)
-            .foregroundStyle(Color.textPrimary)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .foregroundStyle(clubProfileViewModel.clubModel.description == nil ? Color.textDisabled : Color.textPrimary)
             .padding(20)
             .lineSpacing(3)
             .background(Color.bgWhite)
@@ -365,6 +366,6 @@ struct ClubProfileProposeButton: View {
     }
 }
 
-#Preview {
-    ClubProfileView()
-}
+//#Preview {
+//    ClubProfileView()
+//}

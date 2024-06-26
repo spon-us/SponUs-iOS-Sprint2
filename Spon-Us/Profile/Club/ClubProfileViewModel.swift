@@ -10,14 +10,17 @@ import SwiftUI
 
 @Observable
 final class ClubProfileViewModel {
+    var clubModel: ClubModel
+    
     var isSuggestModalPresented: Bool = false
-    var clubName: String = "스포너스기획동아리동아리스"
     var clubCategory: [ClubCategory] = [.planningAndIdeas, .iTAndSoftware, .photographyAndVideo]
     var isBookmarked: Bool = false
-    var clubMemberCount: Int = 342
-    var clubIntroduction: String = "안녕하세요 저희는 스포대학교 기획동아리 입니다. 안녕하세요 저희는 스포대학교 기획동아리 입니다.안녕하세요 저희는 스포대학교 기획동아리 입니다.안녕하세요 저희는 스포대학교 기획동아리 입니다.안녕하세요 저희는 스포대학교 기획동아리 입니다. 안녕하세요 저희는 스포대학교 기획동아리 입니다. 안녕하세요 저희는 스포대학교 기획동아리 입니다.안녕하세요 저희는 스포대학교 기획동아리 입니다.안녕하세요 저희는 스포대학교 기획동아리 입니다.안녕하세요 저희는 스포대학교 기획동아리 입니다. 안녕하세요 저희는 스포대학교 기획동아리 입니다.안녕하세요 저희는"
     var snsURL: [String] = ["https://www.instagram.com/sponus_official?igsh=aXZ4OG85cGcxcDQw", "https://www.facebook.com", "https://www.example.com"]
     var cardnewsDummyData = [PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel()]
+    
+    init(clubModel: ClubModel) {
+        self.clubModel = clubModel
+    }
     
     @ViewBuilder
     func snsViewBuilder(index: Int) -> some View {

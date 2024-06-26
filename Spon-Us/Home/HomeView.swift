@@ -13,18 +13,26 @@ struct HomeView: View {
     var body: some View {
         VStack(spacing: 0) {
             HomeStatusBarView(homeViewModel: homeViewModel)
-//            if homeViewModel.isPortfolioUploaded {
-//                HomeCardGuestView(homeViewModel: homeViewModel)
-//            }
+            
+            if homeViewModel.isPortfolioUploaded {
+                HomeCardGuestView(homeViewModel: homeViewModel)
+            }
             HomeSelectionTabView(homeViewModel: homeViewModel)
+            
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
+                
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
                 CompanyProfileView()
             }
             .navigationDestination(isPresented: $homeViewModel.goToClubProfileView) {
-                ClubProfileView()
+                ClubProfileView(
+                    clubProfileViewModel: ClubProfileViewModel(
+                        clubModel: homeViewModel.selectedClub
+                    )
+                )
+                
             }
     }
 }
@@ -38,7 +46,6 @@ struct HomeStatusBarView: View {
                 .padding([.top, .leading], 20)
             Spacer()
             Button {
-                homeViewModel.fetchOrganizations(type: .company)
                 // 알림 View로 이동
             } label: {
                 ZStack {
@@ -220,6 +227,7 @@ struct HomeCategorySelectionTab: View {
                         )
                         .onTapGesture {
                             withAnimation {
+                                homeViewModel.filterCompanies(category)
                                 homeViewModel.companyCategory = category
                             }
                         }
@@ -236,6 +244,7 @@ struct HomeCategorySelectionTab: View {
                         )
                         .onTapGesture {
                             withAnimation {
+                                homeViewModel.filterClubs(category)
                                 homeViewModel.clubCategory = category
                             }
                         }
@@ -306,6 +315,7 @@ struct HomeListCell: View {
     }
 }
 
+
 struct HomeListView: View {
     var homeViewModel: HomeViewModel
     
@@ -321,18 +331,26 @@ struct HomeListView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
                     if homeViewModel.companyClubSelection == .company {
-                        ForEach(homeViewModel.companies, id: \.id) { org in
+                        ForEach(homeViewModel.filteredCompanies, id: \.id) { org in
                             HomeListCell(organizationData: org)
                                 .onTapGesture {
-                                    homeViewModel.goToCompanyProfileView = true
+                                    homeViewModel.fetchCompany(companyId: org.id) { complete in
+                                        if complete {
+                                            homeViewModel.goToCompanyProfileView = true
+                                        }
+                                    }
                                 }
                         }
                     }
                     else {
-                        ForEach(homeViewModel.clubs, id: \.id) { org in
+                        ForEach(homeViewModel.filteredClubs, id: \.id) { org in
                             HomeListCell(organizationData: org)
                                 .onTapGesture {
-                                    homeViewModel.goToClubProfileView = true
+                                    homeViewModel.fetchClub(clubId: org.id) { complete in
+                                        if complete {
+                                            homeViewModel.goToClubProfileView = true
+                                        }
+                                    }
                                 }
                         }
                     }
