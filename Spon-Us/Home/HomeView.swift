@@ -320,6 +320,7 @@ struct HomeListView: View {
     var homeViewModel: HomeViewModel
     
     @State var scrollID: Int?
+    @State var topID: Int = 0
     
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
@@ -329,6 +330,7 @@ struct HomeListView: View {
     var body: some View {
         ZStack {
             ScrollView {
+                Text("").id(topID)
                 LazyVGrid(columns: columns, spacing: 16) {
                     if homeViewModel.companyClubSelection == .company {
                         ForEach(homeViewModel.filteredCompanies, id: \.id) { org in
@@ -355,17 +357,22 @@ struct HomeListView: View {
                         }
                     }
                 }.scrollTargetLayout()
+                    .onChange(of: scrollID) { oldValue, newValue in
+                        if oldValue == nil {
+                            topID = newValue ?? 0
+                        }
+                    }
             }.scrollIndicators(.hidden)
                 .scrollPosition(id: $scrollID)
             
-            if scrollID != nil && scrollID != 1 {
+            if scrollID != nil && scrollID != topID {
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 0) {
                         Spacer()
                         Button {
                             withAnimation {
-                                scrollID = 1
+                                scrollID = topID
                             }
                         } label: {
                             Image(.arrowUp5)
