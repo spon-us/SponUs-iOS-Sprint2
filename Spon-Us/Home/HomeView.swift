@@ -23,6 +23,18 @@ struct HomeView: View {
                 
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
+            .onAppear() {
+                homeViewModel.fetchOrganizations(type: .company) { success in
+                    if success {
+                        homeViewModel.filterCompanies(.all)
+                    }
+                }
+                homeViewModel.fetchOrganizations(type: .club) { success in
+                    if success {
+                        homeViewModel.filterClubs(.all)
+                    }
+                }
+            }
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
                 CompanyProfileView()
             }
@@ -147,8 +159,12 @@ struct HomeSelectionTabView: View {
                 .foregroundStyle(homeViewModel.companyClubSelection == .company ? Color.textPrimary : Color.textDisabled)
                 .padding(.leading, 24)
                 .onTapGesture {
-                    homeViewModel.fetchOrganizations(type: .company)
                     withAnimation {
+                        homeViewModel.fetchOrganizations(type: .company) { success in
+                            if success {
+                                homeViewModel.filterCompanies(homeViewModel.companyCategory)
+                            }
+                        }
                         homeViewModel.companyClubSelection = .company
                     }
                 }
@@ -157,8 +173,12 @@ struct HomeSelectionTabView: View {
                 .foregroundStyle(homeViewModel.companyClubSelection == .club ? Color.textPrimary : Color.textDisabled)
                 .padding(.leading, 16)
                 .onTapGesture {
-                    homeViewModel.fetchOrganizations(type: .club)
                     withAnimation {
+                        homeViewModel.fetchOrganizations(type: .club) { success in
+                            if success {
+                                homeViewModel.filterClubs(homeViewModel.clubCategory)
+                            }
+                        }
                         homeViewModel.companyClubSelection = .club
                     }
                 }
@@ -216,7 +236,8 @@ struct HomeCategorySelectionTab: View {
     var body: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 0) {
-                if homeViewModel.companyClubSelection == .company {
+                switch homeViewModel.companyClubSelection {
+                case .company:
                     ForEach(CompanyCategory.allCases, id: \.self) { category in
                         HomeCategorySelectionCell(
                             homeViewModel: homeViewModel,
@@ -232,8 +253,7 @@ struct HomeCategorySelectionTab: View {
                             }
                         }
                     }
-                }
-                else {
+                case .club:
                     ForEach(ClubCategory.allCases, id: \.self) { category in
                         HomeCategorySelectionCell(
                             homeViewModel: homeViewModel,
@@ -257,7 +277,7 @@ struct HomeCategorySelectionTab: View {
 }
 
 struct HomeListCell: View {
-    var organizationData: OrganizationModel
+    @State var organizationData: OrganizationModel
     var body: some View {
         
         VStack(spacing: 0) {
@@ -273,12 +293,11 @@ struct HomeListCell: View {
                             .padding(.top, 12)
                             .padding(.trailing, 12)
                             .foregroundStyle(
-                                //                                homeListCellViewModel.isBookmarked ? Color.textBrand :  Color.textSecondary
-                                Color.textSecondary
+                                organizationData.isBookmarked ? Color.textBrand : Color.textSecondary
                             )
                             .onTapGesture {
                                 withAnimation {
-                                    //                                    homeListCellViewModel.isBookmarked.toggle()
+                                    organizationData.isBookmarked.toggle()
                                 }
                             }
                     }
