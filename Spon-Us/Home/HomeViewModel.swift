@@ -33,6 +33,7 @@ final class HomeViewModel {
         collaborationType: "",
         sponsorshipContent: ""
     )
+    
     var selectedClub: ClubModel = .init(
         id: 0,
         name: "",
@@ -57,7 +58,7 @@ final class HomeViewModel {
     var goToCompanyProfileView = false
     var goToClubProfileView = false
     
-    func fetchOrganizations(type: CompanyClubSelection) {
+    func fetchOrganizations(type: CompanyClubSelection, completion: @escaping (Bool) -> Void) {
         provider.request(.getOrganizations(organizationType: type.rawValue)) { response in
             switch response {
             case .success(let result):
@@ -66,17 +67,18 @@ final class HomeViewModel {
                     switch type {
                     case .company:
                         self.companies = orgResponse.content.content
-                        self.filteredCompanies = self.companies
                     case .club:
                         self.clubs = orgResponse.content.content
-                        self.filteredClubs = self.clubs
                     }
+                    completion(true)
                 } catch {
                     print("fetch org decode error", error.localizedDescription)
+                    completion(false)
                 }
                 
             case .failure(let err):
                 print("getOrg API error", err.localizedDescription)
+                completion(false)
             }
         }
     }
@@ -86,6 +88,7 @@ final class HomeViewModel {
             switch response {
             case .success(let response):
                 do {
+                    print(response.data)
                     let companyResponse = try JSONDecoder().decode(CompanyResponseModel.self, from: response.data)
                     self.selectedCompany = companyResponse.content
                     completion(true)
@@ -126,8 +129,7 @@ final class HomeViewModel {
         case .beauty:
             filteredCompanies = companies.filter { $0.subType == "BEAUTY" }
         case .education:
-            // TODO: API EDUCATION 추가시 수정
-            filteredCompanies = companies.filter { $0.subType == "ETC" }
+            filteredCompanies = companies.filter { $0.subType == "EDUCATION" }
         case .food:
             filteredCompanies = companies.filter { $0.subType == "FOOD" }
         case .health:
