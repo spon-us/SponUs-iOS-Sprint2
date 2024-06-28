@@ -76,7 +76,7 @@ extension SponusAPI: TargetType {
     var headers: [String : String]? {
         
         // TODO: 로그인 API 달리면 토큰 바꾸기
-        let auth = ["Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxNiIsImVtYWlsIjoiMDB5aHNwQG5hdmVyLmNvbSIsImF1dGgiOiJDTFVCIiwiaWF0IjoxNzE5NTUzNzc4LCJleHAiOjE3MjA1NTM3Nzh9.v6uZIWH0nwqdubTCKrplFsesxTin1SG_3yFxPgzB7oI"]
+        let auth = ["Authorization": "Bearer "]
         
         switch self {
         case .getOrganizations:
