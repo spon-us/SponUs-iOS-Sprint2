@@ -51,6 +51,10 @@ final class HomeViewModel {
     
     var isLoaded = false
     var unreadNotificationsExist = false
+    
+    var scrollID: Int?
+    var topID: Int = -1
+    
     var isPortfolioUploaded = true
     var companyClubSelection = CompanyClubSelection.company
     var companyCategory = CompanyCategory.all
@@ -158,5 +162,9 @@ final class HomeViewModel {
         case .others:
             filteredClubs = clubs.filter { $0.subType == "ETC" }
         }
+    }
+    
+    func scrollIdToTop() {
+        scrollID = topID
     }
 }

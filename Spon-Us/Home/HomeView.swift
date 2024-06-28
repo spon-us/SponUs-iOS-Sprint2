@@ -166,6 +166,7 @@ struct HomeSelectionTabView: View {
                             }
                         }
                         homeViewModel.companyClubSelection = .company
+                        homeViewModel.scrollIdToTop()
                     }
                 }
             Text("동아리")
@@ -180,6 +181,7 @@ struct HomeSelectionTabView: View {
                             }
                         }
                         homeViewModel.companyClubSelection = .club
+                        homeViewModel.scrollIdToTop()
                     }
                 }
             Spacer()
@@ -250,6 +252,7 @@ struct HomeCategorySelectionTab: View {
                             withAnimation {
                                 homeViewModel.filterCompanies(category)
                                 homeViewModel.companyCategory = category
+                                homeViewModel.scrollIdToTop()
                             }
                         }
                     }
@@ -266,6 +269,7 @@ struct HomeCategorySelectionTab: View {
                             withAnimation {
                                 homeViewModel.filterClubs(category)
                                 homeViewModel.clubCategory = category
+                                homeViewModel.scrollIdToTop()
                             }
                         }
                     }
@@ -336,10 +340,7 @@ struct HomeListCell: View {
 
 
 struct HomeListView: View {
-    var homeViewModel: HomeViewModel
-    
-    @State var scrollID: Int?
-    @State var topID: Int = 0
+    @Bindable var homeViewModel: HomeViewModel
     
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
@@ -349,7 +350,7 @@ struct HomeListView: View {
     var body: some View {
         ZStack {
             ScrollView {
-                Text("").id(topID)
+                EmptyView().id(homeViewModel.topID)
                 LazyVGrid(columns: columns, spacing: 16) {
                     if homeViewModel.companyClubSelection == .company {
                         ForEach(homeViewModel.filteredCompanies, id: \.id) { org in
@@ -376,22 +377,22 @@ struct HomeListView: View {
                         }
                     }
                 }.scrollTargetLayout()
-                    .onChange(of: scrollID) { oldValue, newValue in
+                    .onChange(of: homeViewModel.scrollID) { oldValue, newValue in
                         if oldValue == nil {
-                            topID = newValue ?? 0
+                            homeViewModel.topID = newValue ?? 0
                         }
                     }
             }.scrollIndicators(.hidden)
-                .scrollPosition(id: $scrollID)
+                .scrollPosition(id: $homeViewModel.scrollID)
             
-            if scrollID != nil && scrollID != topID {
+            if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 0) {
                         Spacer()
                         Button {
                             withAnimation {
-                                scrollID = topID
+                                homeViewModel.scrollIdToTop()
                             }
                         } label: {
                             Image(.arrowUp5)
