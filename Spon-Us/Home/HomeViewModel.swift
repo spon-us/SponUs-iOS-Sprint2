@@ -92,7 +92,6 @@ final class HomeViewModel {
             switch response {
             case .success(let response):
                 do {
-                    print(response.data)
                     let companyResponse = try JSONDecoder().decode(CompanyResponseModel.self, from: response.data)
                     self.selectedCompany = companyResponse.content
                     completion(true)

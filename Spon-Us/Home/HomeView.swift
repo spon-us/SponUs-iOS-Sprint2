@@ -36,7 +36,11 @@ struct HomeView: View {
                 }
             }
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
-                CompanyProfileView()
+                CompanyProfileView(
+                    companyProfileViewModel: CompanyProfileViewModel(
+                        companyModel: homeViewModel.selectedCompany
+                    )
+                )
             }
             .navigationDestination(isPresented: $homeViewModel.goToClubProfileView) {
                 ClubProfileView(

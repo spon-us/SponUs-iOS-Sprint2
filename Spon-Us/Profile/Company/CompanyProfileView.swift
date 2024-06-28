@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CompanyProfileView: View {
-    @State var companyProfileViewModel = CompanyProfileViewModel()
+    @State var companyProfileViewModel: CompanyProfileViewModel
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -49,7 +49,7 @@ struct CompanyProfileCardView: View {
                 .aspectRatio(contentMode: .fit)
             
             HStack(spacing: 0) {
-                Text(companyProfileViewModel.companyName)
+                Text(companyProfileViewModel.companyModel.name)
                     .korFont(.H3KrBd)
                     .padding(.top, 20)
                     .padding(.leading, 28)
@@ -186,6 +186,3 @@ struct CompanyProfileCardView: View {
     }
 }
 
-#Preview {
-    CompanyProfileView()
-}
