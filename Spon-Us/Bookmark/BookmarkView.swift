@@ -7,53 +7,66 @@
 
 import SwiftUI
 
+enum BookmarkSelection {
+    case recent
+    case company
+    case club
+}
+
 struct BookmarkView: View {
-    @State private var isRecentSelected: Bool = true
-    @State private var isCompanySelected: Bool = false
-    @State private var isClubSelected: Bool = false
+    @State private var selectedBookmark: BookmarkSelection = .recent
     
-    @State var homeViewModel = HomeViewModel()
+    var bookmarkViewModel = BookmarkListViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
                 Button(action: {
-                    isRecentSelected = true
-                    isCompanySelected = false
-                    isClubSelected = false
+                    selectedBookmark = .recent
+                    bookmarkViewModel.fetchBookmarks(sort: .recent) { success in
+                        if !success {
+                            print("Failed to fetch recent bookmarks")
+                        }
+                    }
                 }, label: {
                     Text("최근 본")
                         .korFont(.T4KrBd)
-                        .foregroundStyle(isRecentSelected ? Color.textPrimary : Color.textDisabled)
+                        .foregroundStyle(selectedBookmark == .recent ? Color.textPrimary : Color.textDisabled)
                         .frame(width: 103, height: 40)
                 })
-                .background(isRecentSelected ? Color.bgWhite : Color.clear)
+                .background(selectedBookmark == .recent ? Color.bgWhite : Color.clear)
                 .cornerRadius(12)
                 
                 Button(action: {
-                    isRecentSelected = false
-                    isCompanySelected = true
-                    isClubSelected = false
+                    selectedBookmark = .company
+                    bookmarkViewModel.fetchBookmarks(sort: .company) { success in
+                        if !success {
+                            print("Failed to fetch company bookmarks")
+                        }
+                    }
                 }, label: {
                     Text("기업")
                         .korFont(.T4KrBd)
-                        .foregroundStyle(isCompanySelected ? Color.textPrimary : Color.textDisabled)
+                        .foregroundStyle(selectedBookmark == .company ? Color.textPrimary : Color.textDisabled)
                         .frame(width: 103, height: 40)
                 })
-                .background(isCompanySelected ? Color.bgWhite : Color.clear)
+                .background(selectedBookmark == .company ? Color.bgWhite : Color.clear)
                 .cornerRadius(12)
                 
                 Button(action: {
-                    isRecentSelected = false
-                    isCompanySelected = false
-                    isClubSelected = true
+                    selectedBookmark = .club
+                    bookmarkViewModel.fetchBookmarks(sort: .club) { success in
+                        if !success {
+                            print("Failed to fetch club bookmarks")
+                        }
+                    }
                 }, label: {
                     Text("동아리")
                         .korFont(.T4KrBd)
-                        .foregroundStyle(isClubSelected ? Color.textPrimary : Color.textDisabled)
+                        .foregroundStyle(selectedBookmark == .club ? Color.textPrimary : Color.textDisabled)
                         .frame(width: 103, height: 40)
                 })
-                .background(isClubSelected ? Color.bgWhite : Color.clear)
+                .background(selectedBookmark == .club ? Color.bgWhite : Color.clear)
                 .cornerRadius(12)
             }
             .padding(.horizontal, 12)
@@ -63,17 +76,24 @@ struct BookmarkView: View {
             .cornerRadius(20)
             .padding(.all, 20)
             
-            BookmarkListView(homeViewModel: homeViewModel)
-                .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
-                    CompanyProfileView()
-                }
+            BookmarkListView(bookmarkViewModel: bookmarkViewModel)
+//                .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
+//                    CompanyProfileView()
+//                }
         }
         .background(Color.bgSecondary)
+        .onAppear {
+            bookmarkViewModel.fetchBookmarks(sort: .recent) { success in
+                if !success {
+                    print("Failed to fetch recent bookmarks")
+                }
+            }
+        }
     }
 }
 
 struct BookmarkListView: View {
-    var homeViewModel: HomeViewModel
+    var bookmarkViewModel: BookmarkListViewModel
     
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 8)
@@ -82,11 +102,8 @@ struct BookmarkListView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(1..<10) { index in
-                    BookmarkListCell(bookmarkListCellViewModel: BookmarkListCellViewModel(companyName: "무신사", imageURL: ""))
-                        .onTapGesture {
-                            homeViewModel.goToCompanyProfileView = true
-                        }
+                ForEach(bookmarkViewModel.bookmarkList) { cellViewModel in
+                    BookmarkListCell(bookmarkListCellViewModel: cellViewModel)
                 }
             }
         }
@@ -101,15 +118,27 @@ struct BookmarkListCell: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Image(.rectangle1363)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 44, height: 44)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle()
-                            .stroke(Color.line200, lineWidth: 1)
-                    )
+                if let imageURL = bookmarkListCellViewModel.imageURL, !imageURL.isEmpty {
+                    Image(uiImage: loadImage(from: imageURL))
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 44, height: 44)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Color.line200, lineWidth: 1)
+                        )
+                } else {
+                    Image("sponus")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 44, height: 44)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Color.line200, lineWidth: 1)
+                        )
+                }
                 
                 Text(bookmarkListCellViewModel.companyName)
                     .korFont(.T4KrBd)
@@ -138,8 +167,16 @@ struct BookmarkListCell: View {
                 .stroke(Color.line200, lineWidth: 1)
         )
     }
+    
+    func loadImage(from urlString: String) -> UIImage {
+        guard let url = URL(string: urlString),
+              let data = try? Data(contentsOf: url),
+              let image = UIImage(data: data) else {
+            return UIImage(named: "sponus")!
+        }
+        return image
+    }
 }
-
 
 #Preview {
     BookmarkView()
