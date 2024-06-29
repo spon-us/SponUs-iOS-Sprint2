@@ -10,10 +10,11 @@ import SwiftUI
 struct SearchView: View {
     @State private var searchData: String = ""
     @State private var recentSearches: [String] = ["무신사", "코카콜라", "해커스", "스포너스"]
+    var searchViewModel = SearchViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
-            SearchBarView(searchData: $searchData, recentSearches: $recentSearches)
+            SearchBarView(searchData: $searchData, recentSearches: $recentSearches, searchViewModel: searchViewModel)
             
             VStack(spacing: 0) {
                 if recentSearches.isEmpty {
@@ -79,12 +80,32 @@ struct SearchView: View {
             .padding(.leading, 20)
         }
         .background(Color.bgSecondary)
+//        .onChange(of: searchData) { newValue in
+//            performSearch()
+//        }
     }
 }
+
 
 struct SearchBarView: View {
     @Binding var searchData: String
     @Binding var recentSearches: [String]
+    var searchViewModel: SearchViewModel
+    
+    private func performSearch() {
+//        guard !searchData.isEmpty else {
+//            searchResults.removeAll()
+//            return
+//        }
+        
+        searchViewModel.fetchSearch(keyword: searchData) { success in
+            if success {
+                print("검색 성공")
+            } else {
+                print("Failed to search organizations")
+            }
+        }
+    }
     
     var body: some View {
         HStack {
@@ -94,6 +115,7 @@ struct SearchBarView: View {
             
             TextField("협업할 기업 혹은 동아리를 검색해 보세요.", text: $searchData, onCommit: {
                 if !searchData.isEmpty {
+                    performSearch()
                     // 동일한 검색어가 입력될 때 해당 검색어가 맨 앞에 오도록 순서 변경
                     if let index = recentSearches.firstIndex(of: searchData) {
                         recentSearches.remove(at: index)
