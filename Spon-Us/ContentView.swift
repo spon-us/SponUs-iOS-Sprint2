@@ -43,7 +43,7 @@ struct ContentView: View {
                     }
                     .tag(2)
                 MyPageView()
-                    .environmentObject(NavigationPathFinder.shared)
+                    .environmentObject(MypageNavigationPathFinder.shared)
                     .tabItem {
                         VStack {
                             Image(.icMy)
@@ -74,4 +74,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(MypageNavigationPathFinder.shared)
 }

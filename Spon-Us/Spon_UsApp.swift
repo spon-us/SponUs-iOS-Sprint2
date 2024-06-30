@@ -13,7 +13,8 @@ import UIKit
 struct Spon_UsApp: App {
     var body: some Scene {
         WindowGroup {
-            WriteProfileView()
+            MyPageView()
+                .environmentObject(MypageNavigationPathFinder.shared)
         }
     }
 }

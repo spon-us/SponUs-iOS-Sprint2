@@ -30,16 +30,16 @@ enum MyPageRoute: String, Hashable {
         case .termsOfUse:
             Text("이용약관")
         case .writeProfile:
-            WriteProfileView()
+            WriteClubProfileView()
         case .writePortfolio:
-            WritePortfolioView()
+            WriteClubPortfolioView()
         }
     }
     
 }
 
-final class NavigationPathFinder: ObservableObject {
-    static let shared = NavigationPathFinder()
+final class MypageNavigationPathFinder: ObservableObject {
+    static let shared = MypageNavigationPathFinder()
     private init() { }
     
     @Published var path: [MyPageRoute] = []
@@ -55,7 +55,7 @@ final class NavigationPathFinder: ObservableObject {
 
 struct MyPageView: View {
     
-    @EnvironmentObject var navPathFinder: NavigationPathFinder
+    @EnvironmentObject var navPathFinder: MypageNavigationPathFinder
     
     var body: some View {
         NavigationStack(path: $navPathFinder.path) {
@@ -188,7 +188,7 @@ struct MyPageCell: View {
     
     var image: String
     var title: MyPageRoute
-    @EnvironmentObject var navPathFinder: NavigationPathFinder
+    @EnvironmentObject var navPathFinder: MypageNavigationPathFinder
     
     var body: some View {
         
@@ -233,5 +233,5 @@ struct MyPageCell: View {
 
 #Preview {
     MyPageView()
-        .environmentObject(NavigationPathFinder.shared)
+        .environmentObject(MypageNavigationPathFinder.shared)
 }

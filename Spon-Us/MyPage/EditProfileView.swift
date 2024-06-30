@@ -10,7 +10,7 @@ import SwiftUI
 struct EditProfileView: View {
     
     @State private var selectedSection = ""
-    @EnvironmentObject var navPathFinder: NavigationPathFinder
+    @EnvironmentObject var navPathFinder: MypageNavigationPathFinder
     
     var body: some View {
         VStack(spacing: 0) {
@@ -54,6 +54,14 @@ struct EditProfileView: View {
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                HStack(spacing: 0) {
+                    CustomBackButton()
+                }
+            }
+        }
     }
 }
 
@@ -78,11 +86,11 @@ struct ProfileSectionCell: View {
                 ZStack {
                     
                     Image(imageName)
-                        .resizable()  // 이미지가 조절 가능하도록 함
+                        .resizable()
                         .renderingMode(.template)
                         .foregroundStyle(Color.textBrand)
-                        .aspectRatio(contentMode: .fit)  // 비율을 유지하면서 맞춤
-                        .frame(width: 40)  // 원하는 크기로 프레임 설정
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 40)
                         .zIndex(1)
                     
                     Circle()
@@ -116,37 +124,20 @@ struct ProfileSectionCell: View {
                     }
                     RoundedRectangle(cornerRadius: 16)
                         .inset(by: selectedSection == section ? 1 : 0.5)
-                    .stroke(selectedSection == section ? Color.textBrand : Color.line200, lineWidth: 2)
+                        .stroke(selectedSection == section ? Color.textBrand : Color.line200, lineWidth: 2)
                 }
             )
         })
     }
 }
 
-struct SponusButtonLabel: View {
-    
-    var text: String
-    var disabledCondition: Bool
-    
-    var body: some View {
-        Text(text)
-            .font(.But1KrBd)
-            .foregroundStyle(disabledCondition ? Color.textDisabled : Color.textWhite)
-          .frame(maxWidth: .infinity)
-          .padding(.vertical, 16)
-          .background(
-            RoundedRectangle(cornerRadius: 20)
-                .inset(by: disabledCondition ? 0.5 : 0)
-                .fill(disabledCondition ? Color.line100 : Color.textBrand)
-                .stroke(disabledCondition ? Color.line200 : Color.clear, lineWidth: 1)
 
-
-          )
-    }
-}
 
 
 
 #Preview {
     EditProfileView()
 }
+
+
+

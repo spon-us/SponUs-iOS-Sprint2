@@ -12,7 +12,7 @@ import PhotosUI
 protocol TabItem: CaseIterable, Hashable, Identifiable, RawRepresentable where RawValue == String {}
 
 // Enum for WritePortfolioTab
-enum WritePortfolioTab: String, CaseIterable, Identifiable, TabItem {
+enum WriteClubPortfolioTab: String, CaseIterable, Identifiable, TabItem {
     case projectName = "프로젝트명"
     case activityDetail = "활동 내용"
     case date = "날짜"
@@ -21,46 +21,12 @@ enum WritePortfolioTab: String, CaseIterable, Identifiable, TabItem {
     var id: String { self.rawValue }
 }
 
-// Generic WriteProfileTopTabBar
-struct SponusTopTabBar<T: TabItem>: View {
-    
-    @Binding var selectedPage: T
-    
-    var body: some View {
-        ScrollView(.horizontal) {
-            HStack(spacing: 4) {
-                
-                ForEach(Array(T.allCases), id: \.self) { category in
-                    
-                    Text(category.rawValue)
-                        .font(.B1KrMd)
-                        .foregroundColor(category.rawValue == selectedPage.rawValue ? Color.textBrand : Color.textDisabled)
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 999)
-                                .inset(by: 0.5)
-                                .fill(Color.bgWhite)
-                                .stroke(category.rawValue == selectedPage.rawValue ? Color.textBrand : Color.line200, lineWidth: 1)
-                        )
-                        .onTapGesture {
-                            selectedPage = category
-                        }
-                    
-                }
-                
-            }
-            .padding(.leading, 20)
-            .padding(.vertical, 1)
-        }
-        .scrollIndicators(.hidden)
-    }
-}
+
 
 // WritePortfolioView using generic WriteProfileTopTabBar
-struct WritePortfolioView: View {
+struct WriteClubPortfolioView: View {
     
-    @State private var selectedPage: WritePortfolioTab = .multiImage
+    @State private var selectedPage: WriteClubPortfolioTab = .projectName
     
     var body: some View {
         
@@ -71,25 +37,38 @@ struct WritePortfolioView: View {
             VStack(spacing: 0) {
                 
                 SponusTopTabBar(selectedPage: $selectedPage)
-                    .background(Color.bgSecondary)
                 
                 TabView(selection: $selectedPage) {
                     
                     ProjectNameTabView(selectedPage: $selectedPage)
-                        .tag(WritePortfolioTab.projectName)
+                        .tag(WriteClubPortfolioTab.projectName)
                     
                     ActivityDetailTabView(selectedPage: $selectedPage)
-                        .tag(WritePortfolioTab.activityDetail)
+                        .tag(WriteClubPortfolioTab.activityDetail)
                     
                     DateTabView(selectedPage: $selectedPage)
-                        .tag(WritePortfolioTab.date)
+                        .tag(WriteClubPortfolioTab.date)
                     
                     MultiImageTabView(selectedPage: $selectedPage)
-                        .tag(WritePortfolioTab.multiImage)
+                        .tag(WriteClubPortfolioTab.multiImage)
                     
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
+            }
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                HStack(spacing: 0) {
+                    CustomBackButton()
+                    
+                    Button(action: {
+                        
+                    }, label: {
+                        Text("버튼")
+                    })
+                }
             }
         }
         
@@ -101,7 +80,7 @@ struct ProjectNameTabView: View {
     @State var text = ""
     var limitTextCount = 18
     
-    @Binding var selectedPage: WritePortfolioTab
+    @Binding var selectedPage: WriteClubPortfolioTab
     
     var body: some View {
         VStack(spacing: 0) {
@@ -147,7 +126,7 @@ struct ActivityDetailTabView: View {
     @State var text = ""
     var limitTextCount = 48
     
-    @Binding var selectedPage: WritePortfolioTab
+    @Binding var selectedPage: WriteClubPortfolioTab
     
     var body: some View {
         VStack(spacing: 0) {
@@ -209,7 +188,7 @@ struct DateTabView: View {
     @State var text = ""
     var limitTextCount = 48
     
-    @Binding var selectedPage: WritePortfolioTab
+    @Binding var selectedPage: WriteClubPortfolioTab
     
     var body: some View {
         VStack(spacing: 0) {
@@ -255,7 +234,7 @@ struct MultiImageTabView: View {
     @State var text = ""
     var limitTextCount = 48
     
-    @Binding var selectedPage: WritePortfolioTab
+    @Binding var selectedPage: WriteClubPortfolioTab
     
     @State private var selectedImages: [UIImage] = []
     
@@ -302,152 +281,10 @@ struct MultiImageTabView: View {
     }
 }
 
-struct MultipleImagePicker: View {
-//    @State private var selectedImages: [UIImage] = []
-    @Binding var selectedImages: [UIImage]
-    @State private var isImagePickerPresented = false
-    
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                ForEach(selectedImages, id: \.self) { image in
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 106, height: 106)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                }
-                
-                Button(action: {
-                    isImagePickerPresented.toggle()
-                }, label: {
-                    Image("icCancel")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 36)
-                        .rotationEffect(.degrees(45))
-                        .padding(.all, 35)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .inset(by: 0.5)
-                                .fill(Color.bgWhite)
-                                .stroke(Color.line200, lineWidth: 1)
-
-                        )
-                    
-                }).sheet(isPresented: $isImagePickerPresented) {
-                    ImagePickerView(selectedImages: $selectedImages, selectedImageCount: .multi)
-                }
-                
-            }
-            .padding(.horizontal, 20)
-        }
-    }
-}
-
-struct ImagePickerView: UIViewControllerRepresentable {
-    
-    enum SelectedImageCount {
-        case single
-        case multi
-    }
-    
-    
-    @Binding var selectedImages: [UIImage]
-    var selectedImageCount: SelectedImageCount
-    
-    func makeUIViewController(context: Context) -> PHPickerViewController {
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .images
-        configuration.selectionLimit = selectedImageCount == .single ? 1 : 0 // Set to 0 for multiple selections
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = context.coordinator
-        return picker
-    }
-    
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: PHPickerViewControllerDelegate {
-        private let parent: ImagePickerView
-        
-        init(_ parent: ImagePickerView) {
-            self.parent = parent
-        }
-        
-        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            parent.selectedImages.removeAll()
-            
-            for result in results {
-                if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                    result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                        if let error = error {
-                            print("Error loading image: \(error.localizedDescription)")
-                        } else if let image = image as? UIImage {
-                            DispatchQueue.main.async {
-                                self.parent.selectedImages.append(image)
-                            }
-                        }
-                    }
-                }
-            }
-            picker.dismiss(animated: true)
-        }
-    }
-}
-
-struct SingleImagePickerView: UIViewControllerRepresentable {
-    @Binding var selectedImage: UIImage?
-    
-    func makeUIViewController(context: Context) -> PHPickerViewController {
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .images
-        configuration.selectionLimit = 1 // Limit selection to 1 image
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = context.coordinator
-        return picker
-    }
-    
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: PHPickerViewControllerDelegate {
-        private let parent: SingleImagePickerView
-        
-        init(_ parent: SingleImagePickerView) {
-            self.parent = parent
-        }
-        
-        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            if let result = results.first {
-                if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                    result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                        if let error = error {
-                            print("Error loading image: \(error.localizedDescription)")
-                        } else if let image = image as? UIImage {
-                            DispatchQueue.main.async {
-                                self.parent.selectedImage = image
-                            }
-                        }
-                    }
-                }
-            }
-            picker.dismiss(animated: true)
-        }
-    }
-}
 
 
 
 #Preview {
-    WritePortfolioView()
+    WriteClubPortfolioView()
 }
 
