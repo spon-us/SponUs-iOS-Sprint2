@@ -52,8 +52,18 @@ struct SearchView: View {
                                         }
                                     
                                     Button(action: {
-                                        if let index = recentSearches.firstIndex(of: search) {
-                                            recentSearches.remove(at: index)
+                                        searchViewModel.deleteKeyword(keyword: search) { success in
+                                            if success {
+                                                searchViewModel.fetchKeyword { success in
+                                                    if success {
+                                                        recentSearches = searchViewModel.recentSearches
+                                                    } else {
+                                                        print("검색 기록 조회 실패")
+                                                    }
+                                                }
+                                            } else {
+                                                print("검색어 개별 삭제 실패")
+                                            }
                                         }
                                     }, label: {
                                         Image(.icDelete)

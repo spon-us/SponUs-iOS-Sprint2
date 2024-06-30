@@ -16,6 +16,7 @@ enum SponusAPI {
     case getSearch(keyword: String)
     case getKeyword
     case postKeyword(keyword: String)
+    case deleteKeyword(keyword: String)
 }
 
 extension SponusAPI: TargetType {
@@ -39,6 +40,8 @@ extension SponusAPI: TargetType {
             return "/api/v2/organizations/search/keywords"
         case .postKeyword:
             return "/api/v2/organizations/search/keywords"
+        case .deleteKeyword:
+            return "/api/v2/organizations/search/keywords"
         }
     }
     
@@ -58,6 +61,8 @@ extension SponusAPI: TargetType {
             return .get
         case .postKeyword:
             return .post
+        case .deleteKeyword:
+            return .delete
         }
     }
     
@@ -76,6 +81,8 @@ extension SponusAPI: TargetType {
         case .getKeyword:
             return Data()
         case .postKeyword:
+            return Data()
+        case .deleteKeyword:
             return Data()
         }
     }
@@ -101,6 +108,8 @@ extension SponusAPI: TargetType {
         case .getKeyword:
             return .requestPlain
         case let .postKeyword(keyword):
+            return .requestParameters(parameters: ["keyword": keyword], encoding: JSONEncoding.default)
+        case let .deleteKeyword(keyword):
             return .requestParameters(parameters: ["keyword": keyword], encoding: JSONEncoding.default)
         }
     }
@@ -128,6 +137,8 @@ extension SponusAPI: TargetType {
         case .getKeyword:
             return auth
         case .postKeyword:
+            return auth
+        case .deleteKeyword:
             return auth
         }
     }
