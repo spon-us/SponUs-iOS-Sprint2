@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1E5498892C2903310008C10A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E5498882C2903310008C10A /* SearchView.swift */; };
+		1E7D55792C2DB822007A6254 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7D55782C2DB822007A6254 /* Bookmark.swift */; };
+		1E97271E2C2FE10400252CA6 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E97271D2C2FE10400252CA6 /* Search.swift */; };
+		1E9727202C2FE1CE00252CA6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E97271F2C2FE1CE00252CA6 /* SearchViewModel.swift */; };
+		1E9727222C2FFD9100252CA6 /* Keyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9727212C2FFD9100252CA6 /* Keyword.swift */; };
+		1E9727242C3134AC00252CA6 /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9727232C3134AC00252CA6 /* HideKeyboardExtension.swift */; };
 		1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD672BF6251C00E333AD /* BookmarkView.swift */; };
 		1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */; };
 		3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B74D7782BF9E6A600B3B750 /* MyPageView.swift */; };
@@ -60,6 +65,11 @@
 
 /* Begin PBXFileReference section */
 		1E5498882C2903310008C10A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		1E7D55782C2DB822007A6254 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
+		1E97271D2C2FE10400252CA6 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		1E97271F2C2FE1CE00252CA6 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		1E9727212C2FFD9100252CA6 /* Keyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyword.swift; sourceTree = "<group>"; };
+		1E9727232C3134AC00252CA6 /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 		1EFADD672BF6251C00E333AD /* BookmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
 		1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		3B74D7782BF9E6A600B3B750 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -127,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				1E5498882C2903310008C10A /* SearchView.swift */,
+				1E97271F2C2FE1CE00252CA6 /* SearchViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -184,6 +195,9 @@
 				DF4074A02C2A900A00321E05 /* Organization.swift */,
 				DF4074A62C2AD9B300321E05 /* Company.swift */,
 				DF4074A82C2AE07400321E05 /* Club.swift */,
+				1E7D55782C2DB822007A6254 /* Bookmark.swift */,
+				1E97271D2C2FE10400252CA6 /* Search.swift */,
+				1E9727212C2FFD9100252CA6 /* Keyword.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -318,6 +332,7 @@
 			isa = PBXGroup;
 			children = (
 				DFBE0BE22BF630F300246814 /* CharWrappingExtension.swift */,
+				1E9727232C3134AC00252CA6 /* HideKeyboardExtension.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -444,10 +459,13 @@
 				DFBE0BE62BF6ED0800246814 /* PortfolioCardNewsDummyModel.swift in Sources */,
 				DFBE0BB32BF315EC00246814 /* EnumManager.swift in Sources */,
 				DFBE0BAD2BF30CC500246814 /* CustomBackButton.swift in Sources */,
+				1E9727202C2FE1CE00252CA6 /* SearchViewModel.swift in Sources */,
 				DF4074A72C2AD9B300321E05 /* Company.swift in Sources */,
 				DF4074A92C2AE07400321E05 /* Club.swift in Sources */,
+				1E9727222C2FFD9100252CA6 /* Keyword.swift in Sources */,
 				DFBE0BDE2BF5B67D00246814 /* ClubProfileViewModel.swift in Sources */,
 				3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */,
+				1E7D55792C2DB822007A6254 /* Bookmark.swift in Sources */,
 				DFBE0BE92BF70B8200246814 /* ClubCompletedModal.swift in Sources */,
 				1E5498892C2903310008C10A /* SearchView.swift in Sources */,
 				DFBE0BD62BF4B1B100246814 /* CompanyExceededViewModel.swift in Sources */,
@@ -456,12 +474,14 @@
 				80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */,
 				1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */,
 				80CF29E42C298B8D00CACA53 /* AgreeView.swift in Sources */,
+				1E97271E2C2FE10400252CA6 /* Search.swift in Sources */,
 				DFBE0BE32BF630F300246814 /* CharWrappingExtension.swift in Sources */,
 				DFBE0BED2BF70BE200246814 /* ClubUnvailableModal.swift in Sources */,
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 				DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */,
 				80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */,
 				DF4074A12C2A900A00321E05 /* Organization.swift in Sources */,
+				1E9727242C3134AC00252CA6 /* HideKeyboardExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
