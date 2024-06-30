@@ -77,6 +77,7 @@ struct SearchView: View {
                                                         print("검색 기록 조회 실패")
                                                     }
                                                 }
+                                                print("검색어 \(search) 삭제 성공")
                                             } else {
                                                 print("검색어 개별 삭제 실패")
                                             }
