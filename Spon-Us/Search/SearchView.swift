@@ -28,7 +28,20 @@ struct SearchView: View {
                         Spacer()
                         
                         Button(action: {
-                            recentSearches.removeAll()
+                            searchViewModel.deleteSearch { success in
+                                if success {
+                                    searchViewModel.fetchKeyword { success in
+                                        if success {
+                                            print("검색어 전체 삭제 성공")
+                                            recentSearches = searchViewModel.recentSearches
+                                        } else {
+                                            print("검색 기록 조회 실패")
+                                        }
+                                    }
+                                } else {
+                                    print("검색어 전체 삭제 실패")
+                                }
+                            }
                         }, label: {
                             Text("전체삭제")
                                 .korFont(.B2KrMd)

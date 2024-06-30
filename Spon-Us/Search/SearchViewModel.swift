@@ -56,7 +56,7 @@ final class SearchViewModel {
             switch response {
             case .success(let response):
                 do {
-                    let postKeywordResponse = try JSONDecoder().decode(DefaultResponse.self, from: response.data)
+                    _ = try JSONDecoder().decode(DefaultResponse.self, from: response.data)
                     completion(true)
                 } catch let error {
                     print("post keyword decode error: \(error.localizedDescription)")
@@ -74,7 +74,7 @@ final class SearchViewModel {
             switch response {
             case .success(let response):
                 do {
-                    let deleteKeywordResponse = try JSONDecoder().decode(DefaultResponse.self, from: response.data)
+                    _ = try JSONDecoder().decode(DefaultResponse.self, from: response.data)
                     completion(true)
                 } catch let error {
                     print("delete keyword decode error: \(error.localizedDescription)")
@@ -82,6 +82,24 @@ final class SearchViewModel {
                 }
             case .failure(let error):
                 print("deleteKeyword API error: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+    
+    func deleteSearch(completion: @escaping (Bool) -> Void) {
+        provider.request(.deleteSearch) { response in
+            switch response {
+            case .success(let response):
+                do {
+                    _ = try JSONDecoder().decode(DefaultResponse.self, from: response.data)
+                    completion(true)
+                } catch let error {
+                    print("delete search decode error: \(error.localizedDescription)")
+                    completion(false)
+                }
+            case .failure(let error):
+                print("deleteSearch API error: \(error.localizedDescription)")
                 completion(false)
             }
         }
