@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
     @State private var searchData: String = ""
-    @State private var recentSearches: [String] = ["무신사", "코카콜라", "해커스", "스포너스"]
+    @State private var recentSearches: [String] = []
     var searchViewModel = SearchViewModel()
     
     var body: some View {
@@ -80,6 +80,15 @@ struct SearchView: View {
             .padding(.leading, 20)
         }
         .background(Color.bgSecondary)
+        .onAppear {
+            searchViewModel.fetchKeyword { success in
+                if success {
+                    recentSearches = searchViewModel.recentSearches
+                } else {
+                    print("Failed to fetch keywords")
+                }
+            }
+        }
 //        .onChange(of: searchData) { newValue in
 //            performSearch()
 //        }

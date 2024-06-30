@@ -11,6 +11,7 @@ import Moya
 @Observable
 final class SearchViewModel {
     let provider = MoyaProvider<SponusAPI>()
+    var recentSearches: [String] = []
     
     func fetchSearch(keyword: String, completion: @escaping (Bool) -> Void) {
         provider.request(.getSearch(keyword: keyword)) { response in
@@ -26,6 +27,25 @@ final class SearchViewModel {
                 }
             case .failure(let error):
                 print("getSearch API error: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+    
+    func fetchKeyword(completion: @escaping (Bool) -> Void) {
+        provider.request(.getKeyword) { response in
+            switch response {
+            case .success(let response):
+                do {
+                    let keywordResponse = try JSONDecoder().decode(KeywordModel.self, from: response.data)
+                    self.recentSearches = keywordResponse.content
+                    completion(true)
+                } catch let error {
+                    print("fetch keyword decode error: \(error.localizedDescription)")
+                    completion(false)
+                }
+            case .failure(let error):
+                print("getKeyword API error: \(error.localizedDescription)")
                 completion(false)
             }
         }

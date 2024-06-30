@@ -14,6 +14,7 @@ enum SponusAPI {
     case getClub(clubId: Int)
     case getBookmark(sort: BookmarkTargetType)
     case getSearch(keyword: String)
+    case getKeyword
 }
 
 extension SponusAPI: TargetType {
@@ -33,6 +34,8 @@ extension SponusAPI: TargetType {
             return "/api/v2/organizations/bookmarked"
         case .getSearch:
             return "/api/v2/organizations/search"
+        case .getKeyword:
+            return "/api/v2/organizations/search/keywords"
         }
     }
     
@@ -48,6 +51,8 @@ extension SponusAPI: TargetType {
             return .get
         case .getSearch:
             return .get
+        case .getKeyword:
+            return .get
         }
     }
     
@@ -62,6 +67,8 @@ extension SponusAPI: TargetType {
         case .getBookmark:
             return Data()
         case .getSearch:
+            return Data()
+        case .getKeyword:
             return Data()
         }
     }
@@ -84,6 +91,8 @@ extension SponusAPI: TargetType {
             return .requestParameters(parameters: ["sort": sort.rawValue], encoding: URLEncoding.queryString)
         case let .getSearch(keyword):
             return .requestParameters(parameters: ["keyword": keyword], encoding: URLEncoding.queryString)
+        case .getKeyword:
+            return .requestPlain
         }
     }
     
@@ -106,6 +115,8 @@ extension SponusAPI: TargetType {
         case .getBookmark:
             return auth
         case .getSearch:
+            return auth
+        case .getKeyword:
             return auth
         }
     }
