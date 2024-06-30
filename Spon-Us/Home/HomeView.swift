@@ -20,23 +20,18 @@ struct HomeView: View {
             HomeSelectionTabView(homeViewModel: homeViewModel)
             
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
-                
+            
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
             .onAppear() {
-                homeViewModel.fetchOrganizations(type: .company) { success in
-                    if success {
-                        homeViewModel.filterCompanies(.all)
-                    }
-                }
-                homeViewModel.fetchOrganizations(type: .club) { success in
-                    if success {
-                        homeViewModel.filterClubs(.all)
-                    }
-                }
+                homeViewModel.onHomeViewAppear()
             }
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
-                CompanyProfileView()
+                CompanyProfileView(
+                    companyProfileViewModel: CompanyProfileViewModel(
+                        companyModel: homeViewModel.selectedCompany
+                    )
+                )
             }
             .navigationDestination(isPresented: $homeViewModel.goToClubProfileView) {
                 ClubProfileView(
@@ -44,7 +39,6 @@ struct HomeView: View {
                         clubModel: homeViewModel.selectedClub
                     )
                 )
-                
             }
     }
 }
@@ -159,28 +153,14 @@ struct HomeSelectionTabView: View {
                 .foregroundStyle(homeViewModel.companyClubSelection == .company ? Color.textPrimary : Color.textDisabled)
                 .padding(.leading, 24)
                 .onTapGesture {
-                    withAnimation {
-                        homeViewModel.fetchOrganizations(type: .company) { success in
-                            if success {
-                                homeViewModel.filterCompanies(homeViewModel.companyCategory)
-                            }
-                        }
-                        homeViewModel.companyClubSelection = .company
-                    }
+                    homeViewModel.onSelectCompany()
                 }
             Text("동아리")
                 .korFont(.H4KrBd)
                 .foregroundStyle(homeViewModel.companyClubSelection == .club ? Color.textPrimary : Color.textDisabled)
                 .padding(.leading, 16)
                 .onTapGesture {
-                    withAnimation {
-                        homeViewModel.fetchOrganizations(type: .club) { success in
-                            if success {
-                                homeViewModel.filterClubs(homeViewModel.clubCategory)
-                            }
-                        }
-                        homeViewModel.companyClubSelection = .club
-                    }
+                    homeViewModel.onSelectClub()
                 }
             Spacer()
         }.padding(.bottom, 14)
@@ -199,6 +179,7 @@ struct HomeCategorySelectionCell: View {
     var isClubMatched: Bool {
         homeViewModel.clubCategory == clubSelection
     }
+    
     var body: some View {
         if companySelection != nil {
             Text(title)
@@ -247,10 +228,7 @@ struct HomeCategorySelectionTab: View {
                             clubSelection: nil
                         )
                         .onTapGesture {
-                            withAnimation {
-                                homeViewModel.filterCompanies(category)
-                                homeViewModel.companyCategory = category
-                            }
+                            homeViewModel.onSelectCompanyCategory(category: category)
                         }
                     }
                 case .club:
@@ -263,10 +241,7 @@ struct HomeCategorySelectionTab: View {
                             clubSelection: category
                         )
                         .onTapGesture {
-                            withAnimation {
-                                homeViewModel.filterClubs(category)
-                                homeViewModel.clubCategory = category
-                            }
+                            homeViewModel.onSelectClubCategory(category: category)
                         }
                     }
                 }
@@ -336,10 +311,7 @@ struct HomeListCell: View {
 
 
 struct HomeListView: View {
-    var homeViewModel: HomeViewModel
-    
-    @State var scrollID: Int?
-    @State var topID: Int = 0
+    @Bindable var homeViewModel: HomeViewModel
     
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
@@ -349,17 +321,12 @@ struct HomeListView: View {
     var body: some View {
         ZStack {
             ScrollView {
-                Text("").id(topID)
                 LazyVGrid(columns: columns, spacing: 16) {
                     if homeViewModel.companyClubSelection == .company {
                         ForEach(homeViewModel.filteredCompanies, id: \.id) { org in
                             HomeListCell(organizationData: org)
                                 .onTapGesture {
-                                    homeViewModel.fetchCompany(companyId: org.id) { complete in
-                                        if complete {
-                                            homeViewModel.goToCompanyProfileView = true
-                                        }
-                                    }
+                                    homeViewModel.onTapCompany(companyId: org.id)
                                 }
                         }
                     }
@@ -367,31 +334,22 @@ struct HomeListView: View {
                         ForEach(homeViewModel.filteredClubs, id: \.id) { org in
                             HomeListCell(organizationData: org)
                                 .onTapGesture {
-                                    homeViewModel.fetchClub(clubId: org.id) { complete in
-                                        if complete {
-                                            homeViewModel.goToClubProfileView = true
-                                        }
-                                    }
+                                    homeViewModel.onTapClub(clubId: org.id)
                                 }
                         }
                     }
                 }.scrollTargetLayout()
-                    .onChange(of: scrollID) { oldValue, newValue in
-                        if oldValue == nil {
-                            topID = newValue ?? 0
-                        }
-                    }
             }.scrollIndicators(.hidden)
-                .scrollPosition(id: $scrollID)
+                .scrollPosition(id: $homeViewModel.scrollID)
             
-            if scrollID != nil && scrollID != topID {
+            if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 0) {
                         Spacer()
                         Button {
                             withAnimation {
-                                scrollID = topID
+                                homeViewModel.scrollToTop()
                             }
                         } label: {
                             Image(.arrowUp5)
@@ -404,10 +362,8 @@ struct HomeListView: View {
                     }.padding(.bottom, 15)
                 }
             }
-            
         }.padding(.top, 15)
             .padding(.horizontal, 20)
-        
     }
 }
 

@@ -78,7 +78,11 @@ struct BookmarkView: View {
             
             BookmarkListView(bookmarkViewModel: bookmarkViewModel)
 //                .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
-//                    CompanyProfileView()
+//                    CompanyProfileView(
+//                         companyProfileViewModel: CompanyProfileViewModel(
+//                             companyModel: homeViewModel.selectedCompany
+//                         )
+//                     )
 //                }
         }
         .background(Color.bgSecondary)
