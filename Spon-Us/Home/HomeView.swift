@@ -24,16 +24,7 @@ struct HomeView: View {
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
             .onAppear() {
-                homeViewModel.fetchOrganizations(type: .company) { success in
-                    if success {
-                        homeViewModel.filterCompanies(.all)
-                    }
-                }
-                homeViewModel.fetchOrganizations(type: .club) { success in
-                    if success {
-                        homeViewModel.filterClubs(.all)
-                    }
-                }
+                homeViewModel.onHomeViewAppear()
             }
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
                 CompanyProfileView(
@@ -330,7 +321,6 @@ struct HomeListView: View {
     var body: some View {
         ZStack {
             ScrollView {
-                EmptyView().id(homeViewModel.topID)
                 LazyVGrid(columns: columns, spacing: 16) {
                     if homeViewModel.companyClubSelection == .company {
                         ForEach(homeViewModel.filteredCompanies, id: \.id) { org in
@@ -349,15 +339,10 @@ struct HomeListView: View {
                         }
                     }
                 }.scrollTargetLayout()
-                    .onChange(of: homeViewModel.scrollID) { oldValue, newValue in
-                        if oldValue == nil || oldValue == -1 {
-                            homeViewModel.topID = newValue ?? -1
-                        }
-                    }
             }.scrollIndicators(.hidden)
                 .scrollPosition(id: $homeViewModel.scrollID)
             
-            if homeViewModel.scrollID != nil && homeViewModel.scrollID != -1 && homeViewModel.scrollID != homeViewModel.topID {
+            if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 0) {
