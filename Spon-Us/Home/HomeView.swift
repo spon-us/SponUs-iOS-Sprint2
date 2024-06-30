@@ -349,15 +349,15 @@ struct HomeListView: View {
                         }
                     }
                 }.scrollTargetLayout()
-                    .onChange(of: homeViewModel.scrollID) { oldValue, _ in
-                        if oldValue == nil {
-                            homeViewModel.topID = -1
+                    .onChange(of: homeViewModel.scrollID) { oldValue, newValue in
+                        if oldValue == nil || oldValue == -1 {
+                            homeViewModel.topID = newValue ?? -1
                         }
                     }
             }.scrollIndicators(.hidden)
                 .scrollPosition(id: $homeViewModel.scrollID)
             
-            if homeViewModel.scrollID != nil && homeViewModel.scrollID != -1 {
+            if homeViewModel.scrollID != nil && homeViewModel.scrollID != -1 && homeViewModel.scrollID != homeViewModel.topID {
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 0) {
