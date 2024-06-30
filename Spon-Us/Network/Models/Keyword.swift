@@ -12,3 +12,8 @@ struct KeywordModel: Codable {
     let message: String
     let content: [String]
 }
+
+struct DefaultResponse: Codable {
+    let statusCode: String
+    let message: String
+}

@@ -50,4 +50,22 @@ final class SearchViewModel {
             }
         }
     }
+    
+    func postKeyword(keyword: String, completion: @escaping (Bool) -> Void) {
+            provider.request(.postKeyword(keyword: keyword)) { response in
+                switch response {
+                case .success(let response):
+                    do {
+                        let postKeywordResponse = try JSONDecoder().decode(DefaultResponse.self, from: response.data)
+                        completion(true)
+                    } catch let error {
+                        print("post keyword decode error: \(error.localizedDescription)")
+                        completion(false)
+                    }
+                case .failure(let error):
+                    print("postKeyword API error: \(error.localizedDescription)")
+                    completion(false)
+                }
+            }
+        }
 }

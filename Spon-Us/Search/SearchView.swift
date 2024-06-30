@@ -85,9 +85,10 @@ struct SearchView: View {
                 if success {
                     recentSearches = searchViewModel.recentSearches
                 } else {
-                    print("Failed to fetch keywords")
+                    print("검색 기록 조회 실패")
                 }
             }
+            UIApplication.shared.hideKeyboard()
         }
 //        .onChange(of: searchData) { newValue in
 //            performSearch()
@@ -109,9 +110,9 @@ struct SearchBarView: View {
         
         searchViewModel.fetchSearch(keyword: searchData) { success in
             if success {
-                print("검색 성공")
+                print("조직 검색 성공")
             } else {
-                print("Failed to search organizations")
+                print("조직 검색 실패")
             }
         }
     }
@@ -125,12 +126,18 @@ struct SearchBarView: View {
             TextField("협업할 기업 혹은 동아리를 검색해 보세요.", text: $searchData, onCommit: {
                 if !searchData.isEmpty {
                     performSearch()
-                    // 동일한 검색어가 입력될 때 해당 검색어가 맨 앞에 오도록 순서 변경
-                    if let index = recentSearches.firstIndex(of: searchData) {
-                        recentSearches.remove(at: index)
+                    searchViewModel.postKeyword(keyword: searchData) { success in
+                        if success {
+                            // 동일한 검색어가 입력될 때 해당 검색어가 맨 앞에 오도록 순서 변경
+                            if let index = recentSearches.firstIndex(of: searchData) {
+                                recentSearches.remove(at: index)
+                            }
+                            recentSearches.insert(searchData, at: 0)
+                            searchData = ""
+                        } else {
+                            print("검색어 저장 실패")
+                        }
                     }
-                    recentSearches.insert(searchData, at: 0)
-                    searchData = ""
                 }
             })
             .font(.B1KrMd)
