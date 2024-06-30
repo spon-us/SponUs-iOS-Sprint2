@@ -6,9 +6,10 @@
 //
 
 import Foundation
-
+import Moya
 @Observable
 final class CompanyProfileViewModel {
+    let provider: MoyaProvider<SponusAPI> = .init()
     var companyModel: CompanyModel
     
     init(companyModel: CompanyModel) {
@@ -20,5 +21,7 @@ final class CompanyProfileViewModel {
     var sponsoredGoods: [String] = ["풀무원선물세트풀무원선물세트풀무원선물세트풀무원선물세트", "김", "쌀", "두부"]
     var isBookmarked = false
     var isSuggestModalPresented = false
-    var profileStatus: ProfileStatus = .unavailable
+    var profileStatus: ProfileStatus = .available
+    
+    
 }

@@ -20,7 +20,7 @@ struct HomeView: View {
             HomeSelectionTabView(homeViewModel: homeViewModel)
             
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
-                
+            
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
             .onAppear() {
@@ -48,7 +48,6 @@ struct HomeView: View {
                         clubModel: homeViewModel.selectedClub
                     )
                 )
-                
             }
     }
 }
@@ -163,30 +162,14 @@ struct HomeSelectionTabView: View {
                 .foregroundStyle(homeViewModel.companyClubSelection == .company ? Color.textPrimary : Color.textDisabled)
                 .padding(.leading, 24)
                 .onTapGesture {
-                    withAnimation {
-                        homeViewModel.fetchOrganizations(type: .company) { success in
-                            if success {
-                                homeViewModel.filterCompanies(homeViewModel.companyCategory)
-                            }
-                        }
-                        homeViewModel.companyClubSelection = .company
-                        homeViewModel.scrollIdToTop()
-                    }
+                    homeViewModel.onSelectCompany()
                 }
             Text("동아리")
                 .korFont(.H4KrBd)
                 .foregroundStyle(homeViewModel.companyClubSelection == .club ? Color.textPrimary : Color.textDisabled)
                 .padding(.leading, 16)
                 .onTapGesture {
-                    withAnimation {
-                        homeViewModel.fetchOrganizations(type: .club) { success in
-                            if success {
-                                homeViewModel.filterClubs(homeViewModel.clubCategory)
-                            }
-                        }
-                        homeViewModel.companyClubSelection = .club
-                        homeViewModel.scrollIdToTop()
-                    }
+                    homeViewModel.onSelectClub()
                 }
             Spacer()
         }.padding(.bottom, 14)
@@ -205,6 +188,7 @@ struct HomeCategorySelectionCell: View {
     var isClubMatched: Bool {
         homeViewModel.clubCategory == clubSelection
     }
+    
     var body: some View {
         if companySelection != nil {
             Text(title)
@@ -253,11 +237,7 @@ struct HomeCategorySelectionTab: View {
                             clubSelection: nil
                         )
                         .onTapGesture {
-                            withAnimation {
-                                homeViewModel.filterCompanies(category)
-                                homeViewModel.companyCategory = category
-                                homeViewModel.scrollIdToTop()
-                            }
+                            homeViewModel.onSelectCompanyCategory(category: category)
                         }
                     }
                 case .club:
@@ -270,11 +250,7 @@ struct HomeCategorySelectionTab: View {
                             clubSelection: category
                         )
                         .onTapGesture {
-                            withAnimation {
-                                homeViewModel.filterClubs(category)
-                                homeViewModel.clubCategory = category
-                                homeViewModel.scrollIdToTop()
-                            }
+                            homeViewModel.onSelectClubCategory(category: category)
                         }
                     }
                 }
@@ -360,11 +336,7 @@ struct HomeListView: View {
                         ForEach(homeViewModel.filteredCompanies, id: \.id) { org in
                             HomeListCell(organizationData: org)
                                 .onTapGesture {
-                                    homeViewModel.fetchCompany(companyId: org.id) { complete in
-                                        if complete {
-                                            homeViewModel.goToCompanyProfileView = true
-                                        }
-                                    }
+                                    homeViewModel.onTapCompany(companyId: org.id)
                                 }
                         }
                     }
@@ -372,31 +344,27 @@ struct HomeListView: View {
                         ForEach(homeViewModel.filteredClubs, id: \.id) { org in
                             HomeListCell(organizationData: org)
                                 .onTapGesture {
-                                    homeViewModel.fetchClub(clubId: org.id) { complete in
-                                        if complete {
-                                            homeViewModel.goToClubProfileView = true
-                                        }
-                                    }
+                                    homeViewModel.onTapClub(clubId: org.id)
                                 }
                         }
                     }
                 }.scrollTargetLayout()
-                    .onChange(of: homeViewModel.scrollID) { oldValue, newValue in
+                    .onChange(of: homeViewModel.scrollID) { oldValue, _ in
                         if oldValue == nil {
-                            homeViewModel.topID = newValue ?? 0
+                            homeViewModel.topID = -1
                         }
                     }
             }.scrollIndicators(.hidden)
                 .scrollPosition(id: $homeViewModel.scrollID)
             
-            if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
+            if homeViewModel.scrollID != nil && homeViewModel.scrollID != -1 {
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 0) {
                         Spacer()
                         Button {
                             withAnimation {
-                                homeViewModel.scrollIdToTop()
+                                homeViewModel.scrollToTop()
                             }
                         } label: {
                             Image(.arrowUp5)
@@ -409,10 +377,8 @@ struct HomeListView: View {
                     }.padding(.bottom, 15)
                 }
             }
-            
         }.padding(.top, 15)
             .padding(.horizontal, 20)
-        
     }
 }
 
