@@ -9,8 +9,25 @@ import Foundation
 import Moya
 
 @Observable
+final class SearchListViewModel: Identifiable {
+    let id: Int
+    let name: String
+    let imageURL: String?
+    let organizationType: String
+    
+    init(searchModel: SearchModel) {
+        self.id = searchModel.id
+        self.name = searchModel.name
+        self.imageURL = searchModel.imageUrl
+        self.organizationType = searchModel.organizationType
+    }
+}
+
+@Observable
 final class SearchViewModel {
     let provider = MoyaProvider<SponusAPI>()
+    
+    var searchList: [SearchListViewModel] = []
     var recentSearches: [String] = []
     
     func fetchSearch(keyword: String, completion: @escaping (Bool) -> Void) {
@@ -19,7 +36,7 @@ final class SearchViewModel {
             case .success(let response):
                 do {
                     let searchResponse = try JSONDecoder().decode(SearchResponseModel.self, from: response.data)
-                    print(searchResponse.content.content)
+                    self.searchList = searchResponse.content.content.map { SearchListViewModel(searchModel: $0) }
                     completion(true)
                 } catch let error {
                     print("fetch search decode error: \(error.localizedDescription)")

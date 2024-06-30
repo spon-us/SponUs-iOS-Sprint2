@@ -167,17 +167,13 @@ struct BookmarkListCell: View {
                 .stroke(Color.line200, lineWidth: 1)
         )
     }
-    
-    func loadImage(from urlString: String) -> UIImage {
-        guard let url = URL(string: urlString),
-              let data = try? Data(contentsOf: url),
-              let image = UIImage(data: data) else {
-            return UIImage(named: "sponus")!
-        }
-        return image
-    }
 }
 
-#Preview {
-    BookmarkView()
+func loadImage(from urlString: String) -> UIImage {
+    guard let url = URL(string: urlString),
+          let data = try? Data(contentsOf: url),
+          let image = UIImage(data: data) else {
+        return UIImage(named: "sponus")!
+    }
+    return image
 }
