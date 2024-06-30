@@ -164,7 +164,13 @@ final class HomeViewModel {
     }
     
     func scrollToTop() {
-        scrollID = -1
+        switch companyClubSelection {
+        case .club:
+            topID = filteredClubs.min { $0.id < $1.id }?.id ?? -1
+        case .company:
+            topID = filteredCompanies.min { $0.id < $1.id }?.id ?? -1
+        }
+        scrollID = topID
     }
     
     func onSelectCompany() {
@@ -172,10 +178,10 @@ final class HomeViewModel {
             fetchOrganizations(type: .company) {[weak self] success in
                 if success {
                     self?.filterCompanies(self?.companyCategory ?? .all)
+                    self?.companyClubSelection = .company
+                    self?.scrollToTop()
                 }
             }
-            companyClubSelection = .company
-            scrollToTop()
         }
     }
     
@@ -184,10 +190,10 @@ final class HomeViewModel {
             fetchOrganizations(type: .club) { [weak self] success in
                 if success {
                     self?.filterClubs(self?.clubCategory ?? .all)
+                    self?.companyClubSelection = .club
+                    self?.scrollToTop()
                 }
             }
-            companyClubSelection = .club
-            scrollToTop()
         }
     }
     
@@ -196,10 +202,10 @@ final class HomeViewModel {
             fetchOrganizations(type: .company) { [weak self] completed in
                 if completed {
                     self?.filterCompanies(category)
+                    self?.companyCategory = category
+                    self?.scrollToTop()
                 }
             }
-            companyCategory = category
-            scrollToTop()
         }
     }
     
@@ -208,10 +214,10 @@ final class HomeViewModel {
             fetchOrganizations(type: .club) { [weak self] completed in
                 if completed {
                     self?.filterClubs(category)
+                    self?.clubCategory = category
+                    self?.scrollToTop()
                 }
             }
-            clubCategory = category
-            scrollToTop()
         }
     }
     
@@ -231,6 +237,20 @@ final class HomeViewModel {
                 if complete {
                     self?.goToClubProfileView = true
                 }
+            }
+        }
+    }
+    
+    func onHomeViewAppear() {
+        fetchOrganizations(type: .company) { [weak self] success in
+            if success {
+                self?.filterCompanies(.all)
+                self?.scrollToTop()
+            }
+        }
+        fetchOrganizations(type: .club) { [weak self] success in
+            if success {
+                self?.filterClubs(.all)
             }
         }
     }
