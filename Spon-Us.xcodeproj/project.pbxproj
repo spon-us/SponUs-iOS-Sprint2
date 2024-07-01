@@ -23,6 +23,7 @@
 		3B82D8B22C32538D008E0138 /* WriteCompanyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */; };
 		3B82D8B52C3253CE008E0138 /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B42C3253CE008E0138 /* MyPageModel.swift */; };
 		3B82D8B72C3253E3008E0138 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */; };
+		8065E24D2C332A63001B35DD /* NavigationBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24C2C332A63001B35DD /* NavigationBackBar.swift */; };
 		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
 		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
 		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
@@ -87,6 +88,7 @@
 		3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCompanyProfileView.swift; sourceTree = "<group>"; };
 		3B82D8B42C3253CE008E0138 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
 		3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
+		8065E24C2C332A63001B35DD /* NavigationBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackBar.swift; sourceTree = "<group>"; };
 		80C320A92C284CE7004C0882 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		80C320AB2C284CFE004C0882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -188,6 +190,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		8065E24B2C332A1F001B35DD /* Componenet */ = {
+			isa = PBXGroup;
+			children = (
+				8065E24C2C332A63001B35DD /* NavigationBackBar.swift */,
+			);
+			path = Componenet;
+			sourceTree = "<group>";
+		};
 		80C320A82C284C59004C0882 /* OnBoarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +260,7 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				8065E24B2C332A1F001B35DD /* Componenet */,
 				80CF29E82C29AB6200CACA53 /* Auth */,
 				80C320A82C284C59004C0882 /* OnBoarding */,
 				DF4074932C286FA100321E05 /* Network */,
@@ -481,6 +492,7 @@
 				1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
 				3B82D8B02C32536F008E0138 /* WriteClubPortfolioView.swift in Sources */,
+				8065E24D2C332A63001B35DD /* NavigationBackBar.swift in Sources */,
 				DFBE0BA72BF1A6B200246814 /* ContentView.swift in Sources */,
 				DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */,
 				3B82D8B22C32538D008E0138 /* WriteCompanyProfileView.swift in Sources */,
