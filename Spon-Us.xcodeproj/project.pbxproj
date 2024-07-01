@@ -16,6 +16,13 @@
 		1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD672BF6251C00E333AD /* BookmarkView.swift */; };
 		1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */; };
 		3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B74D7782BF9E6A600B3B750 /* MyPageView.swift */; };
+		3B82D8AA2C3252FE008E0138 /* MyPageViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8A92C3252FE008E0138 /* MyPageViewHelper.swift */; };
+		3B82D8AC2C32531E008E0138 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8AB2C32531D008E0138 /* EditProfileView.swift */; };
+		3B82D8AE2C325351008E0138 /* WriteClubProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8AD2C325350008E0138 /* WriteClubProfileView.swift */; };
+		3B82D8B02C32536F008E0138 /* WriteClubPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8AF2C32536F008E0138 /* WriteClubPortfolioView.swift */; };
+		3B82D8B22C32538D008E0138 /* WriteCompanyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */; };
+		3B82D8B52C3253CE008E0138 /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B42C3253CE008E0138 /* MyPageModel.swift */; };
+		3B82D8B72C3253E3008E0138 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */; };
 		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
 		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
 		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
@@ -73,6 +80,13 @@
 		1EFADD672BF6251C00E333AD /* BookmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
 		1EFADD682BF6251C00E333AD /* BookmarkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		3B74D7782BF9E6A600B3B750 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		3B82D8A92C3252FE008E0138 /* MyPageViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewHelper.swift; sourceTree = "<group>"; };
+		3B82D8AB2C32531D008E0138 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		3B82D8AD2C325350008E0138 /* WriteClubProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteClubProfileView.swift; sourceTree = "<group>"; };
+		3B82D8AF2C32536F008E0138 /* WriteClubPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteClubPortfolioView.swift; sourceTree = "<group>"; };
+		3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCompanyProfileView.swift; sourceTree = "<group>"; };
+		3B82D8B42C3253CE008E0138 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
+		3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
 		80C320A92C284CE7004C0882 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		80C320AB2C284CFE004C0882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -154,9 +168,24 @@
 		3B74D7772BF9E69600B3B750 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				3B82D8A92C3252FE008E0138 /* MyPageViewHelper.swift */,
 				3B74D7782BF9E6A600B3B750 /* MyPageView.swift */,
+				3B82D8AB2C32531D008E0138 /* EditProfileView.swift */,
+				3B82D8AD2C325350008E0138 /* WriteClubProfileView.swift */,
+				3B82D8AF2C32536F008E0138 /* WriteClubPortfolioView.swift */,
+				3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */,
+				3B82D8B32C3253B0008E0138 /* Network */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		3B82D8B32C3253B0008E0138 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				3B82D8B42C3253CE008E0138 /* MyPageModel.swift */,
+				3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		80C320A82C284C59004C0882 /* OnBoarding */ = {
@@ -445,14 +474,18 @@
 				DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */,
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
 				DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */,
+				3B82D8B52C3253CE008E0138 /* MyPageModel.swift in Sources */,
 				DFBE0BEB2BF70BB900246814 /* ClubExceededModal.swift in Sources */,
 				80CF29EC2C29B56F00CACA53 /* AuthPlugin.swift in Sources */,
 				DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */,
 				1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
+				3B82D8B02C32536F008E0138 /* WriteClubPortfolioView.swift in Sources */,
 				DFBE0BA72BF1A6B200246814 /* ContentView.swift in Sources */,
 				DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */,
+				3B82D8B22C32538D008E0138 /* WriteCompanyProfileView.swift in Sources */,
 				DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */,
+				3B82D8B72C3253E3008E0138 /* MypageViewModel.swift in Sources */,
 				DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */,
 				80CF29EA2C29AB7100CACA53 /* TokenManager.swift in Sources */,
 				DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */,
@@ -463,13 +496,16 @@
 				DF4074A72C2AD9B300321E05 /* Company.swift in Sources */,
 				DF4074A92C2AE07400321E05 /* Club.swift in Sources */,
 				1E9727222C2FFD9100252CA6 /* Keyword.swift in Sources */,
+				3B82D8AC2C32531E008E0138 /* EditProfileView.swift in Sources */,
 				DFBE0BDE2BF5B67D00246814 /* ClubProfileViewModel.swift in Sources */,
 				3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */,
 				1E7D55792C2DB822007A6254 /* Bookmark.swift in Sources */,
+				3B82D8AE2C325351008E0138 /* WriteClubProfileView.swift in Sources */,
 				DFBE0BE92BF70B8200246814 /* ClubCompletedModal.swift in Sources */,
 				1E5498892C2903310008C10A /* SearchView.swift in Sources */,
 				DFBE0BD62BF4B1B100246814 /* CompanyExceededViewModel.swift in Sources */,
 				80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */,
+				3B82D8AA2C3252FE008E0138 /* MyPageViewHelper.swift in Sources */,
 				DFBE0B9C2BEB147900246814 /* HomeView.swift in Sources */,
 				80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */,
 				1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */,
