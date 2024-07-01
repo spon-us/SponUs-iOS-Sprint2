@@ -435,8 +435,8 @@ struct FieldTabView: View {
     let maxSelections = 2
     @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
     
-    @State private var categories: [CategorySelection] = ClubCategory.allCases.dropFirst().map {
-        CategorySelection(category: $0, isSelected: false)
+    @State private var categories: [ClubCategorySelection] = ClubCategory.allCases.dropFirst().map {
+        ClubCategorySelection(category: $0, isSelected: false)
     }
     
     var body: some View {
@@ -482,7 +482,7 @@ struct FieldTabView: View {
         .background(Color.bgSecondary)
     }
     
-    private func toggleSelection(for category: CategorySelection) {
+    private func toggleSelection(for category: ClubCategorySelection) {
         if category.isSelected {
             // If the category is already selected, allow deselecting it
             if let index = categories.firstIndex(where: { $0.id == category.id }) {

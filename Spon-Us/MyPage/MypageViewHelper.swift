@@ -323,9 +323,15 @@ struct SelectinOptionCell: View {
     }
 }
 
-struct CategorySelection: Identifiable {
+struct ClubCategorySelection: Identifiable {
     var id = UUID()
     var category: ClubCategory
+    var isSelected: Bool
+}
+
+struct CompanyCategorySelection: Identifiable {
+    var id = UUID()
+    var category: CompanyCategory
     var isSelected: Bool
 }
 
