@@ -23,6 +23,21 @@ struct BookmarkModel: Codable {
     let createdAt: String
 }
 
+struct BookmarkPostResponseModel: Codable {
+    let statusCode: String
+    let message: String
+    let content: BookmarkPostModel
+}
+
+struct BookmarkPostModel: Codable {
+    let id: Int
+    let organizationId: Int
+    let target: Int
+    let targetType: String
+    let createdAt: String
+    let bookmarked: Bool
+}
+
 enum BookmarkTargetType: String, Codable {
     case recent = "RECENT"
     case company = "COMPANY"

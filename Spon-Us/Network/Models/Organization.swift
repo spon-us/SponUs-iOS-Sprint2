@@ -31,4 +31,8 @@ struct OrganizationModel: Codable {
     var organizationType: String
     var subType: String
     var isBookmarked: Bool
+    
+    mutating func toggleBookmark() {
+        self.isBookmarked.toggle()
+    }
 }
