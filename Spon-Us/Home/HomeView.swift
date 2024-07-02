@@ -22,9 +22,7 @@ struct HomeView: View {
             
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
-            .onAppear() {
-                homeViewModel.onHomeViewAppear()
-            }
+            .onAppear(perform: homeViewModel.onHomeViewAppear)
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
                 CompanyProfileView(
                     companyProfileViewModel: CompanyProfileViewModel(
@@ -343,7 +341,7 @@ struct HomeListView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
                     if homeViewModel.companyClubSelection == .company {
-                        ForEach(homeViewModel.filteredCompanies, id: \.id) { org in
+                        ForEach(homeViewModel.filteredCompanies, id: \.hashValue) { org in
                             HomeListCell(
                                 organizationData: org,
                                 homeViewModel: homeViewModel
@@ -351,7 +349,7 @@ struct HomeListView: View {
                         }
                     }
                     else {
-                        ForEach(homeViewModel.filteredClubs, id: \.id) { org in
+                        ForEach(homeViewModel.filteredClubs, id: \.hashValue) { org in
                             HomeListCell(
                                 organizationData: org,
                                 homeViewModel: homeViewModel

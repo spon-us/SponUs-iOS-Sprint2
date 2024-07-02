@@ -178,14 +178,19 @@ final class HomeViewModel {
         }
     }
     
-    func scrollToTop() {
+    func setTopID() {
         switch companyClubSelection {
         case .club:
-            topID = filteredClubs.min { $0.id < $1.id }?.id ?? -1
+            topID = filteredClubs.min { $0.id < $1.id }?.hashValue ?? -1
         case .company:
-            topID = filteredCompanies.min { $0.id < $1.id }?.id ?? -1
+            topID = filteredCompanies.min { $0.id < $1.id }?.hashValue ?? -1
         }
+    }
+    
+    func scrollToTop() {
+        setTopID()
         withAnimation {
+            scrollID = nil
             scrollID = topID
         }
     }
@@ -195,7 +200,9 @@ final class HomeViewModel {
             if success {
                 self?.filterCompanies(self?.companyCategory ?? .all)
                 self?.companyClubSelection = .company
-                self?.scrollToTop()
+                self?.setTopID()
+                self?.scrollID = nil
+                self?.scrollID = self?.topID
             }
         }
     }
@@ -205,7 +212,9 @@ final class HomeViewModel {
             if success {
                 self?.filterClubs(self?.clubCategory ?? .all)
                 self?.companyClubSelection = .club
-                self?.scrollToTop()
+                self?.setTopID()
+                self?.scrollID = nil
+                self?.scrollID = self?.topID
             }
         }
     }
@@ -215,7 +224,9 @@ final class HomeViewModel {
             if completed {
                 self?.filterCompanies(category)
                 self?.companyCategory = category
-                self?.scrollToTop()
+                self?.setTopID()
+                self?.scrollID = nil
+                self?.scrollID = self?.topID
             }
         }
     }
@@ -225,7 +236,9 @@ final class HomeViewModel {
             if completed {
                 self?.filterClubs(category)
                 self?.clubCategory = category
-                self?.scrollToTop()
+                self?.setTopID()
+                self?.scrollID = nil
+                self?.scrollID = self?.topID
             }
         }
     }
@@ -247,18 +260,15 @@ final class HomeViewModel {
     }
     
     func onHomeViewAppear() {
-        print(filteredCompanies)
         fetchOrganizations(type: .company) { [weak self] success in
             if success {
-                self?.filterCompanies(.all)
-                print(self!.filteredCompanies)
-            }
-        }
-        fetchOrganizations(type: .club) { [weak self] success in
-            if success {
-                self?.filterClubs(.all)
-                self?.scrollToTop()
-                print("onHomeViewAppear")
+                self?.fetchOrganizations(type: .club) { [weak self] success in
+                    if success {
+                        self?.filterCompanies(.all)
+                        self?.filterClubs(.all)
+                        self?.setTopID()
+                    }
+                }
             }
         }
     }
