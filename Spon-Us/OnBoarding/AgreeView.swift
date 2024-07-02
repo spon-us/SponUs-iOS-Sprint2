@@ -97,9 +97,9 @@ struct AgreeView: View {
             
             Spacer()
             
-            Button(action:  {
-                
-            } , label: {
+            NavigationLink {
+                SignUpIdView().navigationBarHidden(true)
+            } label: {
                 Text("다음")
                     .font(.But1KrBd)
                     .foregroundColor(allChecked ? .textWhite : .textDisabled)
@@ -111,9 +111,9 @@ struct AgreeView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(allChecked ? Color.textBrand : Color.line200)
                     )
-            })
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
+            }
         }
         .background(Color.bgSecondary)
     }

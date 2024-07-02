@@ -24,6 +24,7 @@
 		3B82D8B52C3253CE008E0138 /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B42C3253CE008E0138 /* MyPageModel.swift */; };
 		3B82D8B72C3253E3008E0138 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */; };
 		8065E24D2C332A63001B35DD /* NavigationBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24C2C332A63001B35DD /* NavigationBackBar.swift */; };
+		8065E24F2C333070001B35DD /* SignUpIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24E2C333070001B35DD /* SignUpIdView.swift */; };
 		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
 		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
 		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
@@ -89,6 +90,7 @@
 		3B82D8B42C3253CE008E0138 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
 		3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
 		8065E24C2C332A63001B35DD /* NavigationBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackBar.swift; sourceTree = "<group>"; };
+		8065E24E2C333070001B35DD /* SignUpIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpIdView.swift; sourceTree = "<group>"; };
 		80C320A92C284CE7004C0882 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		80C320AB2C284CFE004C0882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				80CF29E12C29851600CACA53 /* LoginViewModel.swift */,
 				80CF29E32C298B8D00CACA53 /* AgreeView.swift */,
 				80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */,
+				8065E24E2C333070001B35DD /* SignUpIdView.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 				DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */,
 				80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */,
+				8065E24F2C333070001B35DD /* SignUpIdView.swift in Sources */,
 				DF4074A12C2A900A00321E05 /* Organization.swift in Sources */,
 				1E9727242C3134AC00252CA6 /* HideKeyboardExtension.swift in Sources */,
 			);
