@@ -5,21 +5,24 @@
 //  Created by 박현수 on 5/16/24.
 //
 
+import Moya
 import Foundation
 import SwiftUI
 
 @Observable
 final class ClubProfileViewModel {
+    let provider: MoyaProvider<SponusAPI> = .init()
     var clubModel: ClubModel
+    var isBookmarked: Bool
     
     var isSuggestModalPresented: Bool = false
     var clubCategory: [ClubCategory] = [.planningAndIdeas, .iTAndSoftware, .photographyAndVideo]
-    var isBookmarked: Bool = false
     var snsURL: [String] = ["https://www.instagram.com/sponus_official?igsh=aXZ4OG85cGcxcDQw", "https://www.facebook.com", "https://www.example.com"]
     var cardnewsDummyData = [PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel()]
     
-    init(clubModel: ClubModel) {
+    init(clubModel: ClubModel, isBookmarked: Bool) {
         self.clubModel = clubModel
+        self.isBookmarked = isBookmarked
     }
     
     @ViewBuilder
@@ -42,5 +45,24 @@ final class ClubProfileViewModel {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    func toggleBookmark(target: Int){
+        provider.request(.postBookmark(target: target)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                do {
+                    let body = try JSONDecoder().decode(BookmarkPostResponseModel.self, from: response.data)
+                    withAnimation {
+                        self?.isBookmarked = body.content.bookmarked
+                    }
+                    
+                } catch {
+                    print("postBookmark parse error", error.localizedDescription)
+                }
+            case .failure(let error):
+                print("postBookmark API error", error.localizedDescription)
+            }
+        }
     }
 }
