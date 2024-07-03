@@ -128,7 +128,7 @@ struct SignUpIdView: View {
                                 vm.postEmail(email: id)
                                 afterRequest = true
                             } else {
-                                if (vm.email == inputAuthNumber) {
+                                if (vm.code == inputAuthNumber) {
                                     isEmailValidated = true
                                 } else {
                                     wrongAuthNumber = true
@@ -205,7 +205,7 @@ struct SignUpIdView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             } else {
-                NavigationLink(destination: SignUpPWView(id: id)) {
+                NavigationLink(destination: SignUpPWView(vm: vm).navigationBarHidden(true)) {
                     Text("다음")
                         .font(.But1KrBd)
                         .frame(maxWidth: .infinity, maxHeight: 56)

@@ -9,7 +9,12 @@ import Foundation
 import Moya
 
 class SignUpViewModel: ObservableObject {
+    @Published var code: String = ""
     @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var name: String = ""
+    @Published var organizationType: String = ""
+
     private let provider = MoyaProvider<SponusAPI>(plugins: [NetworkLoggerPlugin()])
 
     func postEmail(email: String) {
@@ -17,14 +22,10 @@ class SignUpViewModel: ObservableObject {
             switch result {
             case let .success(response):
                 if let emailResponse = try? response.map(EmailModel.self) {
-                    self.email = emailResponse.content.code
-                    print("🚨\(email)")
-                } else {
-                    print("🚨 로그인 API 파싱 실패 :  Invalid response from server")
+                    self.code = emailResponse.content.code
                 }
-
             case let .failure(error):
-                print("Network request failed: \(error)")
+                return
             }
         }
     }
