@@ -212,20 +212,36 @@
 			path = Componenet;
 			sourceTree = "<group>";
 		};
-		80C320A82C284C59004C0882 /* OnBoarding */ = {
+		8065E25D2C357BD7001B35DD /* View */ = {
 			isa = PBXGroup;
 			children = (
 				80C320A92C284CE7004C0882 /* OnBoardingView.swift */,
 				80C320AB2C284CFE004C0882 /* LoginView.swift */,
-				80CF29E12C29851600CACA53 /* LoginViewModel.swift */,
 				80CF29E32C298B8D00CACA53 /* AgreeView.swift */,
 				80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */,
 				8065E24E2C333070001B35DD /* SignUpIdView.swift */,
 				8065E2502C3427AB001B35DD /* SignUpPWView.swift */,
-				8065E2552C3431E3001B35DD /* SignUpViewModel.swift */,
 				8065E2572C347739001B35DD /* SignUpOrgView.swift */,
 				8065E2592C354193001B35DD /* SignUpNameView.swift */,
 				8065E25B2C354353001B35DD /* SuccessSignUpView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8065E25E2C357C00001B35DD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				80CF29E12C29851600CACA53 /* LoginViewModel.swift */,
+				8065E2552C3431E3001B35DD /* SignUpViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		80C320A82C284C59004C0882 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				8065E25D2C357BD7001B35DD /* View */,
+				8065E25E2C357C00001B35DD /* ViewModel */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -282,8 +298,8 @@
 			children = (
 				8065E24B2C332A1F001B35DD /* Componenet */,
 				80CF29E82C29AB6200CACA53 /* Auth */,
-				80C320A82C284C59004C0882 /* OnBoarding */,
 				DF4074932C286FA100321E05 /* Network */,
+				80C320A82C284C59004C0882 /* OnBoarding */,
 				3B74D7772BF9E69600B3B750 /* MyPage */,
 				DFBE0BE12BF630E000246814 /* Extention */,
 				DFBE0BB22BF315EC00246814 /* EnumManager.swift */,
