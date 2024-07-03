@@ -10,14 +10,12 @@ import Moya
 
 @Observable
 final class BookmarkListCellViewModel: Identifiable {
-    var isLoaded = false
+    let target: Int
     var companyName: String
     var imageURL: String?
-    var isBookmarked: Bool = false
-    let id: Int
     
     init(bookmarkModel: BookmarkModel) {
-        self.id = bookmarkModel.id
+        self.target = bookmarkModel.target
         self.companyName = bookmarkModel.name
         self.imageURL = bookmarkModel.imageUrl
     }
@@ -42,6 +40,24 @@ final class BookmarkListViewModel {
                 }
             case .failure(let error):
                 print("getBookmark API error: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+    
+    func postBookmark(target: Int, completion: @escaping (Bool) -> Void) {
+        provider.request(.postBookmark(target: target)) { response in
+            switch response {
+            case .success(let response):
+                do {
+                    _ = try JSONDecoder().decode(postBookmarkResponseModel.self, from: response.data)
+                    completion(true)
+                } catch {
+                    print("post bookmark decode error", error.localizedDescription)
+                    completion(false)
+                }
+            case .failure(let error):
+                print("postBookmark API error: \(error.localizedDescription)")
                 completion(false)
             }
         }

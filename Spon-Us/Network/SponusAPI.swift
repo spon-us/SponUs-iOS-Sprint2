@@ -34,7 +34,7 @@ extension SponusAPI: TargetType {
             return "/api/v2/companies/\(companyId)"
         case let .getClub(clubId):
             return "/api/v2/clubs/\(clubId)"
-        case .getBookmark:
+        case .getBookmark, .postBookmark:
             return "/api/v2/organizations/bookmarked"
         case .postBookmark:
             return "/api/v2/organizations/bookmarked"
@@ -118,7 +118,7 @@ extension SponusAPI: TargetType {
         case let .getBookmark(sort):
             return .requestParameters(parameters: ["sort": sort.rawValue], encoding: URLEncoding.queryString)
         case let .postBookmark(target):
-            return .requestParameters(parameters: ["target" : target], encoding: JSONEncoding.default)
+            return .requestParameters(parameters: ["target": target], encoding: JSONEncoding.default)
         case let .getSearch(keyword):
             return .requestParameters(parameters: ["keyword": keyword], encoding: URLEncoding.queryString)
         case .getKeyword:

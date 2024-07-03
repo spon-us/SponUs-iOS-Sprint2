@@ -23,11 +23,7 @@ struct BookmarkView: View {
             HStack {
                 Button(action: {
                     selectedBookmark = .recent
-                    bookmarkViewModel.fetchBookmarks(sort: .recent) { success in
-                        if !success {
-                            print("Failed to fetch recent bookmarks")
-                        }
-                    }
+                    fetchBookmarksForSelectedBookmark()
                 }, label: {
                     Text("최근 본")
                         .korFont(.T4KrBd)
@@ -39,11 +35,7 @@ struct BookmarkView: View {
                 
                 Button(action: {
                     selectedBookmark = .company
-                    bookmarkViewModel.fetchBookmarks(sort: .company) { success in
-                        if !success {
-                            print("Failed to fetch company bookmarks")
-                        }
-                    }
+                    fetchBookmarksForSelectedBookmark()
                 }, label: {
                     Text("기업")
                         .korFont(.T4KrBd)
@@ -55,11 +47,7 @@ struct BookmarkView: View {
                 
                 Button(action: {
                     selectedBookmark = .club
-                    bookmarkViewModel.fetchBookmarks(sort: .club) { success in
-                        if !success {
-                            print("Failed to fetch club bookmarks")
-                        }
-                    }
+                    fetchBookmarksForSelectedBookmark()
                 }, label: {
                     Text("동아리")
                         .korFont(.T4KrBd)
@@ -76,20 +64,39 @@ struct BookmarkView: View {
             .cornerRadius(20)
             .padding(.all, 20)
             
-            BookmarkListView(bookmarkViewModel: bookmarkViewModel)
-//                .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
-//                    CompanyProfileView(
-//                         companyProfileViewModel: CompanyProfileViewModel(
-//                             companyModel: homeViewModel.selectedCompany
-//                         )
-//                     )
-//                }
+            BookmarkListView(bookmarkViewModel: bookmarkViewModel, selectedBookmark: $selectedBookmark, fetchBookmarksForSelectedBookmark: fetchBookmarksForSelectedBookmark)
+            //                .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
+            //                    CompanyProfileView(
+            //                         companyProfileViewModel: CompanyProfileViewModel(
+            //                             companyModel: homeViewModel.selectedCompany
+            //                         )
+            //                     )
+            //                }
         }
         .background(Color.bgSecondary)
         .onAppear {
+            fetchBookmarksForSelectedBookmark()
+        }
+    }
+    
+    private func fetchBookmarksForSelectedBookmark() {
+        switch selectedBookmark {
+        case .recent:
             bookmarkViewModel.fetchBookmarks(sort: .recent) { success in
                 if !success {
                     print("Failed to fetch recent bookmarks")
+                }
+            }
+        case .company:
+            bookmarkViewModel.fetchBookmarks(sort: .company) { success in
+                if !success {
+                    print("Failed to fetch company bookmarks")
+                }
+            }
+        case .club:
+            bookmarkViewModel.fetchBookmarks(sort: .club) { success in
+                if !success {
+                    print("Failed to fetch club bookmarks")
                 }
             }
         }
@@ -98,6 +105,8 @@ struct BookmarkView: View {
 
 struct BookmarkListView: View {
     var bookmarkViewModel: BookmarkListViewModel
+    @Binding var selectedBookmark: BookmarkSelection
+    var fetchBookmarksForSelectedBookmark: () -> Void
     
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 8)
@@ -107,7 +116,7 @@ struct BookmarkListView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(bookmarkViewModel.bookmarkList) { cellViewModel in
-                    BookmarkListCell(bookmarkListCellViewModel: cellViewModel)
+                    BookmarkListCell(selectedBookmark: $selectedBookmark, bookmarkViewModel: bookmarkViewModel, bookmarkListCellViewModel: cellViewModel, fetchBookmarksForSelectedBookmark: fetchBookmarksForSelectedBookmark)
                 }
             }
         }
@@ -117,7 +126,10 @@ struct BookmarkListView: View {
 }
 
 struct BookmarkListCell: View {
+    @Binding var selectedBookmark: BookmarkSelection
+    var bookmarkViewModel: BookmarkListViewModel
     var bookmarkListCellViewModel: BookmarkListCellViewModel
+    var fetchBookmarksForSelectedBookmark: () -> Void
     
     var body: some View {
         VStack(spacing: 0) {
@@ -151,16 +163,20 @@ struct BookmarkListCell: View {
                 
                 Spacer()
                 
-                Image(.icBookmark)
-                    .renderingMode(.template)
-                    .foregroundStyle(
-                        bookmarkListCellViewModel.isBookmarked ? Color.textBrand :  Color.textDisabled
-                    )
-                    .onTapGesture {
-                        withAnimation {
-                            bookmarkListCellViewModel.isBookmarked.toggle()
+                Button(action: {
+                    bookmarkViewModel.postBookmark(target: bookmarkListCellViewModel.target) { success in
+                        if success {
+                            print("\(bookmarkListCellViewModel.companyName) 북마크 상태 업데이트 성공")
+                            fetchBookmarksForSelectedBookmark()
+                        } else {
+                            print("북마크 상태 업데이트 실패")
                         }
                     }
+                }, label: {
+                    Image(.icBookmark)
+                        .renderingMode(.template)
+                        .foregroundStyle(Color.textBrand)
+                })
             }
             .padding(.all, 20)
         }
