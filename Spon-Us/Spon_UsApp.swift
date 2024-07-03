@@ -15,11 +15,11 @@ struct Spon_UsApp: App {
     
     var body: some Scene {
         WindowGroup() {
-//            if (vm.loginSuccess || TokenManager.shared.isAutoLogin ?? false) && !TokenManager.shared.isRefreshTokenExpired() {
+            if (vm.loginSuccess || TokenManager.shared.isAutoLogin ?? false) && !TokenManager.shared.isRefreshTokenExpired() {
                 OnBoardingView()
-//            } else {
-//                OnBoardingView()
-//            }
+            } else {
+                OnBoardingView()
+            }
         }.environmentObject(vm)
     }
 }

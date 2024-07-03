@@ -29,6 +29,18 @@ class SignUpViewModel: ObservableObject {
             }
         }
     }
+    
+    func signUp(completion: @escaping (Bool) -> Void) {
+        let signUpDetails = SignUpRequest(email: email, password: password, name: name, organizationType: organizationType)
+        provider.request(.postSignUp(signUpDetails: signUpDetails)) { result in
+            switch result {
+            case let .success(response):
+                completion(true)
+            case let .failure(error):
+                completion(false)
+            }
+        }
+    }
 }
 
 struct EmailModel: Decodable {
@@ -40,4 +52,11 @@ struct EmailModel: Decodable {
 struct EmailModelContent: Decodable {
     let email: String
     let code: String
+}
+
+struct SignUpRequest: Encodable {
+    let email: String
+    let password: String
+    let name: String
+    let organizationType: String
 }

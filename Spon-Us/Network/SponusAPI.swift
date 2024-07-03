@@ -17,6 +17,7 @@ enum SponusAPI {
     case getKeyword
     case postKeyword(keyword: String)
     case postEmail(email: String)
+    case postSignUp(signUpDetails: SignUpRequest)
     case deleteKeyword(keyword: String)
     case deleteSearch
 }
@@ -48,6 +49,8 @@ extension SponusAPI: TargetType {
             return "/api/v2/organizations/search"
         case .postEmail:
             return "/api/v2/auth/send-code"
+        case .postSignUp:
+            return "/api/v2/organizations/join"
         }
     }
     
@@ -73,6 +76,8 @@ extension SponusAPI: TargetType {
             return .delete
         case .postEmail:
             return .get
+        case .postSignUp:
+            return .post
         }
     }
     
@@ -97,6 +102,8 @@ extension SponusAPI: TargetType {
         case .deleteSearch:
             return Data()
         case .postEmail:
+            return Data()
+        case .postSignUp(signUpDetails: let signUpDetails):
             return Data()
         }
     }
@@ -129,6 +136,8 @@ extension SponusAPI: TargetType {
             return .requestPlain
         case .postEmail(email: let email):
             return .requestPlain
+        case .postSignUp(signUpDetails: let signUpDetails):
+            return .requestJSONEncodable(signUpDetails)
         }
     }
     
@@ -162,6 +171,8 @@ extension SponusAPI: TargetType {
             return auth
         case .postEmail(email: let email):
             return ["email": email]
+        case .postSignUp(signUpDetails: let signUpDetails):
+            return ["Content-Type": "application/json"]
         }
     }
 }

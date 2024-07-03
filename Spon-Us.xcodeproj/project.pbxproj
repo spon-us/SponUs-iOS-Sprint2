@@ -29,6 +29,8 @@
 		8065E2542C342D78001B35DD /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 8065E2532C342D78001B35DD /* PopupView */; };
 		8065E2562C3431E3001B35DD /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E2552C3431E3001B35DD /* SignUpViewModel.swift */; };
 		8065E2582C347739001B35DD /* SignUpOrgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E2572C347739001B35DD /* SignUpOrgView.swift */; };
+		8065E25A2C354193001B35DD /* SignUpNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E2592C354193001B35DD /* SignUpNameView.swift */; };
+		8065E25C2C354353001B35DD /* SuccessSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E25B2C354353001B35DD /* SuccessSignUpView.swift */; };
 		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
 		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
 		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
@@ -98,6 +100,8 @@
 		8065E2502C3427AB001B35DD /* SignUpPWView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPWView.swift; sourceTree = "<group>"; };
 		8065E2552C3431E3001B35DD /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		8065E2572C347739001B35DD /* SignUpOrgView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpOrgView.swift; sourceTree = "<group>"; };
+		8065E2592C354193001B35DD /* SignUpNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameView.swift; sourceTree = "<group>"; };
+		8065E25B2C354353001B35DD /* SuccessSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessSignUpView.swift; sourceTree = "<group>"; };
 		80C320A92C284CE7004C0882 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		80C320AB2C284CFE004C0882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -220,6 +224,8 @@
 				8065E2502C3427AB001B35DD /* SignUpPWView.swift */,
 				8065E2552C3431E3001B35DD /* SignUpViewModel.swift */,
 				8065E2572C347739001B35DD /* SignUpOrgView.swift */,
+				8065E2592C354193001B35DD /* SignUpNameView.swift */,
+				8065E25B2C354353001B35DD /* SuccessSignUpView.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -501,6 +507,7 @@
 				DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */,
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
 				DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */,
+				8065E25C2C354353001B35DD /* SuccessSignUpView.swift in Sources */,
 				3B82D8B52C3253CE008E0138 /* MyPageModel.swift in Sources */,
 				DFBE0BEB2BF70BB900246814 /* ClubExceededModal.swift in Sources */,
 				80CF29EC2C29B56F00CACA53 /* AuthPlugin.swift in Sources */,
@@ -526,6 +533,7 @@
 				DF4074A72C2AD9B300321E05 /* Company.swift in Sources */,
 				DF4074A92C2AE07400321E05 /* Club.swift in Sources */,
 				1E9727222C2FFD9100252CA6 /* Keyword.swift in Sources */,
+				8065E25A2C354193001B35DD /* SignUpNameView.swift in Sources */,
 				3B82D8AC2C32531E008E0138 /* EditProfileView.swift in Sources */,
 				DFBE0BDE2BF5B67D00246814 /* ClubProfileViewModel.swift in Sources */,
 				3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */,
