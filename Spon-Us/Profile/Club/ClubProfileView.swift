@@ -99,7 +99,8 @@ struct ClubProfileCardView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .onTapGesture {
                         withAnimation {
-                            clubProfileViewModel.isBookmarked.toggle()
+                            clubProfileViewModel.toggleBookmark(target: clubProfileViewModel.clubModel.id)
+//                            homeVM.toggleBookmarkForClub(id: clubProfileViewModel.clubModel.id)
                         }
                     }
                 Text("\(clubProfileViewModel.clubModel.memberCount)명 활동 중")
