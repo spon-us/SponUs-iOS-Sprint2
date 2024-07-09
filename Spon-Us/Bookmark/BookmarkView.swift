@@ -163,20 +163,21 @@ struct BookmarkListCell: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    bookmarkViewModel.postBookmark(target: bookmarkListCellViewModel.target) { success in
-                        if success {
-                            print("\(bookmarkListCellViewModel.companyName) 북마크 상태 업데이트 성공")
-                            fetchBookmarksForSelectedBookmark()
-                        } else {
-                            print("북마크 상태 업데이트 실패")
+                Image(.icBookmark)
+                    .renderingMode(.template)
+                    .foregroundStyle(
+                        bookmarkListCellViewModel.isBookmarked ? Color.textDisabled : Color.textBrand
+                    )
+                    .onTapGesture {
+                        bookmarkViewModel.toggleBookmark(target: bookmarkListCellViewModel.target) { completed in
+                            if completed {
+                                print("북마크 \(bookmarkListCellViewModel.companyName) \(bookmarkListCellViewModel.isBookmarked) 업데이트 성공")
+                                withAnimation {
+                                    bookmarkListCellViewModel.isBookmarked.toggle()
+                                }
+                            }
                         }
                     }
-                }, label: {
-                    Image(.icBookmark)
-                        .renderingMode(.template)
-                        .foregroundStyle(Color.textBrand)
-                })
             }
             .padding(.all, 20)
         }

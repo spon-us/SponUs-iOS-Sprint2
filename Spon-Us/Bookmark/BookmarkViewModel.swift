@@ -13,7 +13,8 @@ final class BookmarkListCellViewModel: Identifiable {
     let target: Int
     var companyName: String
     var imageURL: String?
-    
+    var isBookmarked: Bool = false
+
     init(bookmarkModel: BookmarkModel) {
         self.target = bookmarkModel.target
         self.companyName = bookmarkModel.name
@@ -45,19 +46,24 @@ final class BookmarkListViewModel {
         }
     }
     
-    func postBookmark(target: Int, completion: @escaping (Bool) -> Void) {
-        provider.request(.postBookmark(target: target)) { response in
-            switch response {
+    func toggleBookmark(target: Int, completion: @escaping (Bool) -> Void) {
+        provider.request(.postBookmark(target: target)) { [weak self] result in
+            switch result {
             case .success(let response):
                 do {
-                    _ = try JSONDecoder().decode(postBookmarkResponseModel.self, from: response.data)
-                    completion(true)
+                    let body = try JSONDecoder().decode(BookmarkPostResponseModel.self, from: response.data)
+                    if let index = self?.bookmarkList.firstIndex(where: { $0.target == target }) {
+                        self?.bookmarkList[index].isBookmarked = body.content.bookmarked
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
                 } catch {
-                    print("post bookmark decode error", error.localizedDescription)
+                    print("postBookmark parse error", error.localizedDescription)
                     completion(false)
                 }
             case .failure(let error):
-                print("postBookmark API error: \(error.localizedDescription)")
+                print("postBookmark API error", error.localizedDescription)
                 completion(false)
             }
         }
