@@ -17,6 +17,9 @@ enum SponusAPI {
     case getSearch(keyword: String)
     case getKeyword
     case postKeyword(keyword: String)
+    case postEmail(email: String)
+    case postSignUp(signUpDetails: SignUpRequest)
+    case postLogin(loginDetails: LoginRequest)
     case deleteKeyword(keyword: String)
     case deleteSearch
 }
@@ -48,6 +51,12 @@ extension SponusAPI: TargetType {
             return "/api/v2/organizations/search/keywords"
         case .deleteSearch:
             return "/api/v2/organizations/search"
+        case .postEmail:
+            return "/api/v2/auth/send-code"
+        case .postSignUp:
+            return "/api/v2/organizations/join"
+        case .postLogin(loginDetails: let loginDetails):
+            return "/api/v2/auth/login"
         }
     }
     
@@ -73,6 +82,12 @@ extension SponusAPI: TargetType {
             return .delete
         case .deleteSearch:
             return .delete
+        case .postEmail:
+            return .get
+        case .postSignUp:
+            return .post
+        case .postLogin:
+            return .post
         }
     }
     
@@ -97,6 +112,12 @@ extension SponusAPI: TargetType {
         case .deleteKeyword:
             return Data()
         case .deleteSearch:
+            return Data()
+        case .postEmail:
+            return Data()
+        case .postSignUp:
+            return Data()
+        case .postLogin:
             return Data()
         }
     }
@@ -129,6 +150,12 @@ extension SponusAPI: TargetType {
             return .requestParameters(parameters: ["keyword": keyword], encoding: JSONEncoding.default)
         case .deleteSearch:
             return .requestPlain
+        case .postEmail(email: let email):
+            return .requestPlain
+        case .postSignUp(signUpDetails: let signUpDetails):
+            return .requestJSONEncodable(signUpDetails)
+        case .postLogin(loginDetails: let loginDetails):
+            return .requestJSONEncodable(loginDetails)
         }
     }
     
@@ -162,6 +189,12 @@ extension SponusAPI: TargetType {
             return auth
         case .deleteSearch:
             return auth
+        case .postEmail(email: let email):
+            return ["email": email]
+        case .postSignUp(signUpDetails: let signUpDetails):
+            return ["Content-Type": "application/json"]
+        case .postLogin(loginDetails: let loginDetails):
+            return ["Content-Type": "application/json"]
         }
     }
 }

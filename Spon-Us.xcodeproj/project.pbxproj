@@ -25,6 +25,14 @@
 		3B82D8B22C32538D008E0138 /* WriteCompanyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */; };
 		3B82D8B52C3253CE008E0138 /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B42C3253CE008E0138 /* MyPageModel.swift */; };
 		3B82D8B72C3253E3008E0138 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */; };
+		8065E24D2C332A63001B35DD /* NavigationBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24C2C332A63001B35DD /* NavigationBackBar.swift */; };
+		8065E24F2C333070001B35DD /* SignUpIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24E2C333070001B35DD /* SignUpIdView.swift */; };
+		8065E2512C3427AB001B35DD /* SignUpPWView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E2502C3427AB001B35DD /* SignUpPWView.swift */; };
+		8065E2542C342D78001B35DD /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 8065E2532C342D78001B35DD /* PopupView */; };
+		8065E2562C3431E3001B35DD /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E2552C3431E3001B35DD /* SignUpViewModel.swift */; };
+		8065E2582C347739001B35DD /* SignUpOrgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E2572C347739001B35DD /* SignUpOrgView.swift */; };
+		8065E25A2C354193001B35DD /* SignUpNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E2592C354193001B35DD /* SignUpNameView.swift */; };
+		8065E25C2C354353001B35DD /* SuccessSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E25B2C354353001B35DD /* SuccessSignUpView.swift */; };
 		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
 		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
 		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
@@ -91,6 +99,13 @@
 		3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCompanyProfileView.swift; sourceTree = "<group>"; };
 		3B82D8B42C3253CE008E0138 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
 		3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
+		8065E24C2C332A63001B35DD /* NavigationBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackBar.swift; sourceTree = "<group>"; };
+		8065E24E2C333070001B35DD /* SignUpIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpIdView.swift; sourceTree = "<group>"; };
+		8065E2502C3427AB001B35DD /* SignUpPWView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPWView.swift; sourceTree = "<group>"; };
+		8065E2552C3431E3001B35DD /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		8065E2572C347739001B35DD /* SignUpOrgView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpOrgView.swift; sourceTree = "<group>"; };
+		8065E2592C354193001B35DD /* SignUpNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNameView.swift; sourceTree = "<group>"; };
+		8065E25B2C354353001B35DD /* SuccessSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessSignUpView.swift; sourceTree = "<group>"; };
 		80C320A92C284CE7004C0882 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		80C320AB2C284CFE004C0882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -140,6 +155,7 @@
 				80CF29FC2C29CBC900CACA53 /* ReactiveMoya in Frameworks */,
 				DF40749A2C286FCC00321E05 /* Moya in Frameworks */,
 				DF4074982C286FCC00321E05 /* CombineMoya in Frameworks */,
+				8065E2542C342D78001B35DD /* PopupView in Frameworks */,
 				80CF29FA2C29CBC900CACA53 /* Moya in Frameworks */,
 				DF40749E2C286FCC00321E05 /* RxMoya in Frameworks */,
 				80CF29F82C29CBC900CACA53 /* CombineMoya in Frameworks */,
@@ -194,14 +210,44 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		80C320A82C284C59004C0882 /* OnBoarding */ = {
+		8065E24B2C332A1F001B35DD /* Componenet */ = {
+			isa = PBXGroup;
+			children = (
+				8065E24C2C332A63001B35DD /* NavigationBackBar.swift */,
+			);
+			path = Componenet;
+			sourceTree = "<group>";
+		};
+		8065E25D2C357BD7001B35DD /* View */ = {
 			isa = PBXGroup;
 			children = (
 				80C320A92C284CE7004C0882 /* OnBoardingView.swift */,
 				80C320AB2C284CFE004C0882 /* LoginView.swift */,
-				80CF29E12C29851600CACA53 /* LoginViewModel.swift */,
 				80CF29E32C298B8D00CACA53 /* AgreeView.swift */,
 				80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */,
+				8065E24E2C333070001B35DD /* SignUpIdView.swift */,
+				8065E2502C3427AB001B35DD /* SignUpPWView.swift */,
+				8065E2572C347739001B35DD /* SignUpOrgView.swift */,
+				8065E2592C354193001B35DD /* SignUpNameView.swift */,
+				8065E25B2C354353001B35DD /* SuccessSignUpView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8065E25E2C357C00001B35DD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				80CF29E12C29851600CACA53 /* LoginViewModel.swift */,
+				8065E2552C3431E3001B35DD /* SignUpViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		80C320A82C284C59004C0882 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				8065E25D2C357BD7001B35DD /* View */,
+				8065E25E2C357C00001B35DD /* ViewModel */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -256,9 +302,10 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				8065E24B2C332A1F001B35DD /* Componenet */,
 				80CF29E82C29AB6200CACA53 /* Auth */,
-				80C320A82C284C59004C0882 /* OnBoarding */,
 				DF4074932C286FA100321E05 /* Network */,
+				80C320A82C284C59004C0882 /* OnBoarding */,
 				3B74D7772BF9E69600B3B750 /* MyPage */,
 				DFBE0BE12BF630E000246814 /* Extention */,
 				DFBE0BB22BF315EC00246814 /* EnumManager.swift */,
@@ -415,6 +462,7 @@
 				80CF29F92C29CBC900CACA53 /* Moya */,
 				80CF29FB2C29CBC900CACA53 /* ReactiveMoya */,
 				80CF29FD2C29CBC900CACA53 /* RxMoya */,
+				8065E2532C342D78001B35DD /* PopupView */,
 			);
 			productName = "Spon-Us";
 			productReference = DFBE0B722BE601C400246814 /* Spon-Us.app */;
@@ -446,6 +494,7 @@
 			mainGroup = DFBE0B692BE601C400246814;
 			packageReferences = (
 				80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */,
+				8065E2522C342D78001B35DD /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = DFBE0B732BE601C400246814 /* Products */;
 			projectDirPath = "";
@@ -481,6 +530,7 @@
 				DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */,
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
 				DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */,
+				8065E25C2C354353001B35DD /* SuccessSignUpView.swift in Sources */,
 				3B82D8B52C3253CE008E0138 /* MyPageModel.swift in Sources */,
 				DFBE0BEB2BF70BB900246814 /* ClubExceededModal.swift in Sources */,
 				80CF29EC2C29B56F00CACA53 /* AuthPlugin.swift in Sources */,
@@ -488,11 +538,14 @@
 				1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
 				3B82D8B02C32536F008E0138 /* WriteClubPortfolioView.swift in Sources */,
+				8065E24D2C332A63001B35DD /* NavigationBackBar.swift in Sources */,
 				DFBE0BA72BF1A6B200246814 /* ContentView.swift in Sources */,
 				DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */,
+				8065E2562C3431E3001B35DD /* SignUpViewModel.swift in Sources */,
 				3B82D8B22C32538D008E0138 /* WriteCompanyProfileView.swift in Sources */,
 				DFBE0BAF2BF3123F00246814 /* CustomNavigationTitle.swift in Sources */,
 				3B82D8B72C3253E3008E0138 /* MypageViewModel.swift in Sources */,
+				8065E2512C3427AB001B35DD /* SignUpPWView.swift in Sources */,
 				DFBE0BD82BF4B7A000246814 /* CompanyUnavailableModal.swift in Sources */,
 				80CF29EA2C29AB7100CACA53 /* TokenManager.swift in Sources */,
 				DFBE0BB12BF314CC00246814 /* CompanyProfileViewModel.swift in Sources */,
@@ -503,6 +556,7 @@
 				DF4074A72C2AD9B300321E05 /* Company.swift in Sources */,
 				DF4074A92C2AE07400321E05 /* Club.swift in Sources */,
 				1E9727222C2FFD9100252CA6 /* Keyword.swift in Sources */,
+				8065E25A2C354193001B35DD /* SignUpNameView.swift in Sources */,
 				3B82D8AC2C32531E008E0138 /* EditProfileView.swift in Sources */,
 				DFBE0BDE2BF5B67D00246814 /* ClubProfileViewModel.swift in Sources */,
 				3B74D7792BF9E6A600B3B750 /* MyPageView.swift in Sources */,
@@ -514,6 +568,7 @@
 				80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */,
 				3B82D8AA2C3252FE008E0138 /* MyPageViewHelper.swift in Sources */,
 				DFBE0B9C2BEB147900246814 /* HomeView.swift in Sources */,
+				8065E2582C347739001B35DD /* SignUpOrgView.swift in Sources */,
 				80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */,
 				1EFADD6A2BF6251C00E333AD /* BookmarkView.swift in Sources */,
 				80CF29E42C298B8D00CACA53 /* AgreeView.swift in Sources */,
@@ -524,6 +579,7 @@
 				DFBE0B942BE6227D00246814 /* ColorManager.swift in Sources */,
 				DF4074952C286FAF00321E05 /* SponusAPI.swift in Sources */,
 				80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */,
+				8065E24F2C333070001B35DD /* SignUpIdView.swift in Sources */,
 				DF4074A12C2A900A00321E05 /* Organization.swift in Sources */,
 				1E9727242C3134AC00252CA6 /* HideKeyboardExtension.swift in Sources */,
 			);
@@ -743,6 +799,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8065E2522C342D78001B35DD /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.1;
+			};
+		};
 		80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -762,6 +826,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8065E2532C342D78001B35DD /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8065E2522C342D78001B35DD /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
+		};
 		80CF29F72C29CBC900CACA53 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 80CF29F62C29CBC900CACA53 /* XCRemoteSwiftPackageReference "Moya" */;

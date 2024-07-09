@@ -9,9 +9,13 @@ import SwiftUI
 
 
 struct HomeView: View {
+    @EnvironmentObject var loginVM: LoginViewModel
     @State var homeViewModel = HomeViewModel()
     var body: some View {
         VStack(spacing: 0) {
+            Button(action: {loginVM.logout()}) {
+                Text("로그아웃 Test 버튼!!")
+            }
             HomeStatusBarView(homeViewModel: homeViewModel)
             if homeViewModel.isPortfolioUploaded {
                 HomeCardGuestView(homeViewModel: homeViewModel)

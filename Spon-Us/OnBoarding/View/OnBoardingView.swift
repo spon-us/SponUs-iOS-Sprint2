@@ -28,7 +28,7 @@ struct OnBoardingView: View {
                         .foregroundStyle(.white)
                         Spacer()
                     }.padding(.bottom, 80).padding(.top, 296)
-                    NavigationLink (destination: LoginView(loginVM: LoginViewModel()).navigationBarBackButtonHidden()){
+                    NavigationLink (destination: LoginView().navigationBarBackButtonHidden()){
                         Text("시작하기")
                             .font(.But1KrBd)
                             .foregroundColor(.textWhite)
