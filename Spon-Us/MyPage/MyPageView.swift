@@ -16,6 +16,7 @@ enum MyPageRoute: String, Hashable {
     case contactUs = "문의하기"
     case privacyRule = "개인정보처리방침"
     case termsOfUse = "이용약관"
+//    case clubProfile = "내프로필"
     
     @ViewBuilder func view() -> some View {
         switch self {
@@ -33,6 +34,8 @@ enum MyPageRoute: String, Hashable {
             WriteClubProfileView()
         case .writePortfolio:
             WriteClubPortfolioView()
+//        case .clubProfile:
+//            ClubProfileView2()
         }
     }
     
@@ -234,4 +237,84 @@ struct MyPageCell: View {
 #Preview {
     MyPageView()
         .environmentObject(MypageNavigationPathFinder.shared)
+}
+
+struct ClubProfileView2: View {
+    @State var clubProfileViewModel: ClubProfileViewModel
+
+    var body: some View {
+        ZStack {
+            VStack(spacing: 0) {
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ClubProfileCardView(clubProfileViewModel: clubProfileViewModel)
+                        ClubIntroductionView(clubProfileViewModel: clubProfileViewModel)
+                        ClubSNSView(clubProfileViewModel: clubProfileViewModel)
+                        ClubProfilePortfolioView(clubProfileViewModel: clubProfileViewModel)
+                        Spacer()
+                    }
+                }
+                .padding(.horizontal, 20)
+                .scrollIndicators(.hidden)
+                
+                ClubEditButton(clubProfileViewModel: clubProfileViewModel)
+                
+            }
+            .background(Color.bgSecondary)
+            
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                HStack(spacing: 0) {
+                    CustomBackButton()
+                    CustomNavigationTitle(title: "동아리 프로필")
+                }
+            }
+        }
+    }
+}
+
+struct ClubEditButton: View {
+    var clubProfileViewModel: ClubProfileViewModel
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Divider().foregroundStyle(Color.line200)
+                .padding(.bottom, 20)
+            
+            HStack(spacing: 0) {
+                Button {
+                    
+                } label: {
+                    Text("포트폴리오 수정")
+                        .korFont(.But1KrBd)
+                        .frame(maxWidth: .infinity)
+                      .foregroundStyle(Color.textBrand)
+                      .padding(.vertical, 16)
+                      .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color.bgBrandSecondary)
+                      )
+                }
+                .padding(.trailing, 7)
+                
+                Button {
+                    
+                } label: {
+                    Text("내용 수정")
+                        .korFont(.But1KrBd)
+                        .frame(maxWidth: .infinity)
+                      .foregroundStyle(Color.textBrand)
+                      .padding(.vertical, 16)
+                      .padding(.horizontal, 32)
+                      .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color.bgBrandSecondary)
+                      )
+                }
+            }
+            .padding(.horizontal, 20)
+        }.background(Color.bgWhite)
+    }
 }

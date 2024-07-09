@@ -62,12 +62,6 @@ struct WriteClubPortfolioView: View {
             ToolbarItem(placement: .topBarLeading) {
                 HStack(spacing: 0) {
                     CustomBackButton()
-                    
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("버튼")
-                    })
                 }
             }
         }
