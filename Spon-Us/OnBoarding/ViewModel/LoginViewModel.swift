@@ -9,7 +9,13 @@ import Foundation
 import Moya
 
 class LoginViewModel: ObservableObject {
-    @Published var loginSuccess: Bool = false
+    @Published var loginSuccess: Bool = false {
+        didSet {
+            if loginSuccess == true {
+                TokenManager.shared.isAutoLogin = true
+            }
+        }
+    }
     
     func logout() {
         loginSuccess = false

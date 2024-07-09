@@ -164,9 +164,8 @@ extension SponusAPI: TargetType {
     }
     
     var headers: [String : String]? {
-        
-        // TODO: 로그인 API 달리면 토큰 바꾸기
-        let auth = ["Authorization": "Bearer "]
+        let accessToken: String = TokenManager.shared.accessToken ?? ""
+        let auth = ["Authorization": "Bearer \(accessToken)"]
         
         switch self {
         case .getOrganizations:
