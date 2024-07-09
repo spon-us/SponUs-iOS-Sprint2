@@ -17,7 +17,6 @@ struct HomeView: View {
                 Text("로그아웃 Test 버튼!!")
             }
             HomeStatusBarView(homeViewModel: homeViewModel)
-            
             if homeViewModel.isPortfolioUploaded {
                 HomeCardGuestView(homeViewModel: homeViewModel)
             }
@@ -27,22 +26,24 @@ struct HomeView: View {
             
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
-            .onAppear() {
-                homeViewModel.onHomeViewAppear()
-            }
+            .onAppear(perform: homeViewModel.onHomeViewAppear)
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
                 CompanyProfileView(
                     companyProfileViewModel: CompanyProfileViewModel(
-                        companyModel: homeViewModel.selectedCompany
+                        companyModel: homeViewModel.selectedCompany,
+                        isBookmarked: homeViewModel.currentBookmarkStatus
                     )
                 )
+                .onDisappear(perform: homeViewModel.onHomeViewAppear)
             }
             .navigationDestination(isPresented: $homeViewModel.goToClubProfileView) {
                 ClubProfileView(
                     clubProfileViewModel: ClubProfileViewModel(
-                        clubModel: homeViewModel.selectedClub
+                        clubModel: homeViewModel.selectedClub,
+                        isBookmarked: homeViewModel.currentBookmarkStatus
                     )
                 )
+                .onDisappear(perform: homeViewModel.onHomeViewAppear)
             }
     }
 }
@@ -257,6 +258,7 @@ struct HomeCategorySelectionTab: View {
 
 struct HomeListCell: View {
     @State var organizationData: OrganizationModel
+    var homeViewModel: HomeViewModel
     var body: some View {
         
         VStack(spacing: 0) {
@@ -275,8 +277,12 @@ struct HomeListCell: View {
                                 organizationData.isBookmarked ? Color.textBrand : Color.textSecondary
                             )
                             .onTapGesture {
-                                withAnimation {
-                                    organizationData.isBookmarked.toggle()
+                                homeViewModel.toggleBookmark(target: organizationData.id) { completed in
+                                    if completed {
+                                        withAnimation {
+                                            organizationData.isBookmarked = homeViewModel.currentBookmarkStatus
+                                        }
+                                    }
                                 }
                             }
                     }
@@ -310,6 +316,18 @@ struct HomeListCell: View {
                 RoundedRectangle(cornerRadius: 24)
                     .stroke(Color.line200, lineWidth: 1)
             )
+            .onTapGesture {
+                switch organizationData.organizationType {
+                case "COMPANY":
+                    homeViewModel.currentBookmarkStatus = organizationData.isBookmarked
+                    homeViewModel.onTapCompany(companyId: organizationData.id)
+                case "CLUB":
+                    homeViewModel.currentBookmarkStatus = organizationData.isBookmarked
+                    homeViewModel.onTapClub(clubId: organizationData.id)
+                default:
+                    return
+                }
+            }
     }
 }
 
@@ -327,19 +345,19 @@ struct HomeListView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
                     if homeViewModel.companyClubSelection == .company {
-                        ForEach(homeViewModel.filteredCompanies, id: \.id) { org in
-                            HomeListCell(organizationData: org)
-                                .onTapGesture {
-                                    homeViewModel.onTapCompany(companyId: org.id)
-                                }
+                        ForEach(homeViewModel.filteredCompanies, id: \.hashValue) { org in
+                            HomeListCell(
+                                organizationData: org,
+                                homeViewModel: homeViewModel
+                            )
                         }
                     }
                     else {
-                        ForEach(homeViewModel.filteredClubs, id: \.id) { org in
-                            HomeListCell(organizationData: org)
-                                .onTapGesture {
-                                    homeViewModel.onTapClub(clubId: org.id)
-                                }
+                        ForEach(homeViewModel.filteredClubs, id: \.hashValue) { org in
+                            HomeListCell(
+                                organizationData: org,
+                                homeViewModel: homeViewModel
+                            )
                         }
                     }
                 }.scrollTargetLayout()

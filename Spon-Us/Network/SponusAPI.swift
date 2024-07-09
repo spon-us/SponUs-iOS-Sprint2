@@ -13,6 +13,7 @@ enum SponusAPI {
     case getCompany(companyId: Int)
     case getClub(clubId: Int)
     case getBookmark(sort: BookmarkTargetType)
+    case postBookmark(target: Int)
     case getSearch(keyword: String)
     case getKeyword
     case postKeyword(keyword: String)
@@ -37,6 +38,8 @@ extension SponusAPI: TargetType {
         case let .getClub(clubId):
             return "/api/v2/clubs/\(clubId)"
         case .getBookmark:
+            return "/api/v2/organizations/bookmarked"
+        case .postBookmark:
             return "/api/v2/organizations/bookmarked"
         case .getSearch:
             return "/api/v2/organizations/search"
@@ -67,6 +70,8 @@ extension SponusAPI: TargetType {
             return .get
         case .getBookmark:
             return .get
+        case .postBookmark:
+            return .post
         case .getSearch:
             return .get
         case .getKeyword:
@@ -95,6 +100,8 @@ extension SponusAPI: TargetType {
         case .getClub:
             return Data()
         case .getBookmark:
+            return Data()
+        case .postBookmark:
             return Data()
         case .getSearch:
             return Data()
@@ -131,6 +138,8 @@ extension SponusAPI: TargetType {
             return .requestPlain
         case let .getBookmark(sort):
             return .requestParameters(parameters: ["sort": sort.rawValue], encoding: URLEncoding.queryString)
+        case let .postBookmark(target):
+            return .requestParameters(parameters: ["target": target], encoding: JSONEncoding.default)
         case let .getSearch(keyword):
             return .requestParameters(parameters: ["keyword": keyword], encoding: URLEncoding.queryString)
         case .getKeyword:
@@ -167,6 +176,8 @@ extension SponusAPI: TargetType {
         case .getClub:
             return auth
         case .getBookmark:
+            return auth
+        case .postBookmark:
             return auth
         case .getSearch:
             return auth

@@ -20,7 +20,7 @@ struct OrganizationDataModel: Codable {
     let content: [OrganizationModel]
 }
 
-struct OrganizationModel: Codable {
+struct OrganizationModel: Codable, Hashable {
     let id: Int
     var name: String
     var email: String
@@ -31,4 +31,9 @@ struct OrganizationModel: Codable {
     var organizationType: String
     var subType: String
     var isBookmarked: Bool
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(isBookmarked)
+    }
 }

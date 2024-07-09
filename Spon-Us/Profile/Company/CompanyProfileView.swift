@@ -12,7 +12,9 @@ struct CompanyProfileView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                CompanyProfileCardView(companyProfileViewModel: companyProfileViewModel)
+                CompanyProfileCardView(
+                    companyProfileViewModel: companyProfileViewModel
+                )
                 Spacer()
             }
             .padding(.horizontal, 20)
@@ -139,9 +141,8 @@ struct CompanyProfileCardView: View {
                         .background(Color.bgTertiary)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .onTapGesture {
-                            withAnimation {
-                                companyProfileViewModel.isBookmarked.toggle()
-                            }
+                            companyProfileViewModel.toggleBookmark(target: companyProfileViewModel.companyModel.id
+                            )
                         }
                     Button {
                         withAnimation {
