@@ -43,18 +43,3 @@ enum BookmarkTargetType: String, Codable {
     case company = "COMPANY"
     case club = "CLUB"
 }
-
-struct postBookmarkResponseModel: Codable {
-    let statusCode: String
-    let message: String
-    let content: postBookmarkModel
-}
-
-struct postBookmarkModel: Codable {
-    let id: Int
-    let organizationId: Int
-    let target: Int
-    let targetType: String
-    let createdAt: String
-    let bookmarked: Bool
-}

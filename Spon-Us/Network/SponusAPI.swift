@@ -34,7 +34,7 @@ extension SponusAPI: TargetType {
             return "/api/v2/companies/\(companyId)"
         case let .getClub(clubId):
             return "/api/v2/clubs/\(clubId)"
-        case .getBookmark, .postBookmark:
+        case .getBookmark:
             return "/api/v2/organizations/bookmarked"
         case .postBookmark:
             return "/api/v2/organizations/bookmarked"
