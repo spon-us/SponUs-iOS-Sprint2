@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var selectedTab = 0
+    @State var selectedTab: TabSelection = .init()
     var body: some View {
         NavigationStack {
-            TabView(selection: $selectedTab) {
+            TabView(selection: $selectedTab.currentTab) {
                 HomeView()
                     .tabItem {
                         VStack {
@@ -22,7 +22,7 @@ struct ContentView: View {
                         }
                     }
                     .tag(0)
-                SearchView()
+                SearchView(selectedTab: $selectedTab)
                     .tabItem {
                         VStack {
                             Image(.icSearch)
@@ -63,7 +63,15 @@ struct ContentView: View {
                 UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
             }
         }
+        .onChange(of: selectedTab.currentTab) { oldValue, _ in
+            selectedTab.previousTab = oldValue
+        }
     }
+}
+
+struct TabSelection {
+    var currentTab: Int = 0
+    var previousTab: Int = 0
 }
 
 #Preview {
