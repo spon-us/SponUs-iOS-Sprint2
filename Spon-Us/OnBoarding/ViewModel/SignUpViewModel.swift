@@ -24,7 +24,7 @@ class SignUpViewModel: ObservableObject {
                 if let emailResponse = try? response.map(EmailModel.self) {
                     self.code = emailResponse.content.code
                 }
-            case let .failure(error):
+            case .failure:
                 return
             }
         }
@@ -34,9 +34,9 @@ class SignUpViewModel: ObservableObject {
         let signUpDetails = SignUpRequest(email: email, password: password, name: name, organizationType: organizationType)
         provider.request(.postSignUp(signUpDetails: signUpDetails)) { result in
             switch result {
-            case let .success(response):
+            case .success:
                 completion(true)
-            case let .failure(error):
+            case .failure:
                 completion(false)
             }
         }
