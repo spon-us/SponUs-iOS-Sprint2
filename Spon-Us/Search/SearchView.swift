@@ -10,11 +10,18 @@ import SwiftUI
 struct SearchView: View {
     @State private var searchData: String = ""
     @State private var recentSearches: [String] = []
+    @Binding var selectedTab: TabSelection
     var searchViewModel = SearchViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
-            SearchBarView(searchData: $searchData, recentSearches: $recentSearches, searchViewModel: searchViewModel, performSearch: performSearch)
+            SearchBarView(
+                searchData: $searchData,
+                recentSearches: $recentSearches,
+                searchViewModel: searchViewModel,
+                performSearch: performSearch,
+                selectedTab: $selectedTab
+            )
             
             VStack(spacing: 0) {
                 if recentSearches.isEmpty {
@@ -161,6 +168,7 @@ struct SearchView: View {
             }
             UIApplication.shared.hideKeyboard()
         }
+        .toolbar(.hidden, for: .tabBar)
     }
     
     func performSearch() {
@@ -191,12 +199,11 @@ struct SearchBarView: View {
     @Binding var recentSearches: [String]
     var searchViewModel: SearchViewModel
     var performSearch: () -> Void
+    @Binding var selectedTab: TabSelection
     
     var body: some View {
         HStack {
-            CustomBackButton()
-                .frame(width: 40, height: 40)
-                .padding(.leading, 5)
+            PreviousTabButton(selectedTab: $selectedTab)
             
             TextField("협업할 기업 혹은 동아리를 검색해 보세요.", text: $searchData, onCommit: {
                 if !searchData.isEmpty {
@@ -216,5 +223,23 @@ struct SearchBarView: View {
             .padding(.trailing, 20)
         }
         .frame(height: 56)
+    }
+}
+
+struct PreviousTabButton: View {
+    @Binding var selectedTab: TabSelection
+    
+    var body: some View {
+        Button {
+            withAnimation {
+                selectedTab.currentTab = selectedTab.previousTab
+            }
+        } label: {
+            Image(.icRight)
+                .renderingMode(.template)
+                .scaleEffect(x: -1, y: 1)
+                .foregroundStyle(Color.textBrand)
+        }.frame(width: 40, height: 40)
+            .padding(.leading, 5)
     }
 }
