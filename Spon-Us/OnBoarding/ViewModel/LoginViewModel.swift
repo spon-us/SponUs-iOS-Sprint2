@@ -44,7 +44,7 @@ class LoginViewModel: ObservableObject {
                     }
                     print("🚨로그인 API 404에러 매핑 실패")
                 }
-            case let .failure(error):
+            case .failure:
                 completion("failure")
                 print("🚨 로그인 API 실패")
             }

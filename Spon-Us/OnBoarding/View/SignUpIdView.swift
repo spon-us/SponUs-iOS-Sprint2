@@ -55,7 +55,7 @@ struct SignUpIdView: View {
                     .font(.T4KrMd)
                     .foregroundColor(.textPrimary)
                     .frame(maxWidth: .infinity)
-                    .onChange(of: id) { newValue in
+                    .onChange(of: id) { _, _ in
                         idValid = isValidEmail(id)
                         idEmpty = {return id == ""}()
                     }

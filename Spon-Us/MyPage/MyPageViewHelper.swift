@@ -61,7 +61,7 @@ struct WriteCancleModal: View {
             
             Button {
                 dismiss()
-                navPathFinder.path.popLast()
+//                navPathFinder.path.popLast()
             } label: {
                 Text("중단하기")
                     .korFont(.But1KrBd)

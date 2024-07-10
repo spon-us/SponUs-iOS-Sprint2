@@ -75,7 +75,7 @@ struct SignUpPWView: View {
                         .font(.T4KrMd)
                         .foregroundColor(.textPrimary)
                         .frame(maxWidth: .infinity)
-                        .onChange(of: password2) { newValue in
+                        .onChange(of: password2) { _, _ in
                             passwordValid = (password1 == password2)
                         }
                         .onTapGesture {
@@ -86,7 +86,7 @@ struct SignUpPWView: View {
                         .font(.T4KrMd)
                         .foregroundColor(.textPrimary)
                         .frame(maxWidth: .infinity)
-                        .onChange(of: password2) { newValue in
+                        .onChange(of: password2) { _, _ in
                             passwordValid = (password1 == password2)
                         }
                         .onTapGesture {
