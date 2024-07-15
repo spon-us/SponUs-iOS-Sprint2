@@ -21,10 +21,6 @@ final class CompanyProfileViewModel {
         self.isBookmarked = isBookmarked
     }
     
-    var coworkCategory: [CoworkCategory] = [.linkedProject, .partnership, .sponsorship]
-    var companyCategory: [CompanyCategory] = [.food, .education, .beauty]
-    var sponsoredGoods: [String] = ["풀무원선물세트풀무원선물세트풀무원선물세트풀무원선물세트", "김", "쌀", "두부"]
-    
     var isSuggestModalPresented = false
     var profileStatus: ProfileStatus = .available
     
@@ -44,6 +40,40 @@ final class CompanyProfileViewModel {
             case .failure(let error):
                 print("postBookmark API error", error.localizedDescription)
             }
+        }
+    }
+
+    func convertCompanyTypeToKR(from type: String) -> String {
+        switch type {
+        case "NONE":
+            return "없음"
+        case "FOOD":
+            return "식품"
+        case "HEALTH":
+            return "건강"
+        case "LIFESTYLE":
+            return "생활"
+        case "EDUCATION":
+            return "교육"
+        case "BEAUTY":
+            return "뷰티"
+        case "ETC":
+            return "기타"
+        default:
+            return "Unexpected Company Type"
+        }
+    }
+
+    func convertCollabTypeToKR(from type: String) -> String {
+        switch type {
+        case "PARTNERSHIP_PROJECT":
+            return "연계 프로젝트"
+        case "ALLIANCE":
+            return "제휴"
+        case "SPONSORSHIP":
+            return "협찬"
+        default:
+            return "Unexpected Collaboration Type"
         }
     }
 }

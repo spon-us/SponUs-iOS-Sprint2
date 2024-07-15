@@ -25,5 +25,5 @@ struct ClubModel: Codable {
     var profileStatus: String
     var role: String
     var memberCount: Int
-    var clubType: String
+    var clubTypes: [String]
 }

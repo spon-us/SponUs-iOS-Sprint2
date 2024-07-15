@@ -29,8 +29,8 @@ final class HomeViewModel {
         organizationType: "",
         profileStatus: "",
         role: "",
-        companyType: "",
-        collaborationType: "",
+        companyTypes: [],
+        collaborationTypes: [],
         sponsorshipContent: ""
     )
     
@@ -46,12 +46,12 @@ final class HomeViewModel {
         profileStatus: "",
         role: "",
         memberCount: 0,
-        clubType: ""
+        clubTypes: []
     )
     
     var selectedOrg: OrganizationModel = .init(
-        id: 0, name: "", email: "", bookmarkCount: 0, viewCount: 0, organizationType: "", subType: "", isBookmarked: false)
-    
+        id: 0, name: "", email: "", bookmarkCount: 0, viewCount: 0, organizationType: "", subTypes: [], isBookmarked: false)
+
     var isLoaded = false
     var unreadNotificationsExist = false
     
@@ -142,17 +142,17 @@ final class HomeViewModel {
             case .all:
                 filteredCompanies = companies
             case .beauty:
-                filteredCompanies = companies.filter { $0.subType == "BEAUTY" }
+                filteredCompanies = companies.filter { $0.subTypes.contains("BEAUTY") }
             case .education:
-                filteredCompanies = companies.filter { $0.subType == "EDUCATION" }
+                filteredCompanies = companies.filter { $0.subTypes.contains("EDUCATION") }
             case .food:
-                filteredCompanies = companies.filter { $0.subType == "FOOD" }
+                filteredCompanies = companies.filter { $0.subTypes.contains("FOOD") }
             case .health:
-                filteredCompanies = companies.filter { $0.subType == "HEALTH" }
+                filteredCompanies = companies.filter { $0.subTypes.contains("HEALTH") }
             case .lifestyle:
-                filteredCompanies = companies.filter { $0.subType == "LIFESTYLE" }
+                filteredCompanies = companies.filter { $0.subTypes.contains("LIFESTYLE") }
             case .others:
-                filteredCompanies = companies.filter { $0.subType == "ETC" }
+                filteredCompanies = companies.filter { $0.subTypes.contains("ETC") }
             }
         }
     }
@@ -163,17 +163,17 @@ final class HomeViewModel {
             case .all:
                 filteredClubs = clubs
             case .advertisingAndMarketing:
-                filteredClubs = clubs.filter { $0.subType == "AD_MARKETING" }
+                filteredClubs = clubs.filter { $0.subTypes.contains("AD_MARKETING") } 
             case .design:
-                filteredClubs = clubs.filter { $0.subType == "DESIGN" }
+                filteredClubs = clubs.filter { $0.subTypes.contains("DESIGN") }
             case .iTAndSoftware:
-                filteredClubs = clubs.filter { $0.subType == "IT_SOFTWARE" }
+                filteredClubs = clubs.filter { $0.subTypes.contains("IT_SOFTWARE") }
             case .photographyAndVideo:
-                filteredClubs = clubs.filter { $0.subType == "PHOTO_VIDEO" }
+                filteredClubs = clubs.filter { $0.subTypes.contains("PHOTO_VIDEO") }
             case .planningAndIdeas:
-                filteredClubs = clubs.filter { $0.subType == "PLANNING_IDEA" }
+                filteredClubs = clubs.filter { $0.subTypes.contains("PLANNING_IDEA") }
             case .others:
-                filteredClubs = clubs.filter { $0.subType == "ETC" }
+                filteredClubs = clubs.filter { $0.subTypes.contains("ETC") }
             }
         }
     }

@@ -24,7 +24,7 @@ struct CompanyModel: Codable {
     var organizationType: String
     var profileStatus: String
     var role: String
-    var companyType: String
-    var collaborationType: String
+    var companyTypes: [String]
+    var collaborationTypes: [String]
     var sponsorshipContent: String?
 }

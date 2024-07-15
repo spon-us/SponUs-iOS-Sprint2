@@ -65,11 +65,11 @@ struct CompanyProfileCardView: View {
                     .padding(.leading, 28)
                 ScrollView(.horizontal) {
                     HStack(spacing: 0) {
-                        ForEach(0 ..< companyProfileViewModel.coworkCategory.count, id: \.self) { index in
-                            Text(companyProfileViewModel.coworkCategory[index].rawValue)
+                        ForEach(0 ..< companyProfileViewModel.companyModel.collaborationTypes.count, id: \.self) { index in
+                            Text(companyProfileViewModel.convertCollabTypeToKR(from: companyProfileViewModel.companyModel.collaborationTypes[index]))
                                 .font(.T4KrMd)
                                 .foregroundStyle(Color.textPrimary)
-                            if (index != companyProfileViewModel.coworkCategory.count - 1) {
+                            if (index != companyProfileViewModel.companyModel.collaborationTypes.count - 1) {
                                 Ellipse().frame(width: 4, height: 4)
                                     .foregroundStyle(Color.line200)
                                     .padding(.horizontal, 8)
@@ -89,11 +89,11 @@ struct CompanyProfileCardView: View {
                     .padding(.leading, 28)
                 ScrollView(.horizontal) {
                     HStack(spacing: 0) {
-                        ForEach(0 ..< companyProfileViewModel.companyCategory.count, id: \.self) { index in
-                            Text(companyProfileViewModel.companyCategory[index].rawValue)
+                        ForEach(0 ..< companyProfileViewModel.companyModel.companyTypes.count, id: \.self) { index in
+                            Text(companyProfileViewModel.convertCompanyTypeToKR(from: companyProfileViewModel.companyModel.companyTypes[index]))
                                 .korFont(.T4KrMd)
                                 .foregroundStyle(Color.textPrimary)
-                            if (index != companyProfileViewModel.companyCategory.count - 1) {
+                            if (index != companyProfileViewModel.companyModel.companyTypes.count - 1) {
                                 Ellipse().frame(width: 4, height: 4)
                                     .foregroundStyle(Color.line200)
                                     .padding(.horizontal, 8)
@@ -106,32 +106,22 @@ struct CompanyProfileCardView: View {
                     .scrollIndicators(.hidden)
                     
             }.padding(.top, 4)
-            
-            if !companyProfileViewModel.sponsoredGoods.isEmpty {
-                HStack(spacing: 0) {
-                    Text("협찬 물품")
+
+            HStack(spacing: 0) {
+                Text("협찬 물품")
+                    .korFont(.T4KrMd)
+                    .foregroundStyle(Color.textSecondary)
+                    .padding(.leading, 28)
+                ScrollView(.horizontal) {
+                    Text(companyProfileViewModel.companyModel.sponsorshipContent ?? "협찬 물품이 없습니다")
                         .korFont(.T4KrMd)
-                        .foregroundStyle(Color.textSecondary)
-                        .padding(.leading, 28)
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 0) {
-                            ForEach(0 ..< companyProfileViewModel.sponsoredGoods.count, id: \.self) { index in
-                                Text(companyProfileViewModel.sponsoredGoods[index])
-                                    .korFont(.T4KrMd)
-                                    .foregroundStyle(Color.textPrimary)
-                                if (index != companyProfileViewModel.sponsoredGoods.count - 1) {
-                                    Ellipse().frame(width: 4, height: 4)
-                                        .foregroundStyle(Color.line200)
-                                        .padding(.horizontal, 8)
-                                }
-                            }
-                        }
-                    }.frame(height: 24)
-                        .padding(.leading, 24)
-                        .padding(.trailing, 28)
-                        .scrollIndicators(.hidden)
-                }.padding(.top, 4)
-            }
+                        .foregroundStyle(Color.textPrimary)
+                }.frame(height: 24)
+                    .padding(.leading, 24)
+                    .padding(.trailing, 28)
+                    .scrollIndicators(.hidden)
+            }.padding(.top, 4)
+
             if companyProfileViewModel.profileStatus != .unavailable {
                 HStack(spacing: 0) {
                     Image(.icBookmark)
