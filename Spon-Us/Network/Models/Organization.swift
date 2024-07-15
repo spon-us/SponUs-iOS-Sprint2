@@ -29,7 +29,7 @@ struct OrganizationModel: Codable, Hashable {
     var bookmarkCount: Int
     var viewCount: Int
     var organizationType: String
-    var subType: String
+    var subTypes: [String]
     var isBookmarked: Bool
     
     func hash(into hasher: inout Hasher) {

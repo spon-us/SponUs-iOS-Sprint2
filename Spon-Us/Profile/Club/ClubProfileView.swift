@@ -71,11 +71,11 @@ struct ClubProfileCardView: View {
                     .padding(.leading, 28)
                 ScrollView(.horizontal) {
                     HStack(spacing: 0) {
-                        ForEach(0 ..< clubProfileViewModel.clubCategory.count, id: \.self) { index in
-                            Text(clubProfileViewModel.clubCategory[index].rawValue)
+                        ForEach(0 ..< clubProfileViewModel.clubModel.clubTypes.count, id: \.self) { index in
+                            Text(clubProfileViewModel.clubModel.clubTypes[index])
                                 .korFont(.T4KrMd)
                                 .foregroundStyle(Color.textPrimary)
-                            if (index != clubProfileViewModel.clubCategory.count - 1) {
+                            if (index != clubProfileViewModel.clubModel.clubTypes.count - 1) {
                                 Ellipse().frame(width: 4, height: 4)
                                     .foregroundStyle(Color.line200)
                                     .padding(.horizontal, 8)
@@ -263,7 +263,6 @@ struct ClubProfilePortfolioPageView: View {
             LazyHStack(spacing: 0) {
                 ForEach(clubProfileViewModel.cardnewsDummyData.indices, id: \.self) { index in
                     VStack(spacing: 0) {
-                        
                         ZStack {
                             clubProfileViewModel.cardnewsDummyData[index].image
                                 .resizable()

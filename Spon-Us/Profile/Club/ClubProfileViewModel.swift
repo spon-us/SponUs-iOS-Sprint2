@@ -16,7 +16,6 @@ final class ClubProfileViewModel {
     var isBookmarked: Bool
     
     var isSuggestModalPresented: Bool = false
-    var clubCategory: [ClubCategory] = [.planningAndIdeas, .iTAndSoftware, .photographyAndVideo]
     var snsURL: [String] = ["https://www.instagram.com/sponus_official?igsh=aXZ4OG85cGcxcDQw", "https://www.facebook.com", "https://www.example.com"]
     var cardnewsDummyData = [PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel()]
     
@@ -63,6 +62,27 @@ final class ClubProfileViewModel {
             case .failure(let error):
                 print("postBookmark API error", error.localizedDescription)
             }
+        }
+    }
+
+    func convertClubTypeToKR(from type: String) -> String {
+        switch type {
+        case "NONE":
+            return "없음"
+        case "PLANNING_IDEA":
+            return "기획/아이디어"
+        case "AD_MARKETING":
+            return "광고/마케팅"
+        case "DESIGN":
+            return "디자인"
+        case "PHOTO_VIDEO":
+            return "사진/영상"
+        case "IT_SOFTWARE":
+            return "IT/소프트웨어"
+        case "ETC":
+            return "기타"
+        default:
+            return "Unexpected Club Type"
         }
     }
 }
