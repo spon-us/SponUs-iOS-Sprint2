@@ -21,9 +21,9 @@ struct HomeView: View {
                 HomeCardGuestView(homeViewModel: homeViewModel)
             }
             HomeSelectionTabView(homeViewModel: homeViewModel)
-            
+
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
-            
+
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
             .onAppear(perform: homeViewModel.onHomeViewAppear)
@@ -77,7 +77,7 @@ struct HomeStatusBarView: View {
                 .frame(width: 28, height: 28)
                 .padding(6)
             }.padding([.top, .trailing], 20)
-            
+
         }.frame(height: 56)
             .padding(.bottom, 20)
     }
@@ -90,19 +90,9 @@ struct HomeCardGuestView: View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 VStack(spacing: 0) {
-                    if homeViewModel.isLoaded {
-                        AsyncImage(url: URL(string: "https://www.example.com"))
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                    }
-                    else {
-                        Image(.icGuest)
-                            .renderingMode(.template)
-                            .foregroundStyle(Color.bgWhite)
-                            .padding(8)
-                            .background(Color.bgTertiary)
-                            .clipShape(Circle())
-                    }
+                    AsyncImage(url: URL(string: "https://www.example.com"))
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
                     Spacer()
                 }.padding(.trailing, 16)
                 VStack(spacing: 0) {
@@ -150,7 +140,7 @@ struct HomeCardGuestView: View {
 
 struct HomeSelectionTabView: View {
     var homeViewModel: HomeViewModel
-    
+
     var body: some View {
         HStack(spacing: 0) {
             Text("기업")
@@ -184,7 +174,7 @@ struct HomeCategorySelectionCell: View {
     var isClubMatched: Bool {
         homeViewModel.clubCategory == clubSelection
     }
-    
+
     var body: some View {
         if companySelection != nil {
             Text(title)
@@ -260,12 +250,15 @@ struct HomeListCell: View {
     @State var organizationData: OrganizationModel
     var homeViewModel: HomeViewModel
     var body: some View {
-        
         VStack(spacing: 0) {
+
             ZStack {
-                Image(.rectangle1363)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                AsyncImage(url: URL(string: organizationData.imageUrl ?? "")) { image in
+                    image.resizable().aspectRatio(1, contentMode: .fit)
+                } placeholder: {
+                    Image(.rectangle1363).resizable().aspectRatio(1, contentMode: .fit)
+                }
+
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
                         Spacer()
@@ -289,6 +282,7 @@ struct HomeListCell: View {
                     Spacer()
                 }
             }
+
             HStack(spacing: 0) {
                 Text(organizationData.name)
                     .korFont(.T4KrBd)
@@ -296,7 +290,7 @@ struct HomeListCell: View {
                 Spacer()
             }.padding(.top, 12)
                 .padding(.leading, 20)
-            
+
             HStack(spacing: 0) {
                 Text("제안하기")
                     .korFont(.B2KrMd)
@@ -334,12 +328,12 @@ struct HomeListCell: View {
 
 struct HomeListView: View {
     @Bindable var homeViewModel: HomeViewModel
-    
+
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible()),
     ]
-    
+
     var body: some View {
         ZStack {
             ScrollView {
@@ -363,7 +357,7 @@ struct HomeListView: View {
                 }.scrollTargetLayout()
             }.scrollIndicators(.hidden)
                 .scrollPosition(id: $homeViewModel.scrollID)
-            
+
             if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
                 VStack(spacing: 0) {
                     Spacer()

@@ -51,11 +51,15 @@ struct ClubProfileCardView: View {
     var clubProfileViewModel: ClubProfileViewModel
     var body: some View {
         VStack(spacing: 0) {
-            
-            Image(.rectangle1363)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            
+            AsyncImage(url: URL(string: clubProfileViewModel.clubModel.imageUrl ?? "")) { image in
+                image.resizable().aspectRatio(1, contentMode: .fit)
+            } placeholder: {
+                Image(.rectangle1363)
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fit)
+            }
+
+
             HStack(spacing: 0) {
                 Text(clubProfileViewModel.clubModel.name)
                     .korFont(.H3KrBd)

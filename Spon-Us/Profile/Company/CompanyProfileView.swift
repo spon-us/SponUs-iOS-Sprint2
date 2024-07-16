@@ -45,10 +45,13 @@ struct CompanyProfileCardView: View {
     var companyProfileViewModel: CompanyProfileViewModel
     var body: some View {
         VStack(spacing: 0) {
-            
-            Image(.rectangle1363)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            AsyncImage(url: URL(string: companyProfileViewModel.companyModel.imageUrl ?? "")) { image in
+                image.resizable().aspectRatio(1, contentMode: .fit)
+            } placeholder: {
+                Image(.rectangle1363)
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fit)
+            }
             
             HStack(spacing: 0) {
                 Text(companyProfileViewModel.companyModel.name)
