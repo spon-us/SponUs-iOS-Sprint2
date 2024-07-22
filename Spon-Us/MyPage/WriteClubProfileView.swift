@@ -67,14 +67,7 @@ struct WriteClubProfileView: View {
             ToolbarItem(placement: .topBarLeading) {
                 HStack(spacing: 0) {
 
-                    Button(action: {
-                        isPresented.toggle()
-                    }, label: {
-                        Image(.icRight)
-                            .renderingMode(.template)
-                            .scaleEffect(x: -1, y: 1)
-                            .foregroundStyle(Color.textBrand)
-                    })
+                    CustomBackButton()
                 }
             }
         }

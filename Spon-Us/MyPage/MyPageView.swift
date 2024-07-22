@@ -61,7 +61,7 @@ struct MyPageView: View {
     @EnvironmentObject var navPathFinder: MypageNavigationPathFinder
     
     var body: some View {
-        NavigationStack(path: $navPathFinder.path) {
+//        NavigationStack(path: $navPathFinder.path) {
             VStack(spacing: 0) {
                 
                 MyProfilCell()
@@ -95,7 +95,7 @@ struct MyPageView: View {
             .navigationDestination(for: MyPageRoute.self) { route in
                 route.view()
             }
-        }
+//        }
     }
     
     var logout: some View {
