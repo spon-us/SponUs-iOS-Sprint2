@@ -46,6 +46,7 @@ final class HomeViewModel {
         profileStatus: "",
         role: "",
         memberCount: 0,
+        links: [],
         clubTypes: []
     )
     

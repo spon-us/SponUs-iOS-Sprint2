@@ -24,7 +24,7 @@ struct ClubProfileView: View {
                     .scrollIndicators(.hidden)
                 ClubProfileProposeButton(clubProfileViewModel: clubProfileViewModel)
             }.background(Color.bgSecondary)
-            
+
             if clubProfileViewModel.isSuggestModalPresented {
                 Text("").frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.black.opacity(0.7))
             }
@@ -67,7 +67,7 @@ struct ClubProfileCardView: View {
                     .padding(.leading, 28)
                 Spacer()
             }
-            
+
             HStack(spacing: 0) {
                 Text("동아리 분야")
                     .korFont(.T4KrMd)
@@ -90,10 +90,10 @@ struct ClubProfileCardView: View {
                     .padding(.leading, 12)
                     .padding(.trailing, 25)
                     .scrollIndicators(.hidden)
-                
+
             }.padding(.top, 8)
-            
-            
+
+
             HStack(spacing: 0) {
                 Image(.icBookmark)
                     .renderingMode(.template)
@@ -104,7 +104,7 @@ struct ClubProfileCardView: View {
                     .onTapGesture {
                         withAnimation {
                             clubProfileViewModel.toggleBookmark(target: clubProfileViewModel.clubModel.id)
-//                            homeVM.toggleBookmarkForClub(id: clubProfileViewModel.clubModel.id)
+                            //                            homeVM.toggleBookmarkForClub(id: clubProfileViewModel.clubModel.id)
                         }
                     }
                 Text("\(clubProfileViewModel.clubModel.memberCount)명 활동 중")
@@ -115,10 +115,10 @@ struct ClubProfileCardView: View {
                     .background(Color.bgBrandSecondary)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .padding(.leading, 8)
-                        .padding(.trailing, 28)
+                    .padding(.trailing, 28)
             }
             .padding([.vertical, .leading], 28)
-            
+
         }.background(Color.bgWhite)
             .clipShape(RoundedRectangle(cornerRadius: 40))
             .overlay(
@@ -164,35 +164,82 @@ struct ClubSNSView: View {
         }.padding(.leading, 4)
             .padding(.top, 40)
             .padding(.bottom, 12)
-        
-            ForEach(clubProfileViewModel.snsURL.indices, id: \.self) { index in
-                if !clubProfileViewModel.snsURL[index].isEmpty {
-                    Button {
-                        clubProfileViewModel.openLink(clubProfileViewModel.snsURL[index])
-                    } label: {
-                        HStack(spacing: 0) {
-                            clubProfileViewModel.snsViewBuilder(index: index)
-                            Spacer()
-                            Image(.icRight)
-                                .renderingMode(.template)
-                                .resizable()
-                                .foregroundStyle(Color.textSecondary)
-                                .frame(width: 16, height: 16)
-                                .padding(.trailing, 20)
-                            
-                        }.frame(height: 64)
-                            .background(Color.bgWhite)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.line200, lineWidth: 1)
-                            )
-                    }
-                    .padding(.bottom, index == clubProfileViewModel.snsURL.indices.last ? 0 : 8)
+
+        VStack(spacing: 8) {
+            if let instagram = clubProfileViewModel.clubModel.links.first(where: { $0.name == "instagram" }) {
+                Button {
+                    clubProfileViewModel.openLink(instagram.url)
+                } label: {
+                    HStack(spacing: 0) {
+                        InstagramCell()
+                        Spacer()
+                        Image(.icRight)
+                            .renderingMode(.template)
+                            .resizable()
+                            .foregroundStyle(Color.textSecondary)
+                            .frame(width: 16, height: 16)
+                            .padding(.trailing, 20)
+
+                    }.frame(height: 64)
+                        .background(Color.bgWhite)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.line200, lineWidth: 1)
+                        )
                 }
             }
+            if let facebook = clubProfileViewModel.clubModel.links.first(where: { $0.name == "facebook" }) {
+                Button {
+                    clubProfileViewModel.openLink(facebook.url)
+                } label: {
+                    HStack(spacing: 0) {
+                        FacebookCell()
+                        Spacer()
+                        Image(.icRight)
+                            .renderingMode(.template)
+                            .resizable()
+                            .foregroundStyle(Color.textSecondary)
+                            .frame(width: 16, height: 16)
+                            .padding(.trailing, 20)
+
+                    }.frame(height: 64)
+                        .background(Color.bgWhite)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.line200, lineWidth: 1)
+                        )
+                }
+            }
+            if let homepage = clubProfileViewModel.clubModel.links.first(where: { $0.name == "homepage" }) {
+                Button {
+                    clubProfileViewModel.openLink(homepage.url)
+                } label: {
+                    HStack(spacing: 0) {
+                        WebsiteCell()
+                        Spacer()
+                        Image(.icRight)
+                            .renderingMode(.template)
+                            .resizable()
+                            .foregroundStyle(Color.textSecondary)
+                            .frame(width: 16, height: 16)
+                            .padding(.trailing, 20)
+
+                    }.frame(height: 64)
+                        .background(Color.bgWhite)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.line200, lineWidth: 1)
+                        )
+                }
+            }
+        }
     }
 }
+
+
 
 struct InstagramCell: View {
     var body: some View {
@@ -229,7 +276,7 @@ struct WebsiteCell: View {
 
 struct ClubProfilePortfolioView: View {
     let colors: [Color] = [.red, .yellow, .cyan, .blue, .teal, .brown, .orange, .indigo]
-    
+
     var clubProfileViewModel: ClubProfileViewModel
     var body: some View {
         HStack(spacing: 0) {
@@ -288,14 +335,14 @@ struct ClubProfilePortfolioPageView: View {
                                 }
                             }
                         }
-                        
+
                         HStack(spacing: 0) {
                             Text(clubProfileViewModel.cardnewsDummyData[index].date)
                                 .korFont(.B2KrMd)
                                 .foregroundStyle(Color.textSecondary)
                             Spacer()
                         }.padding([.top, .horizontal], 20)
-                        
+
                         HStack(spacing: 0) {
                             Text(clubProfileViewModel.cardnewsDummyData[index].title.forceCharWrapping)
                                 .korFont(.T3KrBd)
@@ -303,7 +350,7 @@ struct ClubProfilePortfolioPageView: View {
                             Spacer()
                         }.padding(.horizontal, 20)
                             .padding(.top, 6)
-                        
+
                         HStack(spacing: 0) {
                             Text(clubProfileViewModel.cardnewsDummyData[index].content.forceCharWrapping)
                                 .korFont(.B2KrMd)
@@ -328,13 +375,13 @@ struct ClubProfilePortfolioPageView: View {
 
 struct ClubProfileVGridView: View {
     var clubProfileViewModel: ClubProfileViewModel
-    
+
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 8),
         GridItem(.flexible(), spacing: 8),
         GridItem(.flexible())
     ]
-    
+
     var body: some View {
         LazyVGrid(columns: columns, spacing: 8) {
             ForEach(1..<7) { _ in
@@ -349,7 +396,7 @@ struct ClubProfileVGridView: View {
 
 struct ClubProfileProposeButton: View {
     var clubProfileViewModel: ClubProfileViewModel
-    
+
     var body: some View {
         VStack(spacing: 0) {
             Divider().foregroundStyle(Color.line200)

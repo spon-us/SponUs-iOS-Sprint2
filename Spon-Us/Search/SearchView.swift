@@ -13,7 +13,8 @@ struct SearchView: View {
     @Binding var selectedTab: TabSelection
     var searchViewModel = SearchViewModel()
     @FocusState private var isSearchFieldFocused: Bool
-    
+    @State var visibility = Visibility.visible
+
     var body: some View {
         VStack(spacing: 0) {
             SearchBarView(
@@ -21,10 +22,12 @@ struct SearchView: View {
                 recentSearches: $recentSearches,
                 selectedTab: $selectedTab,
                 searchViewModel: searchViewModel,
-                performSearch: performSearch
+                performSearch: performSearch,
+                visibility: $visibility
             )
             .focused($isSearchFieldFocused)
-            
+
+
             VStack(spacing: 0) {
                 if recentSearches.isEmpty {
                     Spacer().frame(height: 44)
@@ -173,7 +176,7 @@ struct SearchView: View {
                 isSearchFieldFocused = true
             }
         }
-        .toolbar(.hidden, for: .tabBar)
+        .toolbar(visibility, for: .tabBar)
     }
     
     func performSearch() {
@@ -206,7 +209,8 @@ struct SearchBarView: View {
     var searchViewModel: SearchViewModel
     var performSearch: () -> Void
     @FocusState private var isSearchFieldFocused: Bool
-    
+    @Binding var visibility: Visibility
+
     var body: some View {
         HStack {
             PreviousTabButton(selectedTab: $selectedTab)
@@ -230,6 +234,12 @@ struct SearchBarView: View {
             .padding(.trailing, 20)
         }
         .frame(height: 56)
+        .onAppear {
+            visibility = .hidden
+        }
+        .onDisappear {
+            visibility = .visible
+        }
     }
 }
 
