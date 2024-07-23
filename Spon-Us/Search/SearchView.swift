@@ -12,16 +12,18 @@ struct SearchView: View {
     @State private var recentSearches: [String] = []
     @Binding var selectedTab: TabSelection
     var searchViewModel = SearchViewModel()
+    @FocusState private var isSearchFieldFocused: Bool
     
     var body: some View {
         VStack(spacing: 0) {
             SearchBarView(
                 searchData: $searchData,
                 recentSearches: $recentSearches,
+                selectedTab: $selectedTab,
                 searchViewModel: searchViewModel,
-                performSearch: performSearch,
-                selectedTab: $selectedTab
+                performSearch: performSearch
             )
+            .focused($isSearchFieldFocused)
             
             VStack(spacing: 0) {
                 if recentSearches.isEmpty {
@@ -167,6 +169,9 @@ struct SearchView: View {
                 }
             }
             UIApplication.shared.hideKeyboard()
+            DispatchQueue.main.async {
+                isSearchFieldFocused = true
+            }
         }
         .toolbar(.hidden, for: .tabBar)
     }
@@ -197,9 +202,10 @@ struct SearchView: View {
 struct SearchBarView: View {
     @Binding var searchData: String
     @Binding var recentSearches: [String]
+    @Binding var selectedTab: TabSelection
     var searchViewModel: SearchViewModel
     var performSearch: () -> Void
-    @Binding var selectedTab: TabSelection
+    @FocusState private var isSearchFieldFocused: Bool
     
     var body: some View {
         HStack {
@@ -210,6 +216,7 @@ struct SearchBarView: View {
                     performSearch()
                 }
             })
+            .focused($isSearchFieldFocused)
             .font(.B1KrMd)
             .foregroundStyle(Color.textPrimary)
             .padding(.horizontal, 20)
