@@ -134,20 +134,20 @@ struct BookmarkListCell: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                if let imageURL = bookmarkListCellViewModel.imageURL, !imageURL.isEmpty {
-                    Image(uiImage: loadImage(from: imageURL))
+                AsyncImage(url: URL(string: bookmarkListCellViewModel.imageURL ?? "")) { image in
+                    image
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
+                        .aspectRatio(1, contentMode: .fit)
                         .frame(width: 44, height: 44)
                         .clipShape(Circle())
                         .overlay(
                             Circle()
                                 .stroke(Color.line200, lineWidth: 1)
                         )
-                } else {
+                } placeholder: {
                     Image("sponus")
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: 44, height: 44)
                         .clipShape(Circle())
                         .overlay(
@@ -188,13 +188,4 @@ struct BookmarkListCell: View {
                 .stroke(Color.line200, lineWidth: 1)
         )
     }
-}
-
-func loadImage(from urlString: String) -> UIImage {
-    guard let url = URL(string: urlString),
-          let data = try? Data(contentsOf: url),
-          let image = UIImage(data: data) else {
-        return UIImage(named: "sponus")!
-    }
-    return image
 }
