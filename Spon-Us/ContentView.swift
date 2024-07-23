@@ -63,14 +63,15 @@ struct ContentView: View {
                 UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
             }
         }
-        .onChange(of: selectedTab.currentTab) { oldValue, _ in
-            selectedTab.previousTab = oldValue
-        }
     }
 }
 
 struct TabSelection {
-    var currentTab: Int = 0
+    var currentTab: Int = 0 {
+        didSet {
+            previousTab = oldValue
+        }
+    }
     var previousTab: Int = 0
 }
 
