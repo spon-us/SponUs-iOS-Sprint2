@@ -19,7 +19,7 @@ enum WriteCompanyProfileTab: String, CaseIterable, Identifiable, TabItem {
 }
 
 struct WriteCompanyProfileView: View {
-    @State private var selectedPage: WriteCompanyProfileTab = .collaborationField
+    @State private var selectedPage: WriteCompanyProfileTab = .image
     @State var isPresented = false
     
     var body: some View {

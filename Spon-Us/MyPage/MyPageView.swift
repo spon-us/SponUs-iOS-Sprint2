@@ -8,15 +8,17 @@
 import SwiftUI
 
 
-enum MyPageRoute: String, Hashable {
-    case editProfileCell = "프로필 수정"
-    case writeProfile = "프로필 작성하기"
-    case writePortfolio = "포트폴리오 작성하기"
-    case cooperationHistory = "이전 협업 관리"
-    case contactUs = "문의하기"
-    case privacyRule = "개인정보처리방침"
-    case termsOfUse = "이용약관"
+enum MyPageRoute: Hashable {
+    case editProfileCell
+    case writeClubProfile
+    case writeClubPortfolio
+    case cooperationHistory
+    case contactUs
+    case privacyPolicy
+    case termsOfUse
 //    case clubProfile = "내프로필"
+    case writeCompanyProfile
+    
     
     @ViewBuilder func view() -> some View {
         switch self {
@@ -26,16 +28,18 @@ enum MyPageRoute: String, Hashable {
             Text("이전 협업 관리")
         case .contactUs:
             Text("문의하기")
-        case .privacyRule:
-            Text("개인정보처리방침")
+        case .privacyPolicy:
+            PrivacyPolicyView()
         case .termsOfUse:
-            Text("이용약관")
-        case .writeProfile:
+            TermsOfUseView()
+        case .writeClubProfile:
             WriteClubProfileView()
-        case .writePortfolio:
+        case .writeClubPortfolio:
             WriteClubPortfolioView()
 //        case .clubProfile:
 //            ClubProfileView2()
+        case .writeCompanyProfile:
+            WriteCompanyProfileView()
         }
     }
     
@@ -59,12 +63,13 @@ final class MypageNavigationPathFinder: ObservableObject {
 struct MyPageView: View {
     
     @EnvironmentObject var navPathFinder: MypageNavigationPathFinder
+    @StateObject var mypageVM = MypageViewModel()
     
     var body: some View {
 //        NavigationStack(path: $navPathFinder.path) {
             VStack(spacing: 0) {
                 
-                MyProfilCell()
+                MyProfilCell(myOrganization: mypageVM.myOrganization)
                 
                 ScrollView {
                     VStack(spacing: 0) {
@@ -77,15 +82,42 @@ struct MyPageView: View {
                         Spacer()
                             .frame(height: 16)
                         
-                        MyPageCell(image: "Profile", title: .editProfileCell)
-                        MyPageCell(image: "Folder", title: .cooperationHistory)
-                        MyPageCell(image: "Shield Done", title: .contactUs)
-                        MyPageCell(image: "Paper", title: .privacyRule)
-                        MyPageCell(image: "Info Circle", title: .termsOfUse)
+                        Button(action: {
+                            if mypageVM.myOrganization?.organizationType == CompanyClubSelection.club.rawValue {
+                                navPathFinder.path.append(.writeClubProfile)
+                            }
+                            else if mypageVM.myOrganization?.organizationType == CompanyClubSelection.company.rawValue {
+                                navPathFinder.path.append(.writeCompanyProfile)
+                            }
+                        }, label: {
+                            MyPageCell(image: "Profile", title: "프로필 수정")
+                        })
+                        
+                        MyPageCell(image: "Folder", title: "이전 협업 관리")
+                        MyPageCell(image: "Shield Done", title: "문의하기")
+                        
+                        Button(action: {
+                            navPathFinder.path.append(.privacyPolicy)
+                        }, label: {
+                            MyPageCell(image: "Paper", title: "개안정보처리방침")
+                        })
+                        
+                        Button(action: {
+                            navPathFinder.path.append(.termsOfUse)
+                        }, label: {
+                            MyPageCell(image: "Info Circle", title: "이용약관")
+                        })
+                        
                         
                         logout
                         
                         cancellation
+                        
+                        Button(action: {
+                            print(TokenManager.shared.accessToken)
+                        }, label: {
+                            Text("토큰 조회")
+                        })
                         
                     }
                     .padding(.horizontal, 20)
@@ -94,6 +126,9 @@ struct MyPageView: View {
             }
             .navigationDestination(for: MyPageRoute.self) { route in
                 route.view()
+            }
+            .onAppear {
+                mypageVM.getMyOrganization()
             }
 //        }
     }
@@ -121,6 +156,9 @@ struct MyPageView: View {
 
 
 struct MyProfilCell: View {
+    
+    var myOrganization: MyOrganization?
+    
     var body: some View {
         VStack(spacing: 0) {
             
@@ -131,7 +169,7 @@ struct MyProfilCell: View {
                     .padding(.leading, 20)
                     .padding(.trailing, 8)
                 
-                Text("스포너스기획동아리동아리스")
+                Text(myOrganization?.name ?? "name")
                     .korFont(.H4KrBd)
                     .foregroundStyle(Color.textPrimary)
                 
@@ -190,14 +228,14 @@ struct MyPageAlarmCell: View {
 struct MyPageCell: View {
     
     var image: String
-    var title: MyPageRoute
+    var title: String
     @EnvironmentObject var navPathFinder: MypageNavigationPathFinder
     
     var body: some View {
         
-        Button(action: {
-            navPathFinder.addPath(route: title)
-        }, label: {
+//        Button(action: {
+//            navPathFinder.addPath(route: title)
+//        }, label: {
             
             HStack(spacing: 0) {
                 Image(image)
@@ -206,12 +244,12 @@ struct MyPageCell: View {
                     .padding(.trailing, 20)
                     .padding(.horizontal, 4)
                 
-                Text(title.rawValue)
+                Text(title)
                     .font(.T4KrBd)
                     .foregroundColor(Color.textPrimary)
                     .padding(.trailing, 8)
                 
-                if(title.rawValue == "프로필 수정") {
+                if(title == "프로필 수정") {
                     Text("추천")
                         .font(.B2KrBd)
                         .foregroundStyle(Color.textBrand)
@@ -230,7 +268,7 @@ struct MyPageCell: View {
                     .frame(maxWidth: 16, maxHeight: 16)
             }
             .padding(.vertical, 16)
-        })
+//        })
     }
 }
 

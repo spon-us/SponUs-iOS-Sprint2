@@ -24,7 +24,9 @@ struct WriteClubProfileView: View {
     @State private var selectedPage: WriteClubProfileTab = .image
     @State var isPresented = false
     
-    @StateObject var writeClubProfileVM = WriteClubProfileViewModel()
+    @StateObject var writeClubProfileVM = MypageViewModel()
+    
+    @State var existProfile = false
     
     var body: some View {
         
@@ -33,6 +35,7 @@ struct WriteClubProfileView: View {
             Color.bgSecondary
             
             VStack(spacing: 0) {
+                
                 
                 SponusTopTabBar(selectedPage: $selectedPage)
                 
@@ -89,7 +92,7 @@ struct ImageTabView: View {
     @State private var selectedImage: UIImage? = nil
     @State private var isImagePickerPresented = false
     
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var WriteClubProfileVM: MypageViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -178,7 +181,7 @@ struct NameTabView: View {
     var limitTextCount = 13
     
     @Binding var selectedPage: WriteClubProfileTab
-    @ObservedObject var writeClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var writeClubProfileVM: MypageViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -229,7 +232,7 @@ struct IntroduceTabView: View {
     var limitTextCount = 300
     
     @Binding var selectedPage: WriteClubProfileTab
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var WriteClubProfileVM: MypageViewModel
 
     
     var body: some View {
@@ -296,7 +299,7 @@ struct MemberTabView: View {
     var limitTextCount = 999
     
     @Binding var selectedPage: WriteClubProfileTab
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var WriteClubProfileVM: MypageViewModel
 
     
     var body: some View {
@@ -357,7 +360,7 @@ struct LinkTabView: View {
     @State private var WebsiteUrl = ""
     
     @Binding var selectedPage: WriteClubProfileTab
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var WriteClubProfileVM: MypageViewModel
 
     
     var limitTextCount = 999
@@ -426,7 +429,7 @@ struct FieldTabView: View {
     var limitTextCount = 999
     
     let maxSelections = 2
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var WriteClubProfileVM: MypageViewModel
     
     @State private var categories: [ClubCategorySelection] = ClubCategory.allCases.dropFirst().map {
         ClubCategorySelection(category: $0, isSelected: false)
