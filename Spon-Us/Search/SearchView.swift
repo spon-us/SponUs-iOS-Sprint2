@@ -14,7 +14,7 @@ struct SearchView: View {
     var searchViewModel = SearchViewModel()
     @FocusState private var isSearchFieldFocused: Bool
     @State var visibility = Visibility.visible
-
+    
     var body: some View {
         VStack(spacing: 0) {
             SearchBarView(
@@ -26,8 +26,7 @@ struct SearchView: View {
                 visibility: $visibility
             )
             .focused($isSearchFieldFocused)
-
-
+            
             VStack(spacing: 0) {
                 if recentSearches.isEmpty {
                     Spacer().frame(height: 44)
@@ -74,8 +73,7 @@ struct SearchView: View {
                                         .korFont(.B1KrMd)
                                         .foregroundStyle(Color.textSecondary)
                                         .onTapGesture {
-                                            searchData = search
-                                            performSearch()
+                                            performSearch(with: search)
                                         }
                                     
                                     Button(action: {
@@ -176,11 +174,19 @@ struct SearchView: View {
                 isSearchFieldFocused = true
             }
         }
+        .onDisappear {
+            searchData = ""
+            searchViewModel.searchList = []
+        }
         .toolbar(visibility, for: .tabBar)
     }
     
     func performSearch() {
-        searchViewModel.fetchSearch(keyword: searchData) { success in
+        performSearch(with: searchData)
+    }
+    
+    func performSearch(with keyword: String) {
+        searchViewModel.fetchSearch(keyword: keyword) { success in
             if success {
                 print("조직 검색 성공")
             } else {
@@ -188,13 +194,16 @@ struct SearchView: View {
             }
         }
         
-        searchViewModel.postKeyword(keyword: searchData) { success in
+        searchViewModel.postKeyword(keyword: keyword) { success in
             if success {
                 // 동일한 검색어가 입력될 때 해당 검색어가 맨 앞에 오도록 순서 변경
-                if let index = recentSearches.firstIndex(of: searchData) {
+                if let index = recentSearches.firstIndex(of: keyword) {
                     recentSearches.remove(at: index)
                 }
-                recentSearches.insert(searchData, at: 0)
+                recentSearches.insert(keyword, at: 0)
+                if keyword == searchData {
+                    searchData = ""
+                }
             } else {
                 print("검색어 저장 실패")
             }
@@ -210,7 +219,7 @@ struct SearchBarView: View {
     var performSearch: () -> Void
     @FocusState private var isSearchFieldFocused: Bool
     @Binding var visibility: Visibility
-
+    
     var body: some View {
         HStack {
             PreviousTabButton(selectedTab: $selectedTab)
