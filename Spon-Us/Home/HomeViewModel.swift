@@ -10,8 +10,27 @@ import Moya
 
 @Observable
 final class HomeViewModel {
-    let provider: MoyaProvider<SponusAPI> = .init()
+    private let authPlugin = AuthPlugin()
+    private var provider: MoyaProvider<SponusAPI>!
     
+    init() {
+            setupProvider()
+            setupAuthPluginCallbacks()
+    }
+    
+    private func setupProvider() {
+        self.provider = MoyaProvider<SponusAPI>(plugins: [authPlugin])
+    }
+    
+    private func setupAuthPluginCallbacks() {
+        authPlugin.onRetrySuccess = { [weak self] in
+            // 재시도 성공 시 필요한 동작 추가.
+        }
+        authPlugin.onRetryFail = { [weak self] in
+            // loginVM.logout()
+        }
+    }
+
     var companies: [OrganizationModel] = []
     var clubs: [OrganizationModel] = []
     
@@ -164,7 +183,7 @@ final class HomeViewModel {
             case .all:
                 filteredClubs = clubs
             case .advertisingAndMarketing:
-                filteredClubs = clubs.filter { $0.subTypes.contains("AD_MARKETING") } 
+                filteredClubs = clubs.filter { $0.subTypes.contains("AD_MARKETING") }
             case .design:
                 filteredClubs = clubs.filter { $0.subTypes.contains("DESIGN") }
             case .iTAndSoftware:

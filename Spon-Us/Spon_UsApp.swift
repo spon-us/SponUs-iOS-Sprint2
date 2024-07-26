@@ -16,7 +16,9 @@ struct Spon_UsApp: App {
     var body: some Scene {
         WindowGroup() {
             if (vm.loginSuccess || (TokenManager.shared.isAutoLogin ?? false)) && !TokenManager.shared.isRefreshTokenExpired() {
-                ContentView()
+                ContentView().onAppear(perform: {
+                    print("\(vm.loginSuccess), \(TokenManager.shared.isAutoLogin ?? false), \(!TokenManager.shared.isRefreshTokenExpired())")
+                })
             } else {
                 OnBoardingView()
             }
