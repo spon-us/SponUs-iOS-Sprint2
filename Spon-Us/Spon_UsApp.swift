@@ -21,5 +21,6 @@ struct Spon_UsApp: App {
                 OnBoardingView()
             }
         }.environmentObject(vm)
+            .environmentObject(MypageNavigationPathFinder.shared)
     }
 }

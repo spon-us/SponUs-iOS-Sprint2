@@ -42,10 +42,10 @@ struct EditProfileView: View {
             
             Button(action: {
                 if selectedSection == "profile" {
-                    navPathFinder.addPath(route: .writeProfile)
+                    navPathFinder.addPath(route: .writeClubProfile)
                 }
                 else if selectedSection == "portfolio" {
-                    navPathFinder.addPath(route: .writePortfolio)
+                    navPathFinder.addPath(route: .writeClubPortfolio)
                 }
             }, label: {
                 SponusButtonLabel(text: "다음", disabledCondition: selectedSection.isEmpty)

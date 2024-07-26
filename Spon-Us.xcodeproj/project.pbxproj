@@ -194,8 +194,8 @@
 				3B82D8AD2C325350008E0138 /* WriteClubProfileView.swift */,
 				3B82D8AF2C32536F008E0138 /* WriteClubPortfolioView.swift */,
 				3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */,
-				3B0927332C3CC20E00777EEC /* TermsOfUseView.swift */,
 				3B0927352C3CC64F00777EEC /* PrivacyPolicyView.swift */,
+				3B0927332C3CC20E00777EEC /* TermsOfUseView.swift */,
 				3B82D8B32C3253B0008E0138 /* Network */,
 			);
 			path = MyPage;
