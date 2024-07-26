@@ -14,37 +14,21 @@ class MypageViewModel: ObservableObject {
     
     @Published var myOrganization: MyOrganization?
     
+    @Published var clubImageUrl: String = ""
+    
+    @Published var clubName: String = ""
+    
+    
+    @Published var clubDescription: String = ""
+    @Published var clubMemberCount: String = ""
+    @Published var clubTypes: [String] = []
+    @Published var clubProfileStatus: String = ""
+    
+    
     @Published var clubProfile: ClubProfile?
     
     private let provider = MoyaProvider<SponusAPI>()
     
-    init() {
-            self.clubProfile = ClubProfile(image: nil, name: "", introduce: "", member: 0, link: nil, fields: [])
-        }
-    
-    func addClubProfileImage(image: UIImage) {
-        clubProfile?.image = image
-    }
-    
-    func addClubProfileName(name: String) {
-        clubProfile?.name = name
-    }
-    
-    func addClubProfileIntroduce(introduce: String) {
-        clubProfile?.introduce = introduce
-    }
-    
-    func addClubProfileMember(member: Int) {
-        clubProfile?.member = member
-    }
-    
-    func addClubProfileLink(link: Link) {
-        clubProfile?.link = link
-    }
-    
-    func addClubProfileField(fields: [String]) {
-            clubProfile?.fields = fields
-        }
     
     func getMyOrganization() {
         provider.request(.getMyOrganization) { result in
@@ -54,6 +38,7 @@ class MypageViewModel: ObservableObject {
                     print(response)
                     if let myOrganizationResponse = try? response.map(MyOrganizationResponse.self) {
                         self.myOrganization = myOrganizationResponse.content
+                        self.clubName = self.myOrganization?.name ?? "name"
                         print("getMyOrganization매핑 성공🚨")
                     }
                     else {
@@ -61,6 +46,27 @@ class MypageViewModel: ObservableObject {
                     }
                 case .failure:
                     print("getMyOrganization네트워크 요청 실패🚨")
+                }
+            }
+        }
+    }
+    
+    func patchClubProfile(clubProfile: ClubProfile) {
+        provider.request(.patchMyClubProfile(clubProfile: clubProfile)) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    print(response)
+//                    if let myOrganizationResponse = try? response.map(MyOrganizationResponse.self) {
+//                        self.myOrganization = myOrganizationResponse.content
+//                        self.clubName = self.myOrganization?.name ?? "name"
+//                        print("patchClubProfile매핑 성공🚨")
+//                    }
+//                    else {
+//                        print("patchClubProfile매핑 실패🚨")
+//                    }
+                case .failure:
+                    print("patchClubProfile네트워크 요청 실패🚨")
                 }
             }
         }

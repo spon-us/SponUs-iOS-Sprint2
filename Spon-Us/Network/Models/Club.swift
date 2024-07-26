@@ -27,3 +27,4 @@ struct ClubModel: Codable {
     var memberCount: Int
     var clubTypes: [String]
 }
+

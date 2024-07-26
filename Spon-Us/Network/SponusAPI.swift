@@ -23,6 +23,7 @@ enum SponusAPI {
     case deleteKeyword(keyword: String)
     case deleteSearch
     case getMyOrganization
+    case patchMyClubProfile(clubProfile: ClubProfile)
 }
 
 extension SponusAPI: TargetType {
@@ -60,6 +61,8 @@ extension SponusAPI: TargetType {
             return "/api/v2/auth/login"
         case .getMyOrganization:
             return "/api/v2/organizations/me"
+        case .patchMyClubProfile:
+            return "/api/v2/clubs/me"
         }
     }
     
@@ -93,6 +96,8 @@ extension SponusAPI: TargetType {
             return .post
         case .getMyOrganization:
             return .get
+        case .patchMyClubProfile:
+            return .patch
         }
     }
     
@@ -125,6 +130,8 @@ extension SponusAPI: TargetType {
         case .postLogin:
             return Data()
         case .getMyOrganization:
+            return Data()
+        case .patchMyClubProfile:
             return Data()
         }
     }
@@ -165,6 +172,8 @@ extension SponusAPI: TargetType {
             return .requestJSONEncodable(loginDetails)
         case .getMyOrganization:
             return .requestPlain
+        case .patchMyClubProfile(let clubProfile):
+            return .requestJSONEncodable(clubProfile)
         }
     }
     
@@ -204,6 +213,8 @@ extension SponusAPI: TargetType {
         case .postLogin:
             return ["Content-Type": "application/json"]
         case .getMyOrganization:
+            return auth
+        case .patchMyClubProfile:
             return auth
         }
     }

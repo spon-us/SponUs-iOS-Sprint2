@@ -20,28 +20,28 @@ enum MyPageRoute: Hashable {
     case writeCompanyProfile
     
     
-    @ViewBuilder func view() -> some View {
-        switch self {
-        case .editProfileCell:
-            EditProfileView()
-        case .cooperationHistory:
-            Text("이전 협업 관리")
-        case .contactUs:
-            Text("문의하기")
-        case .privacyPolicy:
-            PrivacyPolicyView()
-        case .termsOfUse:
-            TermsOfUseView()
-        case .writeClubProfile:
-            WriteClubProfileView()
-        case .writeClubPortfolio:
-            WriteClubPortfolioView()
-//        case .clubProfile:
-//            ClubProfileView2()
-        case .writeCompanyProfile:
-            WriteCompanyProfileView()
-        }
-    }
+//    @ViewBuilder func view() -> some View {
+//        switch self {
+//        case .editProfileCell:
+//            EditProfileView()
+//        case .cooperationHistory:
+//            Text("이전 협업 관리")
+//        case .contactUs:
+//            Text("문의하기")
+//        case .privacyPolicy:
+//            PrivacyPolicyView()
+//        case .termsOfUse:
+//            TermsOfUseView()
+//        case .writeClubProfile:
+//            WriteClubProfileView(mypageVM: <#MypageViewModel#>)
+//        case .writeClubPortfolio:
+//            WriteClubPortfolioView()
+////        case .clubProfile:
+////            ClubProfileView2()
+//        case .writeCompanyProfile:
+//            WriteCompanyProfileView()
+//        }
+//    }
     
 }
 
@@ -82,12 +82,29 @@ struct MyPageView: View {
                         Spacer()
                             .frame(height: 16)
                         
+                        
+                        Button(action: {
+                            print(mypageVM.myOrganization)
+                        }, label: {
+                            Text("myorganization조회")
+                        })
+                        
                         Button(action: {
                             if mypageVM.myOrganization?.organizationType == CompanyClubSelection.club.rawValue {
-                                navPathFinder.path.append(.writeClubProfile)
+                                
+                                if mypageVM.myOrganization?.profileStatus == "INACTIVE" {
+                                    navPathFinder.path.append(.writeClubProfile)
+                                }
+                                else if mypageVM.myOrganization?.profileStatus == "ACTIVE" {
+                                    print("프로필 뷰로 가야함")
+                                }
+                                
                             }
                             else if mypageVM.myOrganization?.organizationType == CompanyClubSelection.company.rawValue {
                                 navPathFinder.path.append(.writeCompanyProfile)
+                            }
+                            else {
+                                navPathFinder.path.append(.writeClubProfile)
                             }
                         }, label: {
                             MyPageCell(image: "Profile", title: "프로필 수정")
@@ -118,6 +135,16 @@ struct MyPageView: View {
                         }, label: {
                             Text("토큰 조회")
                         })
+                        Button(action: {
+                            print(mypageVM.myOrganization)
+                        }, label: {
+                            Text("조직정보 조회")
+                        })
+                        Button(action: {
+                            mypageVM.patchClubProfile(clubProfile: ClubProfile(name: "ninini", description: "asdasd", imageURL: "asdas", memberCount: 10, clubTypes: ["PLANNING_IDEA", "AD_MARKETING"], profileStatus: "ACTIVE"))
+                        }, label: {
+                            Text("패치 테스트")
+                        })
                         
                     }
                     .padding(.horizontal, 20)
@@ -125,7 +152,26 @@ struct MyPageView: View {
                 .background(Color.bgSecondary)
             }
             .navigationDestination(for: MyPageRoute.self) { route in
-                route.view()
+                switch route {
+                case .editProfileCell:
+                    EditProfileView()
+                case .cooperationHistory:
+                    Text("이전 협업 관리")
+                case .contactUs:
+                    Text("문의하기")
+                case .privacyPolicy:
+                    PrivacyPolicyView()
+                case .termsOfUse:
+                    TermsOfUseView()
+                case .writeClubProfile:
+                    WriteClubProfileView(mypageVM: mypageVM)
+                case .writeClubPortfolio:
+                    WriteClubPortfolioView()
+        //        case .clubProfile:
+        //            ClubProfileView2()
+                case .writeCompanyProfile:
+                    WriteCompanyProfileView()
+                }
             }
             .onAppear {
                 mypageVM.getMyOrganization()
