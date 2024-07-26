@@ -39,7 +39,11 @@ final class ClubProfileViewModel {
     }
     
     func openLink(_ urlString: String) {
-        guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else {
+        var prefixed = urlString
+        if !urlString.lowercased().hasPrefix("http://") && !urlString.lowercased().hasPrefix("https://") {
+            prefixed = "https://\(urlString)"
+        }
+        guard let url = URL(string: prefixed), UIApplication.shared.canOpenURL(url) else {
             print("Invalid URL")
             return
         }

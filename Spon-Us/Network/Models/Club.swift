@@ -25,6 +25,13 @@ struct ClubModel: Codable {
     var profileStatus: String
     var role: String
     var memberCount: Int
+    var links: [LinkModel]
     var clubTypes: [String]
 }
 
+struct LinkModel: Codable {
+    let organizationLinkId: Int
+    let organizationId: Int
+    let name: String
+    let url: String
+}
