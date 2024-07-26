@@ -34,6 +34,8 @@ class LoginViewModel: ObservableObject {
                         TokenManager.shared.refreshToken = loginResponse.content.refreshToken
                         completion("success")
                         print("🚨로그인 API 성공")
+                        print(" access:\(loginResponse.content.accessToken)")
+                        print(" refresh:\(loginResponse.content.refreshToken)")
                     } else {
                         print("🚨로그인 API 200 매핑 실패")
                     }

@@ -13,6 +13,7 @@ struct SignUpIdView: View {
     @State private var id: String = ""
     @State private var inputAuthNumber: String = ""
     @State private var idValid: Bool = false
+    @State private var idExisted: Bool = false
     @State private var idEmpty: Bool = true
     @State private var isTimerRunning = false
     @State private var timeRemaining = 0
@@ -36,7 +37,7 @@ struct SignUpIdView: View {
     
     //MARK: Property
     private let vm: SignUpViewModel = SignUpViewModel()
-    private let emailRegexPattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"
+    private let emailRegexPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     //MARK: View
@@ -56,8 +57,16 @@ struct SignUpIdView: View {
                     .foregroundColor(.textPrimary)
                     .frame(maxWidth: .infinity)
                     .onChange(of: id) { _, _ in
-                        idValid = isValidEmail(id)
                         idEmpty = {return id == ""}()
+                        idValid = isValidEmail(id)
+                        if idValid {
+                            vm.isValidEmail(email: id) { status in
+                                if let status = status {
+                                    print("💚status : \(status)")
+                                    idExisted = (status == "EXIST")
+                                }
+                            }
+                        }
                     }
                 Button(action: {
                     id = ""
@@ -73,7 +82,7 @@ struct SignUpIdView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(
-                        idEmpty ? Color.line200 : (!idValid ? .statusRed : Color.textBrand)
+                        idEmpty ? Color.line200 : (!idValid || idExisted ? .statusRed : Color.textBrand)
                     )
             )
             .padding(.top, 20)
@@ -92,17 +101,32 @@ struct SignUpIdView: View {
             } else {
                 if !afterCheckingEmail {
                     if idValid {
-                        HStack() {
-                            Image("Tick Square 3")
-                                .frame(width: 13.33, height: 13.33)
-                                .padding(.trailing, 1)
-                            Text("사용 가능한 이메일이에요.")
-                                .font(.B4KrMd)
-                                .foregroundColor(.textBrand)
-                            Spacer()
+                        if idExisted {
+                            HStack() {
+                                Image("icDanger")
+                                    .frame(width: 13.33, height: 13.33)
+                                    .padding(.trailing, 1)
+                                Text("이미 존재하는 이메일입니다.")
+                                    .font(.B4KrMd)
+                                    .foregroundColor(Color(red: 1, green: 0, blue: 0)
+                                    )
+                                Spacer()
+                            }
+                            .padding(.top, 8)
+                            .padding(.leading, 24)
+                        } else {
+                            HStack() {
+                                Image("Tick Square 3")
+                                    .frame(width: 13.33, height: 13.33)
+                                    .padding(.trailing, 1)
+                                Text("사용 가능한 이메일이에요.")
+                                    .font(.B4KrMd)
+                                    .foregroundColor(.textBrand)
+                                Spacer()
+                            }
+                            .padding(.top, 8)
+                            .padding(.leading, 24)
                         }
-                        .padding(.top, 8)
-                        .padding(.leading, 24)
                     } else {
                         HStack() {
                             Image("icDanger")
@@ -128,7 +152,7 @@ struct SignUpIdView: View {
                                 vm.postEmail(email: id)
                                 afterRequest = true
                             } else {
-                                if (vm.code == inputAuthNumber) {
+                                if (vm.code == inputAuthNumber && !inputAuthNumber.isEmpty) {
                                     isEmailValidated = true
                                 } else {
                                     wrongAuthNumber = true
@@ -201,7 +225,7 @@ struct SignUpIdView: View {
                                 .stroke(!idEmpty ? Color.textBrand : Color.line200)
                         )
                 }
-                .disabled(!idValid)
+                .disabled(!idValid || idExisted)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             } else {

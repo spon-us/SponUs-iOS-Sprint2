@@ -41,6 +41,27 @@ class SignUpViewModel: ObservableObject {
             }
         }
     }
+    
+    func isValidEmail(email: String, completion: @escaping (String?) -> Void) {
+        provider.request(.getVerifyEmail(email: email)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: response.data, options: []) as? [String: Any],
+                       let content = json["content"] as? [String: Any],
+                       let exist = content["exist"] as? String {
+                        DispatchQueue.main.async {
+                            completion(exist)
+                        }
+                    }
+                } catch let error {
+                    print("🚨getVerifyEmail API 파싱 에러 \(error)")
+                }
+            case .failure(let error):
+                print("🚨getVerifyEmail API 서버 에러 \(error)")
+            }
+        }
+    }
 }
 
 struct EmailModel: Decodable {
