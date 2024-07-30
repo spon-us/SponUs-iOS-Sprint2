@@ -55,6 +55,7 @@ class TokenManager {
         UserDefaults.standard.removeObject(forKey: "refreshToken")
         UserDefaults.standard.removeObject(forKey: "isAutoLogin")
         UserDefaults.standard.removeObject(forKey: "fcmToken")
+        print("\(UserDefaults.standard.bool(forKey: "isAutoLogin"))")
     }
     
     func refreshAccessToken(completion: @escaping (Bool) -> Void) {

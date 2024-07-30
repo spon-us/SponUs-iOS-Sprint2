@@ -229,7 +229,7 @@ struct SignUpIdView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
             } else {
-                NavigationLink(destination: SignUpPWView(vm: vm).navigationBarHidden(true)) {
+                NavigationLink(destination: SignUpPWView(vm: vm).navigationBarHidden(true).onAppear(perform: {vm.email = id})) {
                     Text("다음")
                         .font(.But1KrBd)
                         .frame(maxWidth: .infinity, maxHeight: 56)

@@ -33,6 +33,7 @@ class SignUpViewModel: ObservableObject {
     func signUp(completion: @escaping (Bool) -> Void) {
         let signUpDetails = SignUpRequest(email: email, password: password, name: name, organizationType: organizationType)
         provider.request(.postSignUp(signUpDetails: signUpDetails)) { result in
+            print("\(self.email), \(self.password), \(self.name), \(self.organizationType)")
             switch result {
             case .success:
                 completion(true)
