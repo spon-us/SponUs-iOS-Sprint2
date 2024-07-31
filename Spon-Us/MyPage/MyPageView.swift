@@ -96,7 +96,7 @@ struct MyPageView: View {
                                     navPathFinder.path.append(.writeClubProfile)
                                 }
                                 else if mypageVM.myOrganization?.profileStatus == "ACTIVE" {
-                                    print("프로필 뷰로 가야함")
+                                    navPathFinder.path.append(.writeClubProfile)
                                 }
                                 
                             }
