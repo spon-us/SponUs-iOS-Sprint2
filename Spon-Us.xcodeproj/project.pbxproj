@@ -191,11 +191,10 @@
 				3B82D8A92C3252FE008E0138 /* MyPageViewHelper.swift */,
 				3B74D7782BF9E6A600B3B750 /* MyPageView.swift */,
 				3B82D8AB2C32531D008E0138 /* EditProfileView.swift */,
-				3B82D8AD2C325350008E0138 /* WriteClubProfileView.swift */,
-				3B82D8AF2C32536F008E0138 /* WriteClubPortfolioView.swift */,
-				3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */,
 				3B0927352C3CC64F00777EEC /* PrivacyPolicyView.swift */,
 				3B0927332C3CC20E00777EEC /* TermsOfUseView.swift */,
+				3BF1F4AF2C5B44D500B32C66 /* Club */,
+				3BF1F4B02C5B44DE00B32C66 /* Company */,
 				3B82D8B32C3253B0008E0138 /* Network */,
 			);
 			path = MyPage;
@@ -208,6 +207,23 @@
 				3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		3BF1F4AF2C5B44D500B32C66 /* Club */ = {
+			isa = PBXGroup;
+			children = (
+				3B82D8AD2C325350008E0138 /* WriteClubProfileView.swift */,
+				3B82D8AF2C32536F008E0138 /* WriteClubPortfolioView.swift */,
+			);
+			path = Club;
+			sourceTree = "<group>";
+		};
+		3BF1F4B02C5B44DE00B32C66 /* Company */ = {
+			isa = PBXGroup;
+			children = (
+				3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */,
+			);
+			path = Company;
 			sourceTree = "<group>";
 		};
 		8065E24B2C332A1F001B35DD /* Componenet */ = {

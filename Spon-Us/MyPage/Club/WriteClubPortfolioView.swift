@@ -178,12 +178,11 @@ struct ActivityDetailTabView: View {
 }
 
 struct DateTabView: View {
-    
-    @State var text = ""
+    @State private var startDate = ""
+    @State private var endDate = ""
     var limitTextCount = 48
-    
     @Binding var selectedPage: WriteClubPortfolioTab
-    
+
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
@@ -198,28 +197,45 @@ struct DateTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    
-                    TextField("ex. 2024.01.01 ~ 2024.02.01", text: $text)
-                        .textFieldStyle(SponusTextfieldStyle(text: $text, limitTextCount: limitTextCount))
+                    TextField("ex. 2024.01.01 ~ 2024.02.01", text: $startDate)
+                        .textFieldStyle(SponusTextfieldStyle(text: $startDate, limitTextCount: limitTextCount))
                         .padding(.bottom, 8)
+                        .onChange(of: startDate) { newValue in
+                            startDate = formatDateInput(newValue)
+                        }
                     
-                    DatePicker(selection: /*@START_MENU_TOKEN@*/.constant(Date())/*@END_MENU_TOKEN@*/, label: { /*@START_MENU_TOKEN@*/Text("Date")/*@END_MENU_TOKEN@*/ })
-
-                    
+                    DatePicker(selection: .constant(Date()), label: { Text("Date") })
                 }
                 .padding(.horizontal, 20)
             }
         
             Button(action: {
-                
+                // 다음 버튼 액션
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: text.count == 0 || text.count > limitTextCount)
+                SponusButtonLabel(text: "다음", disabledCondition: startDate.isEmpty || endDate.isEmpty)
             })
             .padding(.horizontal, 20)
-            
         }
         .background(Color.bgSecondary)
+    }
 
+    // 날짜 입력을 포맷팅하는 함수
+    private func formatDateInput(_ input: String) -> String {
+        // 숫자와 마침표만 남기고 나머지 문자는 제거합니다.
+        let filtered = input.filter { "0123456789.~".contains($0) }
+        
+        // 각 날짜 부분을 분리하여 배열에 저장합니다.
+        var parts = filtered.components(separatedBy: "~").map { $0.trimmingCharacters(in: .whitespaces) }
+        
+        if parts.count > 2 {
+            // "~" 기호가 두 번 이상 들어간 경우 첫 두 개만 사용하고 나머지는 무시합니다.
+            parts = Array(parts.prefix(2))
+        }
+        
+        // 날짜 형식을 유지하기 위해 각 부분을 다시 결합합니다.
+        let formatted = parts.joined(separator: " ~ ")
+        
+        return formatted
     }
 }
 

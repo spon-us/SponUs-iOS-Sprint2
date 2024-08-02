@@ -184,8 +184,8 @@ extension SponusAPI: TargetType {
             return .requestParameters(parameters: ["name": clubProfile.name, "description": clubProfile.description, "imageUrl": clubProfile.imageURL, "memberCount": clubProfile.memberCount, "clubTypes": clubProfile.clubTypes, "profileStatus": clubProfile.profileStatus], encoding: JSONEncoding.default)
             
         case .postProfileImage(let image):
-            let imageData = image.jpegData(compressionQuality: 0.01)!
-            let formData = MultipartFormData(provider: .data(imageData), name: "profileImage", fileName: "profileImage.png", mimeType: "image/jpeg")
+            let imageData = image.jpegData(compressionQuality: 0.1)!
+            let formData = MultipartFormData(provider: .data(imageData), name: "profileImage", fileName: "profileImage.JPG", mimeType: "image/jpeg")
             return .uploadMultipart([formData])
         }
     }
