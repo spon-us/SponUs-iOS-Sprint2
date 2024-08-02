@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import UIKit
 
 enum SponusAPI {
     case getOrganizations(organizationType: String)
@@ -24,6 +25,7 @@ enum SponusAPI {
     case deleteSearch
     case getMyOrganization
     case patchMyClubProfile(clubProfile: ClubProfile)
+    case postProfileImage(image: UIImage)
 }
 
 extension SponusAPI: TargetType {
@@ -63,6 +65,8 @@ extension SponusAPI: TargetType {
             return "/api/v2/organizations/me"
         case .patchMyClubProfile:
             return "/api/v2/clubs/me"
+        case .postProfileImage:
+            return "/api/v2/organizations/me/profileImage"
         }
     }
     
@@ -98,6 +102,8 @@ extension SponusAPI: TargetType {
             return .get
         case .patchMyClubProfile:
             return .patch
+        case .postProfileImage:
+            return .post
         }
     }
     
@@ -132,6 +138,8 @@ extension SponusAPI: TargetType {
         case .getMyOrganization:
             return Data()
         case .patchMyClubProfile:
+            return Data()
+        case .postProfileImage:
             return Data()
         }
     }
@@ -173,9 +181,15 @@ extension SponusAPI: TargetType {
         case .getMyOrganization:
             return .requestPlain
         case .patchMyClubProfile(let clubProfile):
-            return .requestJSONEncodable(clubProfile)
+            return .requestParameters(parameters: ["name": clubProfile.name, "description": clubProfile.description, "imageUrl": clubProfile.imageURL, "memberCount": clubProfile.memberCount, "clubTypes": clubProfile.clubTypes, "profileStatus": clubProfile.profileStatus], encoding: JSONEncoding.default)
+            
+        case .postProfileImage(let image):
+            let imageData = image.jpegData(compressionQuality: 0.1)!
+            let formData = MultipartFormData(provider: .data(imageData), name: "profileImage", fileName: "profileImage.JPG", mimeType: "image/jpeg")
+            return .uploadMultipart([formData])
         }
     }
+
     
     var validationType: ValidationType {
         return .successAndRedirectCodes
@@ -215,6 +229,8 @@ extension SponusAPI: TargetType {
         case .getMyOrganization:
             return auth
         case .patchMyClubProfile:
+            return auth
+        case .postProfileImage:
             return auth
         }
     }
