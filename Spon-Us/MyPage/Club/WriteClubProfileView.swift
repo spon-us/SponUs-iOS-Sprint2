@@ -24,7 +24,11 @@ struct WriteClubProfileView: View {
     @State private var selectedPage: WriteClubProfileTab = .image
     @State var isPresented = false
     
-    @StateObject var writeClubProfileVM = WriteClubProfileViewModel()
+    @ObservedObject var mypageVM: MypageViewModel
+    
+    @State var existProfile = false
+    
+    
     
     var body: some View {
         
@@ -34,26 +38,27 @@ struct WriteClubProfileView: View {
             
             VStack(spacing: 0) {
                 
+                
                 SponusTopTabBar(selectedPage: $selectedPage)
                 
                 TabView(selection: $selectedPage) {
                     
-                    ImageTabView(selectedPage: $selectedPage, WriteClubProfileVM: writeClubProfileVM)
+                    ImageTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM)
                         .tag(WriteClubProfileTab.image)
                     
-                    NameTabView(selectedPage: $selectedPage, writeClubProfileVM: writeClubProfileVM)
+                    NameTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM)
                         .tag(WriteClubProfileTab.name)
                     
-                    IntroduceTabView(selectedPage: $selectedPage, WriteClubProfileVM: writeClubProfileVM)
+                    IntroduceTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM)
                         .tag(WriteClubProfileTab.introduce)
                     
-                    MemberTabView(selectedPage: $selectedPage, WriteClubProfileVM: writeClubProfileVM)
+                    MemberTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM)
                         .tag(WriteClubProfileTab.member)
                     
-                    LinkTabView(selectedPage: $selectedPage, WriteClubProfileVM: writeClubProfileVM)
+                    LinkTabView(selectedPage: $selectedPage, WriteClubProfileVM: mypageVM)
                         .tag(WriteClubProfileTab.link)
                     
-                    FieldTabView(WriteClubProfileVM: writeClubProfileVM)
+                    FieldTabView(mypageViewModel: mypageVM)
                         .tag(WriteClubProfileTab.field)
                     
                     
@@ -67,14 +72,7 @@ struct WriteClubProfileView: View {
             ToolbarItem(placement: .topBarLeading) {
                 HStack(spacing: 0) {
 
-                    Button(action: {
-                        isPresented.toggle()
-                    }, label: {
-                        Image(.icRight)
-                            .renderingMode(.template)
-                            .scaleEffect(x: -1, y: 1)
-                            .foregroundStyle(Color.textBrand)
-                    })
+                    CustomBackButton()
                 }
             }
         }
@@ -93,10 +91,10 @@ struct ImageTabView: View {
     
     @Binding var selectedPage: WriteClubProfileTab
     
-    @State private var selectedImage: UIImage? = nil
+//    @State private var selectedImage: UIImage? = nil
     @State private var isImagePickerPresented = false
     
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var mypageViewModel: MypageViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -138,7 +136,7 @@ struct ImageTabView: View {
                             .padding(.top, 16)
                             .zIndex(1.0)
                             
-                            if let selectedImage = selectedImage {
+                            if let selectedImage = mypageViewModel.clubImage {
                                 Image(uiImage: selectedImage)
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
@@ -154,38 +152,51 @@ struct ImageTabView: View {
                         }
                     })
                     .sheet(isPresented: $isImagePickerPresented) {
-                        SingleImagePickerView(selectedImage: $selectedImage)
+                        SingleImagePickerView(selectedImage: $mypageViewModel.clubImage)
                     }
                 }
                 .padding(.horizontal, 20)
             }
             
             Button(action: {
-                print(selectedImage)
-                WriteClubProfileVM.addClubProfileImage(image: selectedImage ?? UIImage(systemName: "photo")!)
-                print(WriteClubProfileVM.clubProfile?.image)
+                print(mypageViewModel.clubImage)
+                if let image = mypageViewModel.clubImage {
+                    mypageViewModel.postProfileImage(UIImage: image)
+                }
+            }, label: {
+                Text("이미지 업로드")
+            })
+            
+            Button(action: {
                 selectedPage = .name
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: selectedImage == nil)
+                SponusButtonLabel(text: "다음", disabledCondition: mypageViewModel.clubImageTabDisabledCondition ?? true)
             })
-            .disabled(selectedImage == nil)
+            .disabled(mypageViewModel.clubImageTabDisabledCondition ?? true)
             .padding(.horizontal, 20)
             
         }
         .background(Color.bgSecondary)
+        .onAppear {
+            print("이미지탭 생성")
+            mypageViewModel.checkClubImageTabDisabledCondition()
+        }
+        .onChange(of: mypageViewModel.clubImage) {
+            mypageViewModel.checkClubImageTabDisabledCondition()
+        }
     }
 }
 
-// Note: ImagePickerView should be updated to handle a single image selection and to bind it to a single UIImage instead of an array of UIImages.
+
 
 
 struct NameTabView: View {
     
-    @State var text = ""
-    var limitTextCount = 13
+//    @State var text = ""
+//    var limitTextCount = 13
     
     @Binding var selectedPage: WriteClubProfileTab
-    @ObservedObject var writeClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var mypageViewModel: MypageViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -201,11 +212,11 @@ struct NameTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    TextField("ex. 스포너스 기획 동아리", text: $text)
-                        .textFieldStyle(SponusTextfieldStyle(text: $text, limitTextCount: limitTextCount))
+                    TextField("ex. 스포너스 기획 동아리", text: $mypageViewModel.clubName)
+                        .textFieldStyle(SponusTextfieldStyle(text: $mypageViewModel.clubName, limitTextCount: mypageViewModel.clubNameLimitTextCount))
                         .padding(.bottom, 8)
                     
-                    Text("(\(text.count)/\(limitTextCount))")
+                    Text("(\(mypageViewModel.clubName.count)/\(mypageViewModel.clubNameLimitTextCount))")
                         .font(.B2EnMd)
                         .foregroundStyle(Color.textTertiary)
                         .padding(.leading, 12)
@@ -215,28 +226,33 @@ struct NameTabView: View {
             }
 
             Button(action: {
-                print(text)
-                writeClubProfileVM.addClubProfileName(name: text)
-                print(writeClubProfileVM.clubProfile?.name)
                 selectedPage = .introduce
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: text.count == 0 || text.count > limitTextCount)
+                SponusButtonLabel(text: "다음", disabledCondition: mypageViewModel.clubNameTabDisabledCondition ?? true)
             })
-            .disabled(text.count == 0 || text.count > limitTextCount)
+            .disabled(mypageViewModel.clubNameTabDisabledCondition ?? true)
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)
+        .onAppear {
+            print("네임탭 생성")
+            mypageViewModel.checkClubNameTabDisabledCondition()
+        }
+        .onChange(of: mypageViewModel.clubName) {
+            mypageViewModel.checkClubNameTabDisabledCondition()
+        }
 
     }
+    
 }
 
 struct IntroduceTabView: View {
     
-    @State var text = ""
-    var limitTextCount = 300
+//    @State var text = ""
+//    var limitTextCount = 300
     
     @Binding var selectedPage: WriteClubProfileTab
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var mypageViewModel: MypageViewModel
 
     
     var body: some View {
@@ -253,20 +269,20 @@ struct IntroduceTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    TextEditor(text: $text)
-                        .modifier(SponusTextEditorModifier(text: $text, limitTextCount: limitTextCount, height: 260, placeHolder: "ex. 안녕하세요. 저희는 스포대학교의 마케팅 기획을 하는 동아리 ‘스포대학교' 기획동아리 입니다."))
+                    TextEditor(text: $mypageViewModel.clubDescription)
+                        .modifier(SponusTextEditorModifier(text: $mypageViewModel.clubDescription, limitTextCount: mypageViewModel.clubDescriptionLimitTextCount, height: 260, placeHolder: "ex. 안녕하세요. 저희는 스포대학교의 마케팅 기획을 하는 동아리 ‘스포대학교' 기획동아리 입니다."))
                         .padding(.bottom, 8)
                     
                     HStack(spacing: 0) {
                         
-                        Text("(\(text.count)/\(limitTextCount))")
+                        Text("(\(mypageViewModel.clubDescription.count)/\(mypageViewModel.clubDescriptionLimitTextCount))")
                             .font(.B2EnMd)
                             .foregroundStyle(Color.textTertiary)
                         
                         Spacer()
                         
                         Button(action: {
-                            text = ""
+                            mypageViewModel.clubDescription = ""
                         }, label: {
                             Text("전체 삭제")
                                 .font(.B2EnMd)
@@ -283,27 +299,32 @@ struct IntroduceTabView: View {
         
             Button(action: {
                 selectedPage = .member
-                WriteClubProfileVM.addClubProfileIntroduce(introduce: text)
-                print(WriteClubProfileVM.clubProfile?.introduce)
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: text.count == 0 || text.count > limitTextCount)
+                SponusButtonLabel(text: "다음", disabledCondition: mypageViewModel.clubDescriptionTabDisabledCondition ?? true)
             })
-            .disabled(text.count == 0 || text.count > limitTextCount)
+            .disabled(mypageViewModel.clubDescriptionTabDisabledCondition ?? true)
             .padding(.horizontal, 20)
             
         }
         .background(Color.bgSecondary)
+        .onAppear {
+            print("정보입력탭 생성")
+            mypageViewModel.checkClubDescriptionTabDisabledCondition()
+        }
+        .onChange(of: mypageViewModel.clubDescription) {
+            mypageViewModel.checkClubDescriptionTabDisabledCondition()
+        }
 
     }
 }
 
 struct MemberTabView: View {
     
-    @State private var number = ""
+//    @State private var number = ""
     var limitTextCount = 999
     
     @Binding var selectedPage: WriteClubProfileTab
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var mypageViewModel: MypageViewModel
 
     
     var body: some View {
@@ -320,15 +341,15 @@ struct MemberTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    TextField("ex. 999", text: $number)
+                    TextField("ex. 999", text: $mypageViewModel.clubMemberCount)
                         .keyboardType(.numberPad)
-                        .onReceive(Just(number)) { newValue in
+                        .onReceive(Just(mypageViewModel.clubMemberCount)) { newValue in
                             let filtered = newValue.filter { "0123456789".contains($0) }
                             if filtered != newValue {
-                                self.number = filtered
+                                self.mypageViewModel.clubMemberCount = filtered
                             }
                         }
-                        .textFieldStyle(SponusTextfieldStyle(text: $number, limitTextCount: limitTextCount))
+                        .textFieldStyle(SponusTextfieldStyle(text: $mypageViewModel.clubMemberCount, limitTextCount: limitTextCount))
                         .padding(.bottom, 8)
        
                 }
@@ -336,25 +357,30 @@ struct MemberTabView: View {
             }
             
             Button(action: {
-                WriteClubProfileVM.addClubProfileMember(member: Int(number) ?? 999)
-                print(WriteClubProfileVM.clubProfile?.member)
                 selectedPage = .link
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: isButtonDisabled())
+                SponusButtonLabel(text: "다음", disabledCondition: mypageViewModel.clubMemberTabDisabledCondition ?? true)
             })
-            .disabled(isButtonDisabled())
+            .disabled(mypageViewModel.clubMemberTabDisabledCondition ?? true)
             .padding(.horizontal, 20)
             
         }
         .background(Color.bgSecondary)
+        .onAppear {
+            print("회원수 입력탭 생성")
+            mypageViewModel.checkClubMemberTabDisabledCondition()
+        }
+        .onChange(of: mypageViewModel.clubMemberCount) {
+            mypageViewModel.checkClubMemberTabDisabledCondition()
+        }
     }
     
-    private func isButtonDisabled() -> Bool {
-        guard let numberValue = Int(number), numberValue > 0 else {
-            return true
-        }
-        return false
-    }
+//    private func isButtonDisabled() -> Bool {
+//        guard let numberValue = Int(WriteClubProfileVM.clubMemberCount), numberValue > 0 else {
+//            return true
+//        }
+//        return false
+//    }
 }
 
 struct LinkTabView: View {
@@ -364,7 +390,7 @@ struct LinkTabView: View {
     @State private var WebsiteUrl = ""
     
     @Binding var selectedPage: WriteClubProfileTab
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var WriteClubProfileVM: MypageViewModel
 
     
     var limitTextCount = 999
@@ -416,8 +442,6 @@ struct LinkTabView: View {
                 .padding(.horizontal, 20)
             }
             Button(action: {
-                WriteClubProfileVM.addClubProfileLink(link: Link(instagram: instagramUrl, facebook: facebookUrl, website: WebsiteUrl))
-                print(WriteClubProfileVM.clubProfile?.link)
                 selectedPage = .field
             }, label: {
                 SponusButtonLabel(text: "다음", disabledCondition: false)
@@ -429,11 +453,11 @@ struct LinkTabView: View {
 }
 
 struct FieldTabView: View {
-    @State private var number = ""
+//    @State private var number = ""
     var limitTextCount = 999
     
     let maxSelections = 2
-    @ObservedObject var WriteClubProfileVM: WriteClubProfileViewModel
+    @ObservedObject var mypageViewModel: MypageViewModel
     
     @State private var categories: [ClubCategorySelection] = ClubCategory.allCases.dropFirst().map {
         ClubCategorySelection(category: $0, isSelected: false)
@@ -463,6 +487,10 @@ struct FieldTabView: View {
                             .padding(.bottom, 8)
                             .onTapGesture {
                                 toggleSelection(for: category)
+                                let selectedCategories = categories.filter { $0.isSelected }.map { $0.category.rawValue }
+                                mypageViewModel.clubTypes = getMappedStrings(from: selectedCategories)
+                                print(categories)
+                                print(mypageViewModel.clubTypes)
                             }
                     }
                 }
@@ -471,15 +499,27 @@ struct FieldTabView: View {
             
             Button(action: {
                 let selectedCategories = categories.filter { $0.isSelected }.map { $0.category.rawValue }
-                WriteClubProfileVM.addClubProfileField(fields: selectedCategories)
-                print(WriteClubProfileVM.clubProfile?.fields)
+                print(getMappedStrings(from: selectedCategories))
+                print(selectedCategories)
+                
+//                mypageViewModel.patchClubProfile(clubProfile: ClubProfile)
+                
             }, label: {
-                SponusButtonLabel(text: "완료", disabledCondition: isButtonDisabled())
+                SponusButtonLabel(text: "완료", disabledCondition: mypageViewModel.patchClubProfileDisabledCondition)
             })
-            .disabled(isButtonDisabled())
+            .disabled(mypageViewModel.patchClubProfileDisabledCondition)
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)
+        .onAppear {
+            print("동아리 분야 입력탭 생성")
+            mypageViewModel.checkClubTypesTabDisabledCondition()
+            mypageViewModel.checkPatchClubProfileDisabledCondition()
+        }
+        .onChange(of: mypageViewModel.clubTypes) {
+            mypageViewModel.checkClubTypesTabDisabledCondition()
+            mypageViewModel.checkPatchClubProfileDisabledCondition()
+        }
     }
     
     private func toggleSelection(for category: ClubCategorySelection) {
@@ -502,9 +542,19 @@ struct FieldTabView: View {
     private func isButtonDisabled() -> Bool {
         return categories.filter { $0.isSelected }.isEmpty
     }
+    
+    private func getMappedStrings(from categories: [String]) -> [String] {
+        let mapping: [String: String] = [
+            ClubCategory.planningAndIdeas.rawValue: "PLANNING_IDEA",
+            ClubCategory.advertisingAndMarketing.rawValue: "AD_MARKETING",
+            ClubCategory.design.rawValue: "DESIGN",
+            ClubCategory.photographyAndVideo.rawValue: "PHOTO_VIDEO",
+            ClubCategory.iTAndSoftware.rawValue: "IT_SOFTWARE",
+            ClubCategory.others.rawValue: "ETC"
+        ]
+        
+        return categories.compactMap { mapping[$0] }
+    }
 }
 
 
-#Preview {
-    WriteClubProfileView()
-}

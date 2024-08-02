@@ -25,5 +25,6 @@ struct Spon_UsApp: App {
                 })
             }
         }.environmentObject(vm)
+            .environmentObject(MypageNavigationPathFinder.shared)
     }
 }

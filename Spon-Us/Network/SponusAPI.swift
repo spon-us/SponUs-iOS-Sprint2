@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import UIKit
 
 enum SponusAPI {
     case getOrganizations(organizationType: String)
@@ -24,6 +25,9 @@ enum SponusAPI {
     case deleteSearch
     case getVerifyEmail(email: String)
     case getReissue(refreshToken: String)
+    case getMyOrganization
+    case patchMyClubProfile(clubProfile: ClubProfile)
+    case postProfileImage(image: UIImage)
 }
 
 extension SponusAPI: TargetType {
@@ -63,6 +67,12 @@ extension SponusAPI: TargetType {
             return "/api/v2/auth/verify-email"
         case .getReissue:
             return "/api/v2/auth/reissue"
+        case .getMyOrganization:
+            return "/api/v2/organizations/me"
+        case .patchMyClubProfile:
+            return "/api/v2/clubs/me"
+        case .postProfileImage:
+            return "/api/v2/organizations/me/profileImage"
         }
     }
     
@@ -98,6 +108,12 @@ extension SponusAPI: TargetType {
             return .get
         case .getReissue:
             return .get
+        case .getMyOrganization:
+            return .get
+        case .patchMyClubProfile:
+            return .patch
+        case .postProfileImage:
+            return .post
         }
     }
     
@@ -132,6 +148,12 @@ extension SponusAPI: TargetType {
         case .getVerifyEmail:
             return Data()
         case .getReissue:
+            return Data()
+        case .getMyOrganization:
+            return Data()
+        case .patchMyClubProfile:
+            return Data()
+        case .postProfileImage:
             return Data()
         }
     }
@@ -174,8 +196,18 @@ extension SponusAPI: TargetType {
             return .requestPlain
         case .getReissue:
             return .requestPlain
+        case .getMyOrganization:
+            return .requestPlain
+        case .patchMyClubProfile(let clubProfile):
+            return .requestParameters(parameters: ["name": clubProfile.name, "description": clubProfile.description, "imageUrl": clubProfile.imageURL, "memberCount": clubProfile.memberCount, "clubTypes": clubProfile.clubTypes, "profileStatus": clubProfile.profileStatus], encoding: JSONEncoding.default)
+            
+        case .postProfileImage(let image):
+            let imageData = image.jpegData(compressionQuality: 0.1)!
+            let formData = MultipartFormData(provider: .data(imageData), name: "profileImage", fileName: "profileImage.JPG", mimeType: "image/jpeg")
+            return .uploadMultipart([formData])
         }
     }
+
     
     var validationType: ValidationType {
         return .successAndRedirectCodes
@@ -216,6 +248,12 @@ extension SponusAPI: TargetType {
             return ["email": email]
         case .getReissue(refreshToken: let refreshToken):
             return ["RefreshToken": "\(refreshToken)"]
+        case .getMyOrganization:
+            return auth
+        case .patchMyClubProfile:
+            return auth
+        case .postProfileImage:
+            return auth
         }
     }
 }

@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
-struct ClubProfile {
-    var image: UIImage?
-    var name: String
-    var introduce: String
-    var member: Int
-    var link: Link?
-    var fields: [String]
-}
+//struct ClubProfile {
+//    var image: UIImage?
+//    var name: String
+//    var introduce: String
+//    var member: Int
+//    var link: Link?
+//    var fields: [String]
+//}
 
 struct Link {
     var instagram: String
@@ -29,3 +29,38 @@ struct Portfolio {
 //    var date
     var multiImage: [UIImage]
 }
+
+
+
+struct MyOrganizationResponse: Codable {
+    let statusCode: String
+    let message: String
+    let content: MyOrganization
+}
+
+struct MyOrganization: Codable {
+    let id: Int
+    let name: String
+    let email: String
+    let description: String?
+    let imageURL: String?
+    let bookmarkCount: Int
+    let viewCount: Int
+    let organizationType: String
+    let profileStatus: String
+    let role: String
+    let memberCount: Int
+//    let links
+//    let clubTypes
+}
+
+
+struct ClubProfile: Codable {
+    var name: String
+    var description: String
+    var imageURL: String
+    var memberCount: Int
+    var clubTypes: [String]
+    var profileStatus: String
+}
+

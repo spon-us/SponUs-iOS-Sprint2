@@ -9,8 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     @State var selectedTab: TabSelection = .init()
+    
+    @EnvironmentObject var navPathFinder: MypageNavigationPathFinder
+    
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navPathFinder.path) {
             TabView(selection: $selectedTab.currentTab) {
                 HomeView()
                     .tabItem {
