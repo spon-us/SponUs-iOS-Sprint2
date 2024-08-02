@@ -43,7 +43,7 @@ struct SignUpOrgView: View {
                     )
                 }
                 
-                Button(action: {selectedOrgType = "ORGANIZATION"}) {
+                Button(action: {selectedOrgType = "COMPANY"}) {
                     VStack() {
                         Image("ORGANIZATION")
                             .resizable()

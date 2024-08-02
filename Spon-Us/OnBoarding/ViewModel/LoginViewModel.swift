@@ -9,13 +9,7 @@ import Foundation
 import Moya
 
 class LoginViewModel: ObservableObject {
-    @Published var loginSuccess: Bool = false {
-        didSet {
-            if loginSuccess == true {
-                TokenManager.shared.isAutoLogin = true
-            }
-        }
-    }
+    @Published var loginSuccess: Bool = false
     
     func logout() {
         loginSuccess = false
@@ -34,6 +28,8 @@ class LoginViewModel: ObservableObject {
                         TokenManager.shared.refreshToken = loginResponse.content.refreshToken
                         completion("success")
                         print("🚨로그인 API 성공")
+                        print(" access:\(loginResponse.content.accessToken)")
+                        print(" refresh:\(loginResponse.content.refreshToken)")
                     } else {
                         print("🚨로그인 API 200 매핑 실패")
                     }

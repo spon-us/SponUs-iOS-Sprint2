@@ -76,7 +76,7 @@ struct SignUpNameView: View {
         .background(Color.bgSecondary)
         
         //MARK: Navigate
-        NavigationLink(destination: SuccessSignUpView().navigationBarHidden(true), isActive: $navigate) {
+        NavigationLink(destination: SuccessSignUpView(signUpVM: vm).navigationBarHidden(true), isActive: $navigate) {
             EmptyView()
         }
     }

@@ -23,6 +23,8 @@ enum SponusAPI {
     case postLogin(loginDetails: LoginRequest)
     case deleteKeyword(keyword: String)
     case deleteSearch
+    case getVerifyEmail(email: String)
+    case getReissue(refreshToken: String)
     case getMyOrganization
     case patchMyClubProfile(clubProfile: ClubProfile)
     case postProfileImage(image: UIImage)
@@ -61,6 +63,10 @@ extension SponusAPI: TargetType {
             return "/api/v2/organizations/join"
         case .postLogin:
             return "/api/v2/auth/login"
+        case .getVerifyEmail:
+            return "/api/v2/auth/verify-email"
+        case .getReissue:
+            return "/api/v2/auth/reissue"
         case .getMyOrganization:
             return "/api/v2/organizations/me"
         case .patchMyClubProfile:
@@ -98,6 +104,10 @@ extension SponusAPI: TargetType {
             return .post
         case .postLogin:
             return .post
+        case .getVerifyEmail:
+            return .get
+        case .getReissue:
+            return .get
         case .getMyOrganization:
             return .get
         case .patchMyClubProfile:
@@ -134,6 +144,10 @@ extension SponusAPI: TargetType {
         case .postSignUp:
             return Data()
         case .postLogin:
+            return Data()
+        case .getVerifyEmail:
+            return Data()
+        case .getReissue:
             return Data()
         case .getMyOrganization:
             return Data()
@@ -178,6 +192,10 @@ extension SponusAPI: TargetType {
             return .requestJSONEncodable(signUpDetails)
         case .postLogin(loginDetails: let loginDetails):
             return .requestJSONEncodable(loginDetails)
+        case .getVerifyEmail:
+            return .requestPlain
+        case .getReissue:
+            return .requestPlain
         case .getMyOrganization:
             return .requestPlain
         case .patchMyClubProfile(let clubProfile):
@@ -226,6 +244,10 @@ extension SponusAPI: TargetType {
             return ["Content-Type": "application/json"]
         case .postLogin:
             return ["Content-Type": "application/json"]
+        case .getVerifyEmail(email: let email):
+            return ["email": email]
+        case .getReissue(refreshToken: let refreshToken):
+            return ["RefreshToken": "\(refreshToken)"]
         case .getMyOrganization:
             return auth
         case .patchMyClubProfile:

@@ -33,11 +33,33 @@ class SignUpViewModel: ObservableObject {
     func signUp(completion: @escaping (Bool) -> Void) {
         let signUpDetails = SignUpRequest(email: email, password: password, name: name, organizationType: organizationType)
         provider.request(.postSignUp(signUpDetails: signUpDetails)) { result in
+            print("\(self.email), \(self.password), \(self.name), \(self.organizationType)")
             switch result {
             case .success:
                 completion(true)
             case .failure:
                 completion(false)
+            }
+        }
+    }
+    
+    func isValidEmail(email: String, completion: @escaping (String?) -> Void) {
+        provider.request(.getVerifyEmail(email: email)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: response.data, options: []) as? [String: Any],
+                       let content = json["content"] as? [String: Any],
+                       let exist = content["exist"] as? String {
+                        DispatchQueue.main.async {
+                            completion(exist)
+                        }
+                    }
+                } catch let error {
+                    print("🚨getVerifyEmail API 파싱 에러 \(error)")
+                }
+            case .failure(let error):
+                print("🚨getVerifyEmail API 서버 에러 \(error)")
             }
         }
     }

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SuccessSignUpView: View {
     @EnvironmentObject var loginVM: LoginViewModel
-    
+    @ObservedObject var signUpVM: SignUpViewModel
+
     var body: some View {
         VStack() {
             Image("logo_app")
@@ -32,7 +33,15 @@ struct SuccessSignUpView: View {
             Spacer()
             
             Button(action: {
-                loginVM.logout()
+                loginVM.login(email: signUpVM.email, password: signUpVM.password) { resultContent in
+                    switch resultContent {
+                    case "success" : loginVM.loginSuccess = true
+    //                case "Account not found": wrongInput = "email"
+    //                case "Bad credentials": wrongInput = "password"
+                    default:
+                        return
+                    }
+                }
             }) {
                 Text("시작하기")
                     .font(.But1KrBd)
@@ -51,8 +60,4 @@ struct SuccessSignUpView: View {
         .frame(maxWidth: .infinity)
         .background(Color.bgSecondary)
     }
-}
-
-#Preview {
-    SuccessSignUpView()
 }

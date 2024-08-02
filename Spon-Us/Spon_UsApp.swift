@@ -15,10 +15,14 @@ struct Spon_UsApp: App {
     
     var body: some Scene {
         WindowGroup() {
-            if (vm.loginSuccess || (TokenManager.shared.isAutoLogin ?? false)) && !TokenManager.shared.isRefreshTokenExpired() {
-                ContentView()
+            if (vm.loginSuccess ||  UserDefaults.standard.bool(forKey: "isAutoLogin")) && !TokenManager.shared.isRefreshTokenExpired() {
+                ContentView().onAppear(perform: {
+                    print("\(vm.loginSuccess), \(TokenManager.shared.isAutoLogin ?? false), \(!TokenManager.shared.isRefreshTokenExpired())")
+                })
             } else {
-                OnBoardingView()
+                OnBoardingView().onAppear(perform: {
+                    print("\(vm.loginSuccess), \(TokenManager.shared.isAutoLogin ?? false), \(!TokenManager.shared.isRefreshTokenExpired())")
+                })
             }
         }.environmentObject(vm)
             .environmentObject(MypageNavigationPathFinder.shared)
