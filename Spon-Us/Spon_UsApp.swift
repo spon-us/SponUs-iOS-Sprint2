@@ -24,6 +24,7 @@ struct Spon_UsApp: App {
                     print("\(vm.loginSuccess), \(TokenManager.shared.isAutoLogin ?? false), \(!TokenManager.shared.isRefreshTokenExpired())")
                 })
             }
+//            WriteCompanyProfileView()
         }.environmentObject(vm)
             .environmentObject(MypageNavigationPathFinder.shared)
     }

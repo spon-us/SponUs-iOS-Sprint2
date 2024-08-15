@@ -26,7 +26,8 @@ struct WriteClubProfileView: View {
     
     @ObservedObject var mypageVM: MypageViewModel
     
-    @State var existProfile = false
+//    @State var existProfile = false
+    
     
     
     

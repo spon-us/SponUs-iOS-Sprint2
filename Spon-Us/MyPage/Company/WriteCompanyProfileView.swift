@@ -22,6 +22,10 @@ struct WriteCompanyProfileView: View {
     @State private var selectedPage: WriteCompanyProfileTab = .image
     @State var isPresented = false
     
+    @State var imageTabDiabled = true
+    
+    @State var buttonDisabled: [WriteCompanyProfileTab : Bool] = [.image : true, .name : true, .collaborationField : true, .companyField : true, .link : true]
+    
     var body: some View {
         
         ZStack {
@@ -34,7 +38,7 @@ struct WriteCompanyProfileView: View {
                 
                 TabView(selection: $selectedPage) {
                     
-                    CompanyImageTabView(selectedPage: $selectedPage)
+                    CompanyImageTabView(selectedPage: $selectedPage, imageTabDisabled: $imageTabDiabled, buttonDisabled: $buttonDisabled)
                         .tag(WriteCompanyProfileTab.image)
                     
                     CompanyNameTabView(selectedPage: $selectedPage)
@@ -72,6 +76,9 @@ struct CompanyImageTabView: View {
     
     @State private var selectedImage: UIImage? = nil
     @State private var isImagePickerPresented = false
+    
+    @Binding var imageTabDisabled: Bool
+    @Binding var buttonDisabled: [WriteCompanyProfileTab : Bool]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -138,13 +145,27 @@ struct CompanyImageTabView: View {
             Button(action: {
                 selectedPage = .name
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: selectedImage == nil)
+                SponusButtonLabel(text: "다음", disabledCondition: buttonDisabled[.image]!)
             })
-            .disabled(selectedImage == nil)
+            .disabled(buttonDisabled[.image]!)
             .padding(.horizontal, 20)
             
         }
         .background(Color.bgSecondary)
+        .onChange(of: selectedImage) {
+            if selectedImage == nil {
+//                imageTabDisabled = true
+//                print(imageTabDisabled)
+                buttonDisabled[.image] = true
+                print(buttonDisabled[.image]!)
+            }
+            else {
+//                imageTabDisabled = false
+//                print(imageTabDisabled)
+                buttonDisabled[.image] = false
+                print(buttonDisabled[.image]!)
+            }
+        }
     }
 }
 

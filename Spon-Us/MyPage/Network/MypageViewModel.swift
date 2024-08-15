@@ -12,7 +12,9 @@ import Moya
 
 class MypageViewModel: ObservableObject {
     
-    @Published var myOrganization: MyOrganization?
+    @Published var myOrganizationType: String?
+    @Published var clubOrganization: ClubOrganization?
+    @Published var companyOrganization: CompanyOrganization?
     
     @Published var clubImageUrl: String = ""
     
@@ -55,13 +57,34 @@ class MypageViewModel: ObservableObject {
                 switch result {
                 case .success(let response):
                     print(response)
-                    if let myOrganizationResponse = try? response.map(MyOrganizationResponse.self) {
-                        self.myOrganization = myOrganizationResponse.content
-                        self.clubName = self.myOrganization?.name ?? "name"
-                        print("getMyOrganization매핑 성공🚨")
+                    
+                    if let responseString = String(data: response.data, encoding: .utf8) {
+                                        print("Response as String: \(responseString)")
+                                    } else {
+                                        print("Failed to convert response to String.")
+                                    }
+                    
+                    if let myOrganizationResponse = try? response.map(MyOrganizationTypeResponse.self) {
+                        self.myOrganizationType = myOrganizationResponse.content.organizationType
+                        print(self.myOrganizationType)
+                        
+                        switch self.myOrganizationType {
+                        case "CLUB":
+                            if let myClubOrganizationResponse = try? response.map(MyOrganizationClubResponse.self) {
+                                self.clubOrganization = myClubOrganizationResponse.content
+                                print(self.clubOrganization)
+                            }
+                        case "COMPANY":
+                            if let myCompanyOrganizationResponse = try? response.map(MyOrganizationCompanyResponse.self) {
+                                self.companyOrganization = myCompanyOrganizationResponse.content
+                                print(self.companyOrganization)
+                            }
+                        default:
+                            print("알수없는 조직 타입")
+                        }
                     }
                     else {
-                        print("getMyOrganization매핑 실패🚨")
+                        print("조직타입 매핑 실패")
                     }
                 case .failure:
                     print("getMyOrganization네트워크 요청 실패🚨")
