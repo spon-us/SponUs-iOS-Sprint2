@@ -17,8 +17,15 @@ final class ClubProfileViewModel {
     
     var isSuggestModalPresented: Bool = false
     var snsURL: [String] = ["https://www.instagram.com/sponus_official?igsh=aXZ4OG85cGcxcDQw", "https://www.facebook.com", "https://www.example.com"]
-    var cardnewsDummyData = [PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel()]
     
+    var portfolioPage: Int = 0
+    var portfolios: [PortfolioModel] = .init()
+    var pfIdx: Int?
+    
+    var showMoreButton: Bool = true
+
+    let cardnewsDummyData = [PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel()]
+
     init(clubModel: ClubModel, isBookmarked: Bool) {
         self.clubModel = clubModel
         self.isBookmarked = isBookmarked
@@ -87,6 +94,35 @@ final class ClubProfileViewModel {
             return "기타"
         default:
             return "Unexpected Club Type"
+        }
+    }
+
+    func fetchPortfolios() {
+        provider.request(.getPortfolios(page: portfolioPage, size: 3, clubId: clubModel.id)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                do {
+                    let body = try JSONDecoder().decode(GetPortfolioResponse.self, from: response.data)
+                    withAnimation {
+                        if self?.portfolioPage == 0 {
+                            self?.portfolios = body.content.content
+                        }
+                        else {
+                            for elem in body.content.content {
+                                self?.portfolios.append(elem)
+                            }
+                        }
+                        if body.content.content.count < 3 {
+                            self?.showMoreButton = false
+                        }
+                    }
+                    self?.portfolioPage += 1
+                } catch {
+                    debugPrint("getPortoflio parse err", error)
+                }
+            case .failure(let err):
+                debugPrint(err)
+            }
         }
     }
 }

@@ -288,93 +288,109 @@ struct ClubProfilePortfolioView: View {
             .padding(.bottom, 12)
         ClubProfilePortfolioPageView(clubProfileViewModel: clubProfileViewModel)
         ClubProfileVGridView(clubProfileViewModel: clubProfileViewModel)
-        Button {
-            // 더보기
-        } label: {
-            Text("더보기")
-                .korFont(.B2KrMd)
-                .foregroundStyle(Color.textSecondary)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .background(Color.bgTertiary)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.line200, lineWidth: 1)
-                )
-        }.padding(.top, 20)
-            .padding(.bottom, 93)
+        if clubProfileViewModel.showMoreButton {
+            Button {
+                withAnimation {
+                    clubProfileViewModel.fetchPortfolios()
+                }
+            } label: {
+                Text("더보기")
+                    .korFont(.B2KrMd)
+                    .foregroundStyle(Color.textSecondary)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(Color.bgTertiary)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(Color.line200, lineWidth: 1)
+                    )
+            }.padding(.top, 20)
+                .padding(.bottom, 93)
+                .onAppear(perform: clubProfileViewModel.fetchPortfolios)
+        }
     }
 }
 
 struct ClubProfilePortfolioPageView: View {
-    var clubProfileViewModel: ClubProfileViewModel
+    @Bindable var clubProfileViewModel: ClubProfileViewModel
     var body: some View {
-        ScrollView(.horizontal) {
-            LazyHStack(spacing: 0) {
-                ForEach(clubProfileViewModel.cardnewsDummyData.indices, id: \.self) { index in
-                    VStack(spacing: 0) {
-                        ZStack {
-                            clubProfileViewModel.cardnewsDummyData[index].image
-                                .resizable()
-                                .frame(maxWidth: .infinity)
-                                .aspectRatio(1.717, contentMode: .fit)
-                            VStack(spacing: 0) {
-                                Spacer()
-                                HStack(spacing: 8) {
-                                    ForEach(clubProfileViewModel.cardnewsDummyData.indices, id: \.self) { dotIndex in
-                                        Circle()
-                                            .frame(width: 8, height: 8)
-                                            .foregroundColor(dotIndex == index ? Color.bgWhite : Color.textDisabled)
+        if let pfIdx = clubProfileViewModel.pfIdx {
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: 0) {
+                    ForEach(clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses.indices, id: \.self) { idx in
+                        VStack(spacing: 0) {
+                            ZStack {
+                                AsyncImage(url: URL(string: clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses[idx].url)) { image in
+                                    image
+                                        .resizable()
+                                        .frame(maxWidth: .infinity)
+                                        .aspectRatio(1.717, contentMode: .fit)
+                                } placeholder: {
+                                    Rectangle()
+                                        .foregroundStyle(.clear)
+                                        .aspectRatio(1.717, contentMode: .fit)
+                                }
+                                VStack(spacing: 0) {
+                                    Spacer()
+                                    HStack(spacing: 8) {
+                                        ForEach(clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses.indices, id: \.self) { dotIndex in
+                                            Circle()
+                                                .frame(width: 8, height: 8)
+                                                .foregroundColor(dotIndex == idx ? Color.bgWhite : Color.textDisabled)
+                                        }
+                                    }
+                                    .padding(.bottom, 8)
+                                    .scrollTransition(.animated, axis: .horizontal) { content, phase in
+                                        content
+                                            .scaleEffect(phase.isIdentity ? 1.0 : 0.8)
                                     }
                                 }
-                                .padding(.bottom, 8)
-                                .scrollTransition(.animated, axis: .horizontal) { content, phase in
-                                    content
-                                        .scaleEffect(phase.isIdentity ? 1.0 : 0.8)
-                                }
                             }
+
+                            HStack(spacing: 0) {
+                                Text(clubProfileViewModel.portfolios[pfIdx].startDate + " ~ " + clubProfileViewModel.portfolios[pfIdx].endDate)
+                                    .korFont(.B2KrMd)
+                                    .foregroundStyle(Color.textSecondary)
+                                Spacer()
+                            }.padding([.top, .horizontal], 20)
+
+                            HStack(spacing: 0) {
+                                Text("Dummy Title")
+                                    .korFont(.T3KrBd)
+                                    .lineLimit(1)
+                                    .foregroundStyle(Color.textPrimary)
+                                Spacer()
+                            }.padding(.horizontal, 20)
+                                .padding(.top, 6)
+
+                            HStack(spacing: 0) {
+                                Text(clubProfileViewModel.portfolios[pfIdx].description.forceCharWrapping)
+                                    .korFont(.B2KrMd)
+                                    .foregroundStyle(Color.textSecondary)
+                                Spacer()
+                            }.padding(.horizontal, 20)
+                                .padding(.top, 9)
+                                .padding(.bottom, 20)
                         }
-
-                        HStack(spacing: 0) {
-                            Text(clubProfileViewModel.cardnewsDummyData[index].date)
-                                .korFont(.B2KrMd)
-                                .foregroundStyle(Color.textSecondary)
-                            Spacer()
-                        }.padding([.top, .horizontal], 20)
-
-                        HStack(spacing: 0) {
-                            Text(clubProfileViewModel.cardnewsDummyData[index].title.forceCharWrapping)
-                                .korFont(.T3KrBd)
-                                .foregroundStyle(Color.textPrimary)
-                            Spacer()
-                        }.padding(.horizontal, 20)
-                            .padding(.top, 6)
-
-                        HStack(spacing: 0) {
-                            Text(clubProfileViewModel.cardnewsDummyData[index].content.forceCharWrapping)
-                                .korFont(.B2KrMd)
-                                .foregroundStyle(Color.textSecondary)
-                            Spacer()
-                        }.padding(.horizontal, 20)
-                            .padding(.top, 9)
-                            .padding(.bottom, 20)
+                        .containerRelativeFrame(.horizontal)
+                        .background(Color.bgWhite)
                     }
-                    .containerRelativeFrame(.horizontal)
-                    .background(Color.bgWhite)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.line200, lineWidth: 1)
-                    )
                 }
-            }
-        }.scrollTargetBehavior(.paging)
+            }.scrollTargetBehavior(.paging)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.line200, lineWidth: 1)
+                )
+        } else {
+            EmptyView()
+        }
     }
 }
 
 struct ClubProfileVGridView: View {
-    var clubProfileViewModel: ClubProfileViewModel
+    @Bindable var clubProfileViewModel: ClubProfileViewModel
 
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 8),
@@ -384,11 +400,33 @@ struct ClubProfileVGridView: View {
 
     var body: some View {
         LazyVGrid(columns: columns, spacing: 8) {
-            ForEach(1..<7) { _ in
-                Image(.rectangle1363)
-                    .resizable()
-                    .aspectRatio(1, contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+            ForEach(clubProfileViewModel.portfolios.indices, id: \.self) { idx in
+                if let imgURL = clubProfileViewModel.portfolios[idx].portfolioImageGetResponses.first?.url {
+                    AsyncImage(url: URL(string: imgURL)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color.line200, lineWidth: 1)
+                            )
+                            .onTapGesture {
+                                withAnimation {
+                                    clubProfileViewModel.pfIdx = idx
+                                }
+                            }
+                    } placeholder: {
+                        Rectangle()
+                            .foregroundStyle(.clear)
+                            .aspectRatio(1, contentMode: .fit)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color.line200, lineWidth: 1)
+                            )
+                    }
+                }
             }
         }.padding(.top, 12)
     }
