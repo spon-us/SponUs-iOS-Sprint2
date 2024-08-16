@@ -52,6 +52,7 @@
 		DF4074A12C2A900A00321E05 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074A02C2A900A00321E05 /* Organization.swift */; };
 		DF4074A72C2AD9B300321E05 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074A62C2AD9B300321E05 /* Company.swift */; };
 		DF4074A92C2AE07400321E05 /* Club.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4074A82C2AE07400321E05 /* Club.swift */; };
+		DFAFD1DD2C6FAB2D00F0B61E /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAFD1DC2C6FAB2D00F0B61E /* Portfolio.swift */; };
 		DFBE0B762BE601C400246814 /* Spon_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0B752BE601C400246814 /* Spon_UsApp.swift */; };
 		DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B792BE601C500246814 /* Assets.xcassets */; };
 		DFBE0B7D2BE601C500246814 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBE0B7C2BE601C500246814 /* Preview Assets.xcassets */; };
@@ -117,6 +118,7 @@
 		DF4074A02C2A900A00321E05 /* Organization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		DF4074A62C2AD9B300321E05 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		DF4074A82C2AE07400321E05 /* Club.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Club.swift; sourceTree = "<group>"; };
+		DFAFD1DC2C6FAB2D00F0B61E /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		DFBE0B722BE601C400246814 /* Spon-Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spon-Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBE0B752BE601C400246814 /* Spon_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spon_UsApp.swift; sourceTree = "<group>"; };
 		DFBE0B792BE601C500246814 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				1E7D55782C2DB822007A6254 /* Bookmark.swift */,
 				1E97271D2C2FE10400252CA6 /* Search.swift */,
 				1E9727212C2FFD9100252CA6 /* Keyword.swift */,
+				DFAFD1DC2C6FAB2D00F0B61E /* Portfolio.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				DFBE0BB32BF315EC00246814 /* EnumManager.swift in Sources */,
 				DFBE0BAD2BF30CC500246814 /* CustomBackButton.swift in Sources */,
 				1E9727202C2FE1CE00252CA6 /* SearchViewModel.swift in Sources */,
+				DFAFD1DD2C6FAB2D00F0B61E /* Portfolio.swift in Sources */,
 				DF4074A72C2AD9B300321E05 /* Company.swift in Sources */,
 				DF4074A92C2AE07400321E05 /* Club.swift in Sources */,
 				1E9727222C2FFD9100252CA6 /* Keyword.swift in Sources */,
@@ -740,6 +744,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -774,6 +779,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

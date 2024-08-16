@@ -28,6 +28,7 @@ enum SponusAPI {
     case getMyOrganization
     case patchMyClubProfile(clubProfile: ClubProfile)
     case postProfileImage(image: UIImage)
+    case getPortfolios(page: Int, size: Int, clubId: Int)
 }
 
 extension SponusAPI: TargetType {
@@ -73,6 +74,8 @@ extension SponusAPI: TargetType {
             return "/api/v2/clubs/me"
         case .postProfileImage:
             return "/api/v2/organizations/me/profileImage"
+        case .getPortfolios:
+            return "/api/v2/portfolio"
         }
     }
     
@@ -114,6 +117,8 @@ extension SponusAPI: TargetType {
             return .patch
         case .postProfileImage:
             return .post
+        case .getPortfolios:
+            return .get
         }
     }
     
@@ -154,6 +159,8 @@ extension SponusAPI: TargetType {
         case .patchMyClubProfile:
             return Data()
         case .postProfileImage:
+            return Data()
+        case .getPortfolios:
             return Data()
         }
     }
@@ -205,6 +212,14 @@ extension SponusAPI: TargetType {
             let imageData = image.jpegData(compressionQuality: 0.1)!
             let formData = MultipartFormData(provider: .data(imageData), name: "profileImage", fileName: "profileImage.JPG", mimeType: "image/jpeg")
             return .uploadMultipart([formData])
+        case let .getPortfolios(page, size, clubId):
+            let parameters: [String: Any] = [
+                "page": page,
+                "size": size,
+                "sort": "sorted",
+                "clubId": clubId
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 
@@ -253,6 +268,8 @@ extension SponusAPI: TargetType {
         case .patchMyClubProfile:
             return auth
         case .postProfileImage:
+            return auth
+        case .getPortfolios:
             return auth
         }
     }
