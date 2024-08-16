@@ -30,6 +30,7 @@ final class SearchViewModel {
     var searchList: [SearchListViewModel] = []
     var recentSearches: [String] = []
     
+    // [GET] 조직 검색
     func fetchSearch(keyword: String, completion: @escaping (Bool) -> Void) {
         provider.request(.getSearch(keyword: keyword)) { response in
             switch response {
@@ -49,6 +50,7 @@ final class SearchViewModel {
         }
     }
     
+    // [GET] 검색 기록 조회
     func fetchKeyword(completion: @escaping (Bool) -> Void) {
         provider.request(.getKeyword) { response in
             switch response {
@@ -68,6 +70,7 @@ final class SearchViewModel {
         }
     }
     
+    // [POST] 검색어 저장
     func postKeyword(keyword: String, completion: @escaping (Bool) -> Void) {
         provider.request(.postKeyword(keyword: keyword)) { response in
             switch response {
@@ -86,6 +89,7 @@ final class SearchViewModel {
         }
     }
     
+    // [DELETE] 검색어 개별 삭제
     func deleteKeyword(keyword: String, completion: @escaping (Bool) -> Void) {
         provider.request(.deleteKeyword(keyword: keyword)) { response in
             switch response {
@@ -104,6 +108,7 @@ final class SearchViewModel {
         }
     }
     
+    // [DELETE] 검색어 전체 삭제
     func deleteSearch(completion: @escaping (Bool) -> Void) {
         provider.request(.deleteSearch) { response in
             switch response {
