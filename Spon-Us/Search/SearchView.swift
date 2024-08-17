@@ -15,6 +15,8 @@ struct SearchView: View {
     @FocusState private var isSearchFieldFocused: Bool
     @State var visibility = Visibility.visible
     
+    @State var homeViewModel = HomeViewModel()
+
     var body: some View {
         VStack(spacing: 0) {
             SearchBarView(
@@ -118,8 +120,7 @@ struct SearchView: View {
                     VStack(spacing: 16) {
                         ForEach(searchViewModel.searchList, id: \.id) { search in
                             Button {
-                                // TODO: 검색 결과 화면 연결
-                                print(search.id)
+                                navigateToDetail(for: search)
                             } label: {
                                 HStack {
                                     if let imageURL = search.imageURL, let url = URL(string: imageURL) {
@@ -179,6 +180,24 @@ struct SearchView: View {
             searchViewModel.searchList = []
         }
         .toolbar(visibility, for: .tabBar)
+        .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
+            CompanyProfileView(
+                companyProfileViewModel: CompanyProfileViewModel(
+                    companyModel: homeViewModel.selectedCompany,
+                    isBookmarked: homeViewModel.currentBookmarkStatus
+                )
+            )
+            .onDisappear(perform: homeViewModel.onHomeViewAppear)
+        }
+        .navigationDestination(isPresented: $homeViewModel.goToClubProfileView) {
+            ClubProfileView(
+                clubProfileViewModel: ClubProfileViewModel(
+                    clubModel: homeViewModel.selectedClub,
+                    isBookmarked: homeViewModel.currentBookmarkStatus
+                )
+            )
+            .onDisappear(perform: homeViewModel.onHomeViewAppear)
+        }
     }
     
     func performSearch() {
@@ -207,6 +226,14 @@ struct SearchView: View {
             } else {
                 print("검색어 저장 실패")
             }
+        }
+    }
+    
+    func navigateToDetail(for search: SearchListViewModel) {
+        if search.organizationType == "COMPANY" {
+            homeViewModel.onTapCompany(companyId: search.id)
+        } else if search.organizationType == "CLUB" {
+            homeViewModel.onTapClub(clubId: search.id)
         }
     }
 }

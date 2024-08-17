@@ -15,7 +15,7 @@ enum BookmarkSelection {
 
 struct BookmarkView: View {
     @State private var selectedBookmark: BookmarkSelection = .recent
-    
+    @State var homeViewModel = HomeViewModel()
     var bookmarkViewModel = BookmarkListViewModel()
     
     var body: some View {
@@ -63,15 +63,31 @@ struct BookmarkView: View {
             .background(Color.bgTertiary)
             .cornerRadius(20)
             .padding(.all, 20)
-            
-            BookmarkListView(bookmarkViewModel: bookmarkViewModel, selectedBookmark: $selectedBookmark, fetchBookmarksForSelectedBookmark: fetchBookmarksForSelectedBookmark)
-            //                .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
-            //                    CompanyProfileView(
-            //                         companyProfileViewModel: CompanyProfileViewModel(
-            //                             companyModel: homeViewModel.selectedCompany
-            //                         )
-            //                     )
-            //                }
+
+            BookmarkListView(
+                bookmarkViewModel: bookmarkViewModel,
+                selectedBookmark: $selectedBookmark,
+                homeViewModel: homeViewModel,
+                fetchBookmarksForSelectedBookmark: fetchBookmarksForSelectedBookmark
+            )
+            .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
+                CompanyProfileView(
+                    companyProfileViewModel: CompanyProfileViewModel(
+                        companyModel: homeViewModel.selectedCompany,
+                        isBookmarked: true
+                    )
+                )
+                .onDisappear(perform: homeViewModel.onHomeViewAppear)
+            }
+            .navigationDestination(isPresented: $homeViewModel.goToClubProfileView) {
+                ClubProfileView(
+                    clubProfileViewModel: ClubProfileViewModel(
+                        clubModel: homeViewModel.selectedClub,
+                        isBookmarked: true
+                    )
+                )
+                .onDisappear(perform: homeViewModel.onHomeViewAppear)
+            }
         }
         .background(Color.bgSecondary)
         .onAppear {
@@ -106,6 +122,7 @@ struct BookmarkView: View {
 struct BookmarkListView: View {
     var bookmarkViewModel: BookmarkListViewModel
     @Binding var selectedBookmark: BookmarkSelection
+    var homeViewModel: HomeViewModel
     var fetchBookmarksForSelectedBookmark: () -> Void
     
     let columns: [GridItem] = [
@@ -116,7 +133,13 @@ struct BookmarkListView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(bookmarkViewModel.bookmarkList) { cellViewModel in
-                    BookmarkListCell(selectedBookmark: $selectedBookmark, bookmarkViewModel: bookmarkViewModel, bookmarkListCellViewModel: cellViewModel, fetchBookmarksForSelectedBookmark: fetchBookmarksForSelectedBookmark)
+                    BookmarkListCell(
+                        selectedBookmark: $selectedBookmark,
+                        bookmarkViewModel: bookmarkViewModel,
+                        bookmarkListCellViewModel: cellViewModel,
+                        homeViewModel: homeViewModel,
+                        fetchBookmarksForSelectedBookmark: fetchBookmarksForSelectedBookmark
+                    )
                 }
             }
         }
@@ -129,6 +152,7 @@ struct BookmarkListCell: View {
     @Binding var selectedBookmark: BookmarkSelection
     var bookmarkViewModel: BookmarkListViewModel
     var bookmarkListCellViewModel: BookmarkListCellViewModel
+    var homeViewModel: HomeViewModel
     var fetchBookmarksForSelectedBookmark: () -> Void
     
     var body: some View {
@@ -187,5 +211,16 @@ struct BookmarkListCell: View {
             RoundedRectangle(cornerRadius: 24)
                 .stroke(Color.line200, lineWidth: 1)
         )
+        .onTapGesture {
+            navigateToDetail(for: bookmarkListCellViewModel)
+        }
+    }
+
+    private func navigateToDetail(for cellViewModel: BookmarkListCellViewModel) {
+        if cellViewModel.organizationType == "COMPANY" {
+            homeViewModel.onTapCompany(companyId: cellViewModel.target)
+        } else if cellViewModel.organizationType == "CLUB" {
+            homeViewModel.onTapClub(clubId: cellViewModel.target)
+        }
     }
 }
