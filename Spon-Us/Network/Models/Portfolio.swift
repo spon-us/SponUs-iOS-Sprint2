@@ -32,6 +32,7 @@ struct PortfolioModel: Codable {
     let clubId: Int
     let startDate: String
     let endDate: String
+    let title: String?
     let description: String
     let portfolioImageGetResponses: [PortfolioImageGetResponse]
 }

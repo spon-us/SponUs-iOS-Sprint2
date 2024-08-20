@@ -316,68 +316,69 @@ struct ClubProfilePortfolioPageView: View {
     @Bindable var clubProfileViewModel: ClubProfileViewModel
     var body: some View {
         if let pfIdx = clubProfileViewModel.pfIdx {
-            ScrollView(.horizontal) {
-                LazyHStack(spacing: 0) {
-                    ForEach(clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses.indices, id: \.self) { idx in
-                        VStack(spacing: 0) {
-                            ZStack {
-                                AsyncImage(url: URL(string: clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses[idx].url)) { image in
-                                    image
-                                        .resizable()
-                                        .frame(maxWidth: .infinity)
-                                        .aspectRatio(1.717, contentMode: .fit)
-                                } placeholder: {
-                                    Rectangle()
-                                        .foregroundStyle(.clear)
-                                        .aspectRatio(1.717, contentMode: .fit)
-                                }
-                                VStack(spacing: 0) {
-                                    Spacer()
-                                    HStack(spacing: 8) {
-                                        ForEach(clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses.indices, id: \.self) { dotIndex in
-                                            Circle()
-                                                .frame(width: 8, height: 8)
-                                                .foregroundColor(dotIndex == idx ? Color.bgWhite : Color.textDisabled)
-                                        }
+            VStack(spacing: 0) {
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 0) {
+                        ForEach(clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses.indices, id: \.self) { idx in
+                            VStack(spacing: 0) {
+                                ZStack {
+                                    AsyncImage(url: URL(string: clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses[idx].url)) { image in
+                                        image
+                                            .resizable()
+                                            .frame(maxWidth: .infinity)
+                                            .aspectRatio(1.717, contentMode: .fit)
+                                    } placeholder: {
+                                        Rectangle()
+                                            .foregroundStyle(.clear)
+                                            .aspectRatio(1.717, contentMode: .fit)
                                     }
-                                    .padding(.bottom, 8)
-                                    .scrollTransition(.animated, axis: .horizontal) { content, phase in
-                                        content
-                                            .scaleEffect(phase.isIdentity ? 1.0 : 0.8)
+                                    VStack(spacing: 0) {
+                                        Spacer()
+                                        HStack(spacing: 8) {
+                                            ForEach(clubProfileViewModel.portfolios[pfIdx].portfolioImageGetResponses.indices, id: \.self) { dotIndex in
+                                                Circle()
+                                                    .frame(width: 8, height: 8)
+                                                    .foregroundColor(dotIndex == idx ? Color.bgWhite : Color.textDisabled)
+                                            }
+                                        }
+                                        .padding(.bottom, 8)
+                                        .scrollTransition(.animated, axis: .horizontal) { content, phase in
+                                            content
+                                                .scaleEffect(phase.isIdentity ? 1.0 : 0.8)
+                                        }
                                     }
                                 }
                             }
-
-                            HStack(spacing: 0) {
-                                Text(clubProfileViewModel.portfolios[pfIdx].startDate + " ~ " + clubProfileViewModel.portfolios[pfIdx].endDate)
-                                    .korFont(.B2KrMd)
-                                    .foregroundStyle(Color.textSecondary)
-                                Spacer()
-                            }.padding([.top, .horizontal], 20)
-
-                            HStack(spacing: 0) {
-                                Text("Dummy Title")
-                                    .korFont(.T3KrBd)
-                                    .lineLimit(1)
-                                    .foregroundStyle(Color.textPrimary)
-                                Spacer()
-                            }.padding(.horizontal, 20)
-                                .padding(.top, 6)
-
-                            HStack(spacing: 0) {
-                                Text(clubProfileViewModel.portfolios[pfIdx].description.forceCharWrapping)
-                                    .korFont(.B2KrMd)
-                                    .foregroundStyle(Color.textSecondary)
-                                Spacer()
-                            }.padding(.horizontal, 20)
-                                .padding(.top, 9)
-                                .padding(.bottom, 20)
+                            .containerRelativeFrame(.horizontal)
+                            .background(Color.bgWhite)
                         }
-                        .containerRelativeFrame(.horizontal)
-                        .background(Color.bgWhite)
                     }
-                }
-            }.scrollTargetBehavior(.paging)
+                }.scrollTargetBehavior(.paging)
+                HStack(spacing: 0) {
+                    Text(clubProfileViewModel.portfolios[pfIdx].startDate + " ~ " + clubProfileViewModel.portfolios[pfIdx].endDate)
+                        .korFont(.B2KrMd)
+                        .foregroundStyle(Color.textSecondary)
+                    Spacer()
+                }.padding([.top, .horizontal], 20)
+
+                HStack(spacing: 0) {
+                    Text(clubProfileViewModel.portfolios[pfIdx].title ?? "Dummy Title")
+                        .korFont(.T3KrBd)
+                        .lineLimit(1)
+                        .foregroundStyle(Color.textPrimary)
+                    Spacer()
+                }.padding(.horizontal, 20)
+                    .padding(.top, 6)
+
+                HStack(spacing: 0) {
+                    Text(clubProfileViewModel.portfolios[pfIdx].description.forceCharWrapping)
+                        .korFont(.B2KrMd)
+                        .foregroundStyle(Color.textSecondary)
+                    Spacer()
+                }.padding(.horizontal, 20)
+                    .padding(.top, 9)
+                    .padding(.bottom, 20)
+            }
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
