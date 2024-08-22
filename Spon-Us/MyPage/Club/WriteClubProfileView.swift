@@ -26,8 +26,8 @@ struct WriteClubProfileView: View {
     
     @ObservedObject var mypageVM: MypageViewModel
     
-    @State var existProfile = false
     
+    @State var buttonDisabled: [WriteClubProfileTab : Bool] = [.image : true, .name : true, .introduce : true, .member : true, .link : true, .field : true]
     
     
     var body: some View {
@@ -43,24 +43,23 @@ struct WriteClubProfileView: View {
                 
                 TabView(selection: $selectedPage) {
                     
-                    ImageTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM)
+                    ImageTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM, buttonDisabled: $buttonDisabled)
                         .tag(WriteClubProfileTab.image)
                     
-                    NameTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM)
+                    NameTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM, buttonDisabled: $buttonDisabled)
                         .tag(WriteClubProfileTab.name)
                     
-                    IntroduceTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM)
+                    IntroduceTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM, buttonDisabled: $buttonDisabled)
                         .tag(WriteClubProfileTab.introduce)
                     
-                    MemberTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM)
+                    MemberTabView(selectedPage: $selectedPage, mypageViewModel: mypageVM, buttonDisabled: $buttonDisabled)
                         .tag(WriteClubProfileTab.member)
                     
-                    LinkTabView(selectedPage: $selectedPage, WriteClubProfileVM: mypageVM)
+                    LinkTabView(selectedPage: $selectedPage, WriteClubProfileVM: mypageVM, buttonDisabled: $buttonDisabled)
                         .tag(WriteClubProfileTab.link)
                     
-                    FieldTabView(mypageViewModel: mypageVM)
+                    FieldTabView(mypageViewModel: mypageVM, buttonDisabled: $buttonDisabled)
                         .tag(WriteClubProfileTab.field)
-                    
                     
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -91,10 +90,12 @@ struct ImageTabView: View {
     
     @Binding var selectedPage: WriteClubProfileTab
     
-//    @State private var selectedImage: UIImage? = nil
+    @State private var selectedImage: UIImage? = nil
     @State private var isImagePickerPresented = false
     
     @ObservedObject var mypageViewModel: MypageViewModel
+    
+    @Binding var buttonDisabled: [WriteClubProfileTab : Bool]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -136,7 +137,7 @@ struct ImageTabView: View {
                             .padding(.top, 16)
                             .zIndex(1.0)
                             
-                            if let selectedImage = mypageViewModel.clubImage {
+                            if let selectedImage = selectedImage {
                                 Image(uiImage: selectedImage)
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
@@ -152,7 +153,7 @@ struct ImageTabView: View {
                         }
                     })
                     .sheet(isPresented: $isImagePickerPresented) {
-                        SingleImagePickerView(selectedImage: $mypageViewModel.clubImage)
+                        SingleImagePickerView(selectedImage: $selectedImage)
                     }
                 }
                 .padding(.horizontal, 20)
@@ -170,19 +171,27 @@ struct ImageTabView: View {
             Button(action: {
                 selectedPage = .name
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: mypageViewModel.clubImageTabDisabledCondition ?? true)
+                SponusButtonLabel(text: "다음", disabledCondition: buttonDisabled[.image]!)
             })
-            .disabled(mypageViewModel.clubImageTabDisabledCondition ?? true)
+            .disabled(buttonDisabled[.image]!)
             .padding(.horizontal, 20)
             
         }
         .background(Color.bgSecondary)
         .onAppear {
             print("이미지탭 생성")
-            mypageViewModel.checkClubImageTabDisabledCondition()
         }
-        .onChange(of: mypageViewModel.clubImage) {
-            mypageViewModel.checkClubImageTabDisabledCondition()
+        .onChange(of: selectedImage) {
+            if selectedImage == nil {
+                buttonDisabled[.image] = true
+                print(buttonDisabled[.image]!)
+                mypageViewModel.clubImage = selectedImage
+            }
+            else {
+                buttonDisabled[.image] = false
+                print(buttonDisabled[.image]!)
+                mypageViewModel.clubImage = selectedImage
+            }
         }
     }
 }
@@ -192,11 +201,13 @@ struct ImageTabView: View {
 
 struct NameTabView: View {
     
-//    @State var text = ""
-//    var limitTextCount = 13
+    @State var text = ""
+    var limitTextCount = 13
     
     @Binding var selectedPage: WriteClubProfileTab
     @ObservedObject var mypageViewModel: MypageViewModel
+    
+    @Binding var buttonDisabled: [WriteClubProfileTab : Bool]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -212,11 +223,11 @@ struct NameTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    TextField("ex. 스포너스 기획 동아리", text: $mypageViewModel.clubName)
-                        .textFieldStyle(SponusTextfieldStyle(text: $mypageViewModel.clubName, limitTextCount: mypageViewModel.clubNameLimitTextCount))
+                    TextField("ex. 스포너스 기획 동아리", text: $text)
+                        .textFieldStyle(SponusTextfieldStyle(text: $text, limitTextCount: limitTextCount))
                         .padding(.bottom, 8)
                     
-                    Text("(\(mypageViewModel.clubName.count)/\(mypageViewModel.clubNameLimitTextCount))")
+                    Text("(\(text.count)/\(limitTextCount))")
                         .font(.B2EnMd)
                         .foregroundStyle(Color.textTertiary)
                         .padding(.leading, 12)
@@ -228,31 +239,39 @@ struct NameTabView: View {
             Button(action: {
                 selectedPage = .introduce
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: mypageViewModel.clubNameTabDisabledCondition ?? true)
+                SponusButtonLabel(text: "다음", disabledCondition: buttonDisabled[.name]!)
             })
-            .disabled(mypageViewModel.clubNameTabDisabledCondition ?? true)
+            .disabled(buttonDisabled[.name]!)
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)
         .onAppear {
             print("네임탭 생성")
-            mypageViewModel.checkClubNameTabDisabledCondition()
         }
-        .onChange(of: mypageViewModel.clubName) {
-            mypageViewModel.checkClubNameTabDisabledCondition()
+        .onChange(of: text) {
+            if text.count == 0 || text.count > limitTextCount {
+                buttonDisabled[.name] = true
+                print(buttonDisabled[.name]!)
+                mypageViewModel.clubProfile?.name = text
+            }
+            else {
+                buttonDisabled[.name] = false
+                print(buttonDisabled[.name]!)
+                mypageViewModel.clubProfile?.name = text
+            }
         }
-
     }
-    
 }
 
 struct IntroduceTabView: View {
     
-//    @State var text = ""
-//    var limitTextCount = 300
+    @State var text = ""
+    var limitTextCount = 300
     
     @Binding var selectedPage: WriteClubProfileTab
     @ObservedObject var mypageViewModel: MypageViewModel
+    
+    @Binding var buttonDisabled: [WriteClubProfileTab : Bool]
 
     
     var body: some View {
@@ -269,30 +288,27 @@ struct IntroduceTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    TextEditor(text: $mypageViewModel.clubDescription)
-                        .modifier(SponusTextEditorModifier(text: $mypageViewModel.clubDescription, limitTextCount: mypageViewModel.clubDescriptionLimitTextCount, height: 260, placeHolder: "ex. 안녕하세요. 저희는 스포대학교의 마케팅 기획을 하는 동아리 ‘스포대학교' 기획동아리 입니다."))
+                    TextEditor(text: $text)
+                        .modifier(SponusTextEditorModifier(text: $text, limitTextCount: limitTextCount, height: 260, placeHolder: "ex. 안녕하세요. 저희는 스포대학교의 마케팅 기획을 하는 동아리 ‘스포대학교' 기획동아리 입니다."))
                         .padding(.bottom, 8)
                     
                     HStack(spacing: 0) {
                         
-                        Text("(\(mypageViewModel.clubDescription.count)/\(mypageViewModel.clubDescriptionLimitTextCount))")
+                        Text("(\(text.count)/\(limitTextCount))")
                             .font(.B2EnMd)
                             .foregroundStyle(Color.textTertiary)
                         
                         Spacer()
                         
                         Button(action: {
-                            mypageViewModel.clubDescription = ""
+                            text = ""
                         }, label: {
                             Text("전체 삭제")
                                 .font(.B2EnMd)
                                 .foregroundStyle(Color.textTertiary)
-                            
                         })
-                        
                     }
                     .padding(.horizontal, 12)
-                    
                 }
                 .padding(.horizontal, 20)
             }
@@ -300,31 +316,38 @@ struct IntroduceTabView: View {
             Button(action: {
                 selectedPage = .member
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: mypageViewModel.clubDescriptionTabDisabledCondition ?? true)
+                SponusButtonLabel(text: "다음", disabledCondition: buttonDisabled[.introduce]!)
             })
-            .disabled(mypageViewModel.clubDescriptionTabDisabledCondition ?? true)
+            .disabled(buttonDisabled[.introduce]!)
             .padding(.horizontal, 20)
             
         }
         .background(Color.bgSecondary)
         .onAppear {
             print("정보입력탭 생성")
-            mypageViewModel.checkClubDescriptionTabDisabledCondition()
         }
-        .onChange(of: mypageViewModel.clubDescription) {
-            mypageViewModel.checkClubDescriptionTabDisabledCondition()
+        .onChange(of: text) {
+            if text.count == 0 || text.count > limitTextCount {
+                buttonDisabled[.introduce] = true
+                mypageViewModel.clubProfile?.description = text
+            }
+            else {
+                buttonDisabled[.introduce] = false
+                mypageViewModel.clubProfile?.description = text
+            }
         }
-
     }
 }
 
 struct MemberTabView: View {
     
-//    @State private var number = ""
+    @State private var text = ""
     var limitTextCount = 999
     
     @Binding var selectedPage: WriteClubProfileTab
     @ObservedObject var mypageViewModel: MypageViewModel
+    
+    @Binding var buttonDisabled: [WriteClubProfileTab : Bool]
 
     
     var body: some View {
@@ -341,15 +364,15 @@ struct MemberTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    TextField("ex. 999", text: $mypageViewModel.clubMemberCount)
+                    TextField("ex. 999", text: $text)
                         .keyboardType(.numberPad)
-                        .onReceive(Just(mypageViewModel.clubMemberCount)) { newValue in
+                        .onReceive(Just(text)) { newValue in
                             let filtered = newValue.filter { "0123456789".contains($0) }
                             if filtered != newValue {
-                                self.mypageViewModel.clubMemberCount = filtered
+                                text = filtered
                             }
                         }
-                        .textFieldStyle(SponusTextfieldStyle(text: $mypageViewModel.clubMemberCount, limitTextCount: limitTextCount))
+                        .textFieldStyle(SponusTextfieldStyle(text: $text, limitTextCount: limitTextCount))
                         .padding(.bottom, 8)
        
                 }
@@ -359,28 +382,26 @@ struct MemberTabView: View {
             Button(action: {
                 selectedPage = .link
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: mypageViewModel.clubMemberTabDisabledCondition ?? true)
+                SponusButtonLabel(text: "다음", disabledCondition: buttonDisabled[.member]!)
             })
-            .disabled(mypageViewModel.clubMemberTabDisabledCondition ?? true)
+            .disabled(buttonDisabled[.member]!)
             .padding(.horizontal, 20)
-            
         }
         .background(Color.bgSecondary)
         .onAppear {
             print("회원수 입력탭 생성")
-            mypageViewModel.checkClubMemberTabDisabledCondition()
         }
-        .onChange(of: mypageViewModel.clubMemberCount) {
-            mypageViewModel.checkClubMemberTabDisabledCondition()
+        .onChange(of: text) {
+            if let numberValue = Int(text), numberValue > 0 {
+                buttonDisabled[.member] = false
+                mypageViewModel.clubProfile?.memberCount = Int(text) ?? 0
+            }
+            else {
+                buttonDisabled[.member] = true
+                mypageViewModel.clubProfile?.memberCount = Int(text) ?? 0
+            }
         }
     }
-    
-//    private func isButtonDisabled() -> Bool {
-//        guard let numberValue = Int(WriteClubProfileVM.clubMemberCount), numberValue > 0 else {
-//            return true
-//        }
-//        return false
-//    }
 }
 
 struct LinkTabView: View {
@@ -391,6 +412,8 @@ struct LinkTabView: View {
     
     @Binding var selectedPage: WriteClubProfileTab
     @ObservedObject var WriteClubProfileVM: MypageViewModel
+    
+    @Binding var buttonDisabled: [WriteClubProfileTab : Bool]
 
     
     var limitTextCount = 999
@@ -453,20 +476,32 @@ struct LinkTabView: View {
 }
 
 struct FieldTabView: View {
-//    @State private var number = ""
+    
     var limitTextCount = 999
     
     let maxSelections = 2
+    
     @ObservedObject var mypageViewModel: MypageViewModel
     
-    @State private var categories: [ClubCategorySelection] = ClubCategory.allCases.dropFirst().map {
-        ClubCategorySelection(category: $0, isSelected: false)
-    }
+//    @State private var categories: [ClubCategorySelection] = ClubCategory.allCases.dropFirst().map {
+//        ClubCategorySelection(category: $0, isSelected: false)
+//    }
+    
+    var categories2 = ClubCategory.allCases.dropFirst().map { $0.rawValue }
+    @State var selectedCategories: [String] = []
+    
+    @Binding var buttonDisabled: [WriteClubProfileTab : Bool]
     
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
+                    
+                    Button(action: {
+                        print(mypageViewModel.clubProfile)
+                    }, label: {
+                        Text("클럽프로필 출력")
+                    })
                     
                     Rectangle()
                         .frame(height: 0)
@@ -482,15 +517,20 @@ struct FieldTabView: View {
                         .foregroundStyle(Color.textDisabled)
                         .padding(.bottom, 24)
                     
-                    ForEach($categories) { $category in
-                        SelectinOptionCell(text: category.category.rawValue, isSelected: category.isSelected)
+                    ForEach(categories2, id: \.self) { category in
+                        SelectinOptionCell(text: category, isSelected: selectedCategories.contains(category))
                             .padding(.bottom, 8)
                             .onTapGesture {
-                                toggleSelection(for: category)
-                                let selectedCategories = categories.filter { $0.isSelected }.map { $0.category.rawValue }
-                                mypageViewModel.clubTypes = getMappedStrings(from: selectedCategories)
-                                print(categories)
-                                print(mypageViewModel.clubTypes)
+                                if selectedCategories.contains(category) {
+                                    // 카테고리가 선택된 상태라면 배열에서 제거
+                                    selectedCategories.removeAll { $0 == category }
+                                } else if selectedCategories.count < maxSelections {
+                                    // 카테고리가 선택되지 않았고, 최대 선택 수를 넘지 않았을 때만 추가
+                                    selectedCategories.append(category)
+                                }
+                                // 선택된 항목이 최대치에 도달한 경우, 아무 동작도 하지 않음
+                                // 매핑
+//                                print(getMappedStrings(from: selectedCategories))
                             }
                     }
                 }
@@ -498,49 +538,26 @@ struct FieldTabView: View {
             }
             
             Button(action: {
-                let selectedCategories = categories.filter { $0.isSelected }.map { $0.category.rawValue }
-                print(getMappedStrings(from: selectedCategories))
-                print(selectedCategories)
-                
-//                mypageViewModel.patchClubProfile(clubProfile: ClubProfile)
-                
             }, label: {
-                SponusButtonLabel(text: "완료", disabledCondition: mypageViewModel.patchClubProfileDisabledCondition)
+                SponusButtonLabel(text: "완료", disabledCondition: buttonDisabled[.image]! || buttonDisabled[.name]! || buttonDisabled[.introduce]! || buttonDisabled[.member]! || buttonDisabled[.field]!)
             })
-            .disabled(mypageViewModel.patchClubProfileDisabledCondition)
+            .disabled(buttonDisabled[.image]! || buttonDisabled[.name]! || buttonDisabled[.introduce]! || buttonDisabled[.member]! || buttonDisabled[.field]!)
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)
         .onAppear {
             print("동아리 분야 입력탭 생성")
-            mypageViewModel.checkClubTypesTabDisabledCondition()
-            mypageViewModel.checkPatchClubProfileDisabledCondition()
         }
-        .onChange(of: mypageViewModel.clubTypes) {
-            mypageViewModel.checkClubTypesTabDisabledCondition()
-            mypageViewModel.checkPatchClubProfileDisabledCondition()
-        }
-    }
-    
-    private func toggleSelection(for category: ClubCategorySelection) {
-        if category.isSelected {
-            // If the category is already selected, allow deselecting it
-            if let index = categories.firstIndex(where: { $0.id == category.id }) {
-                categories[index].isSelected.toggle()
+        .onChange(of: selectedCategories) {
+            if selectedCategories.count > 0 && selectedCategories.count <= 2 {
+                buttonDisabled[.field] = false
+                mypageViewModel.clubProfile?.clubTypes = getMappedStrings(from: selectedCategories)
             }
-        } else {
-            // If the category is not selected, allow selecting it only if the limit has not been reached
-            let selectedCount = categories.filter { $0.isSelected }.count
-            if selectedCount < maxSelections {
-                if let index = categories.firstIndex(where: { $0.id == category.id }) {
-                    categories[index].isSelected.toggle()
-                }
+            else {
+                buttonDisabled[.field] = true
+                mypageViewModel.clubProfile?.clubTypes = getMappedStrings(from: selectedCategories)
             }
         }
-    }
-    
-    private func isButtonDisabled() -> Bool {
-        return categories.filter { $0.isSelected }.isEmpty
     }
     
     private func getMappedStrings(from categories: [String]) -> [String] {

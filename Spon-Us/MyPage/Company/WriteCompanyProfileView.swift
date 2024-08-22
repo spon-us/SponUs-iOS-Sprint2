@@ -22,6 +22,10 @@ struct WriteCompanyProfileView: View {
     @State private var selectedPage: WriteCompanyProfileTab = .image
     @State var isPresented = false
     
+    @State var imageTabDiabled = true
+    
+    @State var buttonDisabled: [WriteCompanyProfileTab : Bool] = [.image : true, .name : true, .collaborationField : true, .companyField : true, .link : true]
+    
     var body: some View {
         
         ZStack {
@@ -34,19 +38,19 @@ struct WriteCompanyProfileView: View {
                 
                 TabView(selection: $selectedPage) {
                     
-                    CompanyImageTabView(selectedPage: $selectedPage)
+                    CompanyImageTabView(selectedPage: $selectedPage, imageTabDisabled: $imageTabDiabled, buttonDisabled: $buttonDisabled)
                         .tag(WriteCompanyProfileTab.image)
                     
-                    CompanyNameTabView(selectedPage: $selectedPage)
+                    CompanyNameTabView(selectedPage: $selectedPage, buttonDisabled: $buttonDisabled)
                         .tag(WriteCompanyProfileTab.name)
                     
-                    CompanyCollaborationFieldTabView(selectedPage: $selectedPage)
+                    CompanyCollaborationFieldTabView(selectedPage: $selectedPage, buttonDisabled: $buttonDisabled)
                         .tag(WriteCompanyProfileTab.collaborationField)
                     
-                    CompanyFieldTabView(selectedPage: $selectedPage)
+                    CompanyFieldTabView(selectedPage: $selectedPage, buttonDisabled: $buttonDisabled)
                         .tag(WriteCompanyProfileTab.companyField)
                     
-                    CompanyLinkTabView(selectedPage: $selectedPage)
+                    CompanyLinkTabView(selectedPage: $selectedPage, buttonDisabled: $buttonDisabled)
                         .tag(WriteCompanyProfileTab.link)
                     
                 }
@@ -72,6 +76,9 @@ struct CompanyImageTabView: View {
     
     @State private var selectedImage: UIImage? = nil
     @State private var isImagePickerPresented = false
+    
+    @Binding var imageTabDisabled: Bool
+    @Binding var buttonDisabled: [WriteCompanyProfileTab : Bool]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -138,13 +145,23 @@ struct CompanyImageTabView: View {
             Button(action: {
                 selectedPage = .name
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: selectedImage == nil)
+                SponusButtonLabel(text: "다음", disabledCondition: buttonDisabled[.image]!)
             })
-            .disabled(selectedImage == nil)
+            .disabled(buttonDisabled[.image]!)
             .padding(.horizontal, 20)
             
         }
         .background(Color.bgSecondary)
+        .onChange(of: selectedImage) {
+            if selectedImage == nil {
+                buttonDisabled[.image] = true
+                print(buttonDisabled[.image]!)
+            }
+            else {
+                buttonDisabled[.image] = false
+                print(buttonDisabled[.image]!)
+            }
+        }
     }
 }
 
@@ -154,6 +171,7 @@ struct CompanyNameTabView: View {
     var limitTextCount = 13
     
     @Binding var selectedPage: WriteCompanyProfileTab
+    @Binding var buttonDisabled: [WriteCompanyProfileTab : Bool]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -185,21 +203,26 @@ struct CompanyNameTabView: View {
             Button(action: {
                 selectedPage = .collaborationField
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: text.count == 0 || text.count > limitTextCount)
+                SponusButtonLabel(text: "다음", disabledCondition: buttonDisabled[.name]!)
             })
-            .disabled(text.count == 0 || text.count > limitTextCount)
+            .disabled(buttonDisabled[.name]!)
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)
-
+        .onChange(of: text) {
+            if text.count == 0 || text.count > limitTextCount {
+                buttonDisabled[.name] = true
+                print(buttonDisabled[.name]!)
+            }
+            else {
+                buttonDisabled[.name] = false
+                print(buttonDisabled[.name]!)
+            }
+        }
     }
 }
 
-//enum CoworkCategory: String {
-//    case linkedProject = "연계프로젝트"
-//    case partnership = "제휴"
-//    case sponsorship = "협찬"
-//}
+
 
 struct CompanyCollaborationFieldTabView: View {
     
@@ -213,16 +236,23 @@ struct CompanyCollaborationFieldTabView: View {
     @State var sponsorshipSelected = false
     @State var sponsorshipSelected2 = false
     
-    @State var text = ""
     
-    @State private var categories: [CompanyCategorySelection] = CompanyCategory.allCases.dropFirst().map {
-        CompanyCategorySelection(category: $0, isSelected: false)
-    }
+    @State var selectedCategories: [String] = []
+    @State var sponsorshipContent = ""
+    
+    @Binding var buttonDisabled: [WriteCompanyProfileTab : Bool]
     
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
+                    
+                    Button(action: {
+                        print(selectedCategories)
+                        print(sponsorshipContent)
+                    }, label: {
+                        Text("선택된 유형 추가")
+                    })
                     
                     Rectangle()
                         .frame(height: 0)
@@ -233,29 +263,32 @@ struct CompanyCollaborationFieldTabView: View {
                         .foregroundStyle(Color.textPrimary)
                         .padding(.bottom, 20)
                     
-                    SelectinOptionCell(text: CoworkCategory.linkedProject.rawValue, isSelected: linkedProjectSelected)
+                    SelectinOptionCell(text: CoworkCategory.linkedProject.rawValue, isSelected: selectedCategories.contains(CoworkCategory.linkedProject.rawValue))
                         .onTapGesture {
-                            linkedProjectSelected.toggle()
+                            if selectedCategories.contains(CoworkCategory.linkedProject.rawValue) {
+                                selectedCategories.removeAll { $0 == CoworkCategory.linkedProject.rawValue }
+                            } else {
+                                selectedCategories.append(CoworkCategory.linkedProject.rawValue)
+                            }
                         }
                         .padding(.bottom, 8)
                     
-                    SelectinOptionCell(text: CoworkCategory.partnership.rawValue, isSelected: partnershipSelected)
+                    SelectinOptionCell(text: CoworkCategory.partnership.rawValue, isSelected: selectedCategories.contains(CoworkCategory.partnership.rawValue))
                         .onTapGesture {
-                        partnershipSelected.toggle()
-                    }
-                        .padding(.bottom, 8)
-                    
-                    SelectinOptionCell(text: CoworkCategory.sponsorship.rawValue, isSelected: sponsorshipSelected)
-                        .onTapGesture {
-                            sponsorshipSelected.toggle()
+                            if selectedCategories.contains(CoworkCategory.partnership.rawValue) {
+                                selectedCategories.removeAll { $0 == CoworkCategory.partnership.rawValue }
+                            } else {
+                                selectedCategories.append(CoworkCategory.partnership.rawValue)
+                            }
                         }
                         .padding(.bottom, 8)
+                    
                     
                     VStack(spacing: 0) {
                         HStack(spacing: 0) {
                             Image("Tick Square")
                                 .renderingMode(.template)
-                                .foregroundStyle(sponsorshipSelected2 ? Color.textBrand : Color.textDisabled)
+                                .foregroundStyle(selectedCategories.contains(CoworkCategory.sponsorship.rawValue) ? Color.textBrand : Color.textDisabled)
                                 .padding(.trailing, 21)
                             
                             Text("협찬")
@@ -265,29 +298,31 @@ struct CompanyCollaborationFieldTabView: View {
                             Spacer()
                         }
                         .padding(.bottom, 12)
+                        .onTapGesture {
+                            if selectedCategories.contains(CoworkCategory.sponsorship.rawValue) {
+                                selectedCategories.removeAll { $0 == CoworkCategory.sponsorship.rawValue }
+                                sponsorshipContent = ""
+                            } else {
+                                selectedCategories.append(CoworkCategory.sponsorship.rawValue)
+                            }
+                        }
                         
-                        TextField("협찬 가능한 대표적인 물품", text: $text)
+                        if selectedCategories.contains(CoworkCategory.sponsorship.rawValue) {
+                            TextField("협찬 가능한 대표적인 물품", text: $sponsorshipContent)
+                                .padding(.bottom, 14)
+                        }
+                            
                     }
-                        .padding(.vertical, 14)
+                        .padding(.top, 14)
                         .padding(.leading, 20)
                         .background(Color.bgWhite)
                         .cornerRadius(16)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
                                 .inset(by: 0.5)
-                                .stroke(sponsorshipSelected2 ? Color.textBrand : Color.line200, lineWidth: 1)
-                            
+                                .stroke(selectedCategories.contains(CoworkCategory.sponsorship.rawValue) ? Color.textBrand : Color.line200, lineWidth: 1)
                         )
 
-
-                    
-//                    ForEach($categories) { $category in
-//                        SelectinOptionCell(text: category.category.rawValue, isSelected: category.isSelected)
-//                            .padding(.bottom, 8)
-//                            .onTapGesture {
-//                                toggleSelection(for: category)
-//                            }
-//                    }
                 }
                 .padding(.horizontal, 20)
             }
@@ -295,35 +330,51 @@ struct CompanyCollaborationFieldTabView: View {
             Button(action: {
 
             }, label: {
-                SponusButtonLabel(text: "완료", disabledCondition: isButtonDisabled())
+                SponusButtonLabel(text: "완료", disabledCondition: selectedCategories.isEmpty || (selectedCategories.contains(CoworkCategory.sponsorship.rawValue) && sponsorshipContent.isEmpty))
             })
-            .disabled(isButtonDisabled())
+            .disabled(selectedCategories.isEmpty || (selectedCategories.contains(CoworkCategory.sponsorship.rawValue) && sponsorshipContent.isEmpty))
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)
+        .onChange(of: selectedCategories) {
+            if selectedCategories.isEmpty {
+                buttonDisabled[.collaborationField] = true
+            }
+            else {
+                buttonDisabled[.collaborationField] = false
+                print(buttonDisabled[.companyField]!)
+            }
+        }
     }
     
 
     
-    private func isButtonDisabled() -> Bool {
-        return categories.filter { $0.isSelected }.isEmpty
-    }
+//    private func isButtonDisabled() -> Bool {
+//        return categories.filter { $0.isSelected }.isEmpty
+//    }
 }
 
 struct CompanyFieldTabView: View {
-    @State private var number = ""
     @Binding var selectedPage: WriteCompanyProfileTab
     
     var limitTextCount = 999
     
     let maxSelections = 3
     
-    @State private var categories: [CompanyCategorySelection] = CompanyCategory.allCases.dropFirst().map {
-        CompanyCategorySelection(category: $0, isSelected: false)
-    }
+    @Binding var buttonDisabled: [WriteCompanyProfileTab : Bool]
+    
+    var categories: [String] = CompanyCategory.allCases.dropFirst().map { $0.rawValue }
+    @State var selectedCategories: [String] = []
     
     var body: some View {
         VStack(spacing: 0) {
+            
+            Button(action: {
+                print(categories)
+            }, label: {
+                Text("카테고리 출력")
+            })
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     
@@ -341,12 +392,23 @@ struct CompanyFieldTabView: View {
                         .foregroundStyle(Color.textDisabled)
                         .padding(.bottom, 24)
                     
-                    ForEach($categories) { $category in
-                        SelectinOptionCell(text: category.category.rawValue, isSelected: category.isSelected)
-                            .padding(.bottom, 8)
-                            .onTapGesture {
-                                toggleSelection(for: category)
+
+                    ForEach(categories, id: \.self) { category in
+                        SelectinOptionCell(
+                            text: category,
+                            isSelected: selectedCategories.contains(category)
+                        )
+                        .padding(.bottom, 8)
+                        .onTapGesture {
+                            if selectedCategories.contains(category) {
+                                // 카테고리가 선택된 상태라면 배열에서 제거
+                                selectedCategories.removeAll { $0 == category }
+                            } else if selectedCategories.count < maxSelections {
+                                // 카테고리가 선택되지 않았고, 최대 선택 수를 넘지 않았을 때만 추가
+                                selectedCategories.append(category)
                             }
+                            // 선택된 항목이 최대치에 도달한 경우, 아무 동작도 하지 않음
+                        }
                     }
                 }
                 .padding(.horizontal, 20)
@@ -355,33 +417,22 @@ struct CompanyFieldTabView: View {
             Button(action: {
 
             }, label: {
-                SponusButtonLabel(text: "완료", disabledCondition: isButtonDisabled())
+                SponusButtonLabel(text: "완료", disabledCondition: buttonDisabled[.companyField]!)
             })
-            .disabled(isButtonDisabled())
+            .disabled(buttonDisabled[.companyField]!)
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)
-    }
-    
-    private func toggleSelection(for category: CompanyCategorySelection) {
-        if category.isSelected {
-            // If the category is already selected, allow deselecting it
-            if let index = categories.firstIndex(where: { $0.id == category.id }) {
-                categories[index].isSelected.toggle()
+        .onChange(of: selectedCategories) {
+            if selectedCategories.isEmpty {
+                buttonDisabled[.companyField] = true
+                print(buttonDisabled[.companyField]!)
             }
-        } else {
-            // If the category is not selected, allow selecting it only if the limit has not been reached
-            let selectedCount = categories.filter { $0.isSelected }.count
-            if selectedCount < maxSelections {
-                if let index = categories.firstIndex(where: { $0.id == category.id }) {
-                    categories[index].isSelected.toggle()
-                }
+            else {
+                buttonDisabled[.companyField] = false
+                print(buttonDisabled[.companyField]!)
             }
         }
-    }
-    
-    private func isButtonDisabled() -> Bool {
-        return categories.filter { $0.isSelected }.isEmpty
     }
 }
 
@@ -390,6 +441,8 @@ struct CompanyLinkTabView: View {
     @State private var WebsiteUrl = ""
     
     @Binding var selectedPage: WriteCompanyProfileTab
+    
+    @Binding var buttonDisabled: [WriteCompanyProfileTab : Bool]
 
     
     var limitTextCount = 999
@@ -422,10 +475,14 @@ struct CompanyLinkTabView: View {
                 .padding(.horizontal, 20)
             }
             Button(action: {
-                    
+                print(buttonDisabled[.image])
+                print(buttonDisabled[.name])
+                print(buttonDisabled[.collaborationField])
+                print(buttonDisabled[.companyField])
             }, label: {
-                SponusButtonLabel(text: "다음", disabledCondition: false)
+                SponusButtonLabel(text: "다음", disabledCondition: buttonDisabled[.image]! || buttonDisabled[.name]! || buttonDisabled[.collaborationField]! || buttonDisabled[.companyField]!)
             })
+            .disabled(buttonDisabled[.image]! || buttonDisabled[.name]! || buttonDisabled[.collaborationField]! || buttonDisabled[.companyField]!)
             .padding(.horizontal, 20)
         }
         .background(Color.bgSecondary)

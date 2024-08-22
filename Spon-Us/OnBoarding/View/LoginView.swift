@@ -102,7 +102,10 @@ struct LoginView: View {
             Button(action:  {
                 loginVM.login(email: email, password: password) { resultContent in
                     switch resultContent {
-                    case "success" : loginVM.loginSuccess = true
+                    case "success" : 
+                        loginVM.loginSuccess = true
+                        UserDefaults.standard.set(true, forKey: "isAutoLogin")
+//                        TokenManager.shared.isAutoLogin = true
                     case "Account not found": wrongInput = "email"
                     case "Bad credentials": wrongInput = "password"
                     default:

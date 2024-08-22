@@ -69,7 +69,8 @@ struct MyPageView: View {
 //        NavigationStack(path: $navPathFinder.path) {
             VStack(spacing: 0) {
                 
-                MyProfilCell(myOrganization: mypageVM.myOrganization)
+                MyProfilCell(mypageVM: mypageVM)
+                
                 
                 ScrollView {
                     VStack(spacing: 0) {
@@ -83,28 +84,33 @@ struct MyPageView: View {
                             .frame(height: 16)
                         
                         
-                        Button(action: {
-                            print(mypageVM.myOrganization)
-                        }, label: {
-                            Text("myorganization조회")
-                        })
                         
                         Button(action: {
-                            if mypageVM.myOrganization?.organizationType == CompanyClubSelection.club.rawValue {
-                                
-                                if mypageVM.myOrganization?.profileStatus == "INACTIVE" {
-                                    navPathFinder.path.append(.writeClubProfile)
-                                }
-                                else if mypageVM.myOrganization?.profileStatus == "ACTIVE" {
-                                    navPathFinder.path.append(.writeClubProfile)
-                                }
-                                
+//                            if mypageVM.myOrganization?.organizationType == CompanyClubSelection.club.rawValue {
+//                                
+////                                if mypageVM.myOrganization?.profileStatus == "INACTIVE" {
+////                                    navPathFinder.path.append(.writeClubProfile)
+////                                }
+////                                else if mypageVM.myOrganization?.profileStatus == "ACTIVE" {
+////                                    navPathFinder.path.append(.writeClubProfile)
+////                                }
+//                                
+//                            }
+//                            else if mypageVM.myOrganization?.organizationType == CompanyClubSelection.company.rawValue {
+//                                navPathFinder.path.append(.writeCompanyProfile)
+//                            }
+//                            else {
+//                                navPathFinder.path.append(.writeClubProfile)
+//                            }
+                            
+                            if mypageVM.myOrganizationType == "CLUB" {
+                                navPathFinder.path.append(.writeClubProfile)
                             }
-                            else if mypageVM.myOrganization?.organizationType == CompanyClubSelection.company.rawValue {
+                            else if mypageVM.myOrganizationType == "COMPANY" {
                                 navPathFinder.path.append(.writeCompanyProfile)
                             }
                             else {
-                                navPathFinder.path.append(.writeClubProfile)
+                                print("잘못된 조직타입")
                             }
                         }, label: {
                             MyPageCell(image: "Profile", title: "프로필 수정")
@@ -141,10 +147,16 @@ struct MyPageView: View {
                             Text("토큰 조회")
                         })
                         Button(action: {
-                            print(mypageVM.myOrganization)
+                            print(mypageVM.clubOrganization)
                         }, label: {
-                            Text("조직정보 조회")
+                            Text("단체정보 조회")
                         })
+                        Button(action: {
+                            print(mypageVM.companyOrganization)
+                        }, label: {
+                            Text("기업정보 조회")
+                        })
+                        
                         Button(action: {
                             mypageVM.patchClubProfile(clubProfile: ClubProfile(name: "ninini", description: "asdasd", imageURL: "asdas", memberCount: 10, clubTypes: ["PLANNING_IDEA", "AD_MARKETING"], profileStatus: "ACTIVE"))
                         }, label: {
@@ -208,7 +220,7 @@ struct MyPageView: View {
 
 struct MyProfilCell: View {
     
-    var myOrganization: MyOrganization?
+    @ObservedObject var mypageVM: MypageViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -220,9 +232,18 @@ struct MyProfilCell: View {
                     .padding(.leading, 20)
                     .padding(.trailing, 8)
                 
-                Text(myOrganization?.name ?? "name")
-                    .korFont(.H4KrBd)
-                    .foregroundStyle(Color.textPrimary)
+                if mypageVM.myOrganizationType == "CLUB" {
+                    Text(mypageVM.clubOrganization?.name ?? "unname")
+                        .korFont(.H4KrBd)
+                        .foregroundStyle(Color.textPrimary)
+                    
+                }
+                else if mypageVM.myOrganizationType == "COMPANY" {
+                    Text(mypageVM.companyOrganization?.name ?? "unname")
+                        .korFont(.H4KrBd)
+                        .foregroundStyle(Color.textPrimary)
+                    
+                }
                 
                 Spacer()
             }

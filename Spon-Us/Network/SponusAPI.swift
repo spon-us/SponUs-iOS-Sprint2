@@ -27,7 +27,7 @@ enum SponusAPI {
     case getReissue(refreshToken: String)
     case getMyOrganization
     case patchMyClubProfile(clubProfile: ClubProfile)
-    case postProfileImage(image: UIImage)
+    case postProfileImage(image: UIImage, fileName: String)
     case getPortfolios(page: Int, size: Int, clubId: Int)
 }
 
@@ -208,9 +208,9 @@ extension SponusAPI: TargetType {
         case .patchMyClubProfile(let clubProfile):
             return .requestParameters(parameters: ["name": clubProfile.name, "description": clubProfile.description, "imageUrl": clubProfile.imageURL, "memberCount": clubProfile.memberCount, "clubTypes": clubProfile.clubTypes, "profileStatus": clubProfile.profileStatus], encoding: JSONEncoding.default)
             
-        case .postProfileImage(let image):
+        case .postProfileImage(let image, let fileName):
             let imageData = image.jpegData(compressionQuality: 0.1)!
-            let formData = MultipartFormData(provider: .data(imageData), name: "profileImage", fileName: "profileImage.JPG", mimeType: "image/jpeg")
+            let formData = MultipartFormData(provider: .data(imageData), name: "profileImage", fileName: "image9.jpg", mimeType: "image/jpeg")
             return .uploadMultipart([formData])
         case let .getPortfolios(page, size, clubId):
             let parameters: [String: Any] = [
@@ -222,6 +222,7 @@ extension SponusAPI: TargetType {
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
+    
 
     
     var validationType: ValidationType {

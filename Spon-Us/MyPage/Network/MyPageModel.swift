@@ -31,28 +31,81 @@ struct Portfolio {
 }
 
 
+//struct MyOrganizationResponse: Codable {
+//    let statusCode: String
+//    let message: String
+//    let content: String
+//}
 
-struct MyOrganizationResponse: Codable {
+struct MyOrganizationTypeResponse: Codable {
     let statusCode: String
     let message: String
     let content: MyOrganization
 }
 
+struct MyOrganizationClubResponse: Codable {
+    let statusCode: String
+    let message: String
+    let content: ClubOrganization
+}
+
+struct MyOrganizationCompanyResponse: Codable {
+    let statusCode: String
+    let message: String
+    let content: CompanyOrganization
+}
+
 struct MyOrganization: Codable {
+//    let id: Int
+//    let name: String
+//    let email: String
+//    let description: String?
+//    let imageURL: String?
+//    let bookmarkCount: Int
+//    let viewCount: Int
+    let organizationType: String
+//    let profileStatus: String
+//    let role: String
+//    let memberCount: Int
+//    let links
+//    let clubTypes
+}
+
+
+// 클럽 모델
+struct ClubOrganization: Codable {
     let id: Int
     let name: String
     let email: String
     let description: String?
-    let imageURL: String?
+    let imageUrl: String?
     let bookmarkCount: Int
     let viewCount: Int
-    let organizationType: String
     let profileStatus: String
     let role: String
     let memberCount: Int
-//    let links
-//    let clubTypes
+    let links: [String]
+    let clubTypes: [String]
 }
+
+// 기업 모델
+struct CompanyOrganization: Codable {
+    let id: Int
+    let name: String
+    let email: String
+    let description: String?
+    let imageUrl: String?
+    let bookmarkCount: Int
+    let viewCount: Int
+    let profileStatus: String
+    let role: String
+    let companyTypes: [String]
+    let collaborationTypes: [String]
+    let sponsorshipContent: String?
+}
+
+
+
 
 
 struct ClubProfile: Codable {
@@ -64,3 +117,13 @@ struct ClubProfile: Codable {
     var profileStatus: String
 }
 
+
+struct PostImageResponse: Codable {
+    let statusCode: String
+    let message: String
+    let content: ImageUrl
+}
+
+struct ImageUrl: Codable {
+    let imageUrl: String
+}
