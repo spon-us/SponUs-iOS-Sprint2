@@ -117,3 +117,13 @@ struct ClubProfile: Codable {
     var profileStatus: String
 }
 
+
+struct PostImageResponse: Codable {
+    let statusCode: String
+    let message: String
+    let content: ImageUrl
+}
+
+struct ImageUrl: Codable {
+    let imageUrl: String
+}

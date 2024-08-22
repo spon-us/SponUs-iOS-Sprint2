@@ -19,36 +19,30 @@ class MypageViewModel: ObservableObject {
     @Published var clubImageUrl: String = ""
     
     @Published var clubImage: UIImage?
-    @Published var clubImageTabDisabledCondition: Bool = true
-    
-    
-    @Published var clubName: String = ""
-    var clubNameLimitTextCount = 13
-    @Published var clubNameTabDisabledCondition: Bool = true
-    
-    
-    @Published var clubDescription: String = ""
-    var clubDescriptionLimitTextCount = 300
-    @Published var clubDescriptionTabDisabledCondition: Bool = true
-    
-    
-    @Published var clubMemberCount: String = ""
-//    var clubMemberCountLimitTextCount: String = ""
-    @Published var clubMemberTabDisabledCondition: Bool = true
-    
-    
-    @Published var clubTypes: [String] = []
-    @Published var clubTypesTabDisabledCondition: Bool = true
-    
-    @Published var patchClubProfileDisabledCondition: Bool = true
-    
-    
-    @Published var clubProfileStatus: String = ""
+//    
+//    
+//    @Published var clubName: String = ""
+//    
+//    
+//    @Published var clubDescription: String = ""
+//    
+//    
+//    @Published var clubMemberCount: String = ""
+//    
+//    
+//    @Published var clubTypes: [String] = []
+//    
+//    
+//    @Published var clubProfileStatus: String = ""
     
     
     @Published var clubProfile: ClubProfile?
     
     private let provider = MoyaProvider<SponusAPI>()
+    
+    init() {
+        clubProfile = ClubProfile(name: "", description: "", imageURL: "", memberCount: 0, clubTypes: [], profileStatus: "")
+    }
     
     
     func getMyOrganization() {
@@ -108,15 +102,29 @@ class MypageViewModel: ObservableObject {
     }
     
     func postProfileImage(UIImage: UIImage) {
-        provider.request(.postProfileImage(image: UIImage)) { result in
+        
+        // 타임스탬프 기반 파일 이름 생성
+        let timestamp = Int(Date().timeIntervalSince1970)
+        let uniqueFileName = "image_\(timestamp).jpg"
+        
+        provider.request(.postProfileImage(image: UIImage, fileName: uniqueFileName)) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
                     print(response)
                     if let responseString = String(data: response.data, encoding: .utf8) {
                         print("Response Data: \(responseString)")
+                        print("postProfileImage네트워크 요청 성공🚨")
                     }
-                    print("postProfileImage네트워크 요청 성공🚨")
+                    
+                    if let postImageResponse = try? response.map(PostImageResponse.self) {
+                        self.clubProfile?.imageURL = postImageResponse.content.imageUrl
+                        print(self.clubProfile)
+                        print("postProfileImage매핑 성공🚨")
+                    }
+                    else {
+                        print("postProfileImage매핑 실패🚨")
+                    }
                 case .failure(let error):
                     
                     if let response = error.response {
@@ -131,68 +139,68 @@ class MypageViewModel: ObservableObject {
         }
         
     // api 아닌 함수
-    func checkClubImageTabDisabledCondition() {
-        if clubImage == nil {
-            print(true)
-            clubImageTabDisabledCondition = true
-        }
-        else {
-            print(false)
-            clubImageTabDisabledCondition = false
-        }
-    }
-    
-    func checkClubNameTabDisabledCondition() {
-        if clubName.count == 0 || clubName.count > clubNameLimitTextCount {
-            print(true)
-            clubNameTabDisabledCondition = true
-        }
-        else {
-            print(false)
-            clubNameTabDisabledCondition = false
-        }
-    }
-    
-    func checkClubDescriptionTabDisabledCondition() {
-        if clubDescription.count == 0 || clubDescription.count > clubDescriptionLimitTextCount {
-            print(true)
-            clubDescriptionTabDisabledCondition = true
-        }
-        else {
-            print(false)
-            clubDescriptionTabDisabledCondition = false
-        }
-    }
-    
-    func checkClubMemberTabDisabledCondition() {
-        if let numberValue = Int(clubMemberCount), numberValue > 0 {
-            print(false)
-            clubMemberTabDisabledCondition = false
-        }
-        else {
-            print(true)
-            clubMemberTabDisabledCondition = true
-        }
-    }
-    
-    func checkClubTypesTabDisabledCondition() {
-        if clubTypes.count > 0 && clubTypes.count <= 2 {
-            print(false)
-            clubTypesTabDisabledCondition = false
-        }
-        else {
-            print(true)
-            clubTypesTabDisabledCondition = true
-        }
-    }
-    
-    func checkPatchClubProfileDisabledCondition() {
-        if clubImageTabDisabledCondition == false && clubNameTabDisabledCondition == false && clubDescriptionTabDisabledCondition == false && clubMemberTabDisabledCondition == false && clubTypesTabDisabledCondition == false {
-            patchClubProfileDisabledCondition = false
-        }
-        else {
-            patchClubProfileDisabledCondition = true
-        }
-    }
+//    func checkClubImageTabDisabledCondition() {
+//        if clubImage == nil {
+//            print(true)
+//            clubImageTabDisabledCondition = true
+//        }
+//        else {
+//            print(false)
+//            clubImageTabDisabledCondition = false
+//        }
+//    }
+//    
+//    func checkClubNameTabDisabledCondition() {
+//        if clubName.count == 0 || clubName.count > clubNameLimitTextCount {
+//            print(true)
+//            clubNameTabDisabledCondition = true
+//        }
+//        else {
+//            print(false)
+//            clubNameTabDisabledCondition = false
+//        }
+//    }
+//    
+//    func checkClubDescriptionTabDisabledCondition() {
+//        if clubDescription.count == 0 || clubDescription.count > clubDescriptionLimitTextCount {
+//            print(true)
+//            clubDescriptionTabDisabledCondition = true
+//        }
+//        else {
+//            print(false)
+//            clubDescriptionTabDisabledCondition = false
+//        }
+//    }
+//    
+//    func checkClubMemberTabDisabledCondition() {
+//        if let numberValue = Int(clubMemberCount), numberValue > 0 {
+//            print(false)
+//            clubMemberTabDisabledCondition = false
+//        }
+//        else {
+//            print(true)
+//            clubMemberTabDisabledCondition = true
+//        }
+//    }
+//    
+//    func checkClubTypesTabDisabledCondition() {
+//        if clubTypes.count > 0 && clubTypes.count <= 2 {
+//            print(false)
+//            clubTypesTabDisabledCondition = false
+//        }
+//        else {
+//            print(true)
+//            clubTypesTabDisabledCondition = true
+//        }
+//    }
+//    
+//    func checkPatchClubProfileDisabledCondition() {
+//        if clubImageTabDisabledCondition == false && clubNameTabDisabledCondition == false && clubDescriptionTabDisabledCondition == false && clubMemberTabDisabledCondition == false && clubTypesTabDisabledCondition == false {
+//            patchClubProfileDisabledCondition = false
+//        }
+//        else {
+//            patchClubProfileDisabledCondition = true
+//        }
+//    }
     
 }

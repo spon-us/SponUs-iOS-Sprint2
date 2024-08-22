@@ -18,14 +18,15 @@ struct Spon_UsApp: App {
             if (vm.loginSuccess ||  UserDefaults.standard.bool(forKey: "isAutoLogin")) && !TokenManager.shared.isRefreshTokenExpired() {
                 ContentView().onAppear(perform: {
                     print("\(vm.loginSuccess), \(TokenManager.shared.isAutoLogin ?? false), \(!TokenManager.shared.isRefreshTokenExpired())")
-                })
+                }).environmentObject(vm)
             } else {
                 OnBoardingView().onAppear(perform: {
                     print("\(vm.loginSuccess), \(TokenManager.shared.isAutoLogin ?? false), \(!TokenManager.shared.isRefreshTokenExpired())")
-                })
+                }).environmentObject(vm)
             }
 //            WriteCompanyProfileView()
-        }.environmentObject(vm)
+        }/*.environmentObject(vm)*/
             .environmentObject(MypageNavigationPathFinder.shared)
     }
 }
+
