@@ -14,11 +14,13 @@ final class BookmarkListCellViewModel: Identifiable {
     var companyName: String
     var imageURL: String?
     var isBookmarked: Bool = false
+    var organizationType: String
 
     init(bookmarkModel: BookmarkModel) {
         self.target = bookmarkModel.target
         self.companyName = bookmarkModel.name
         self.imageURL = bookmarkModel.imageUrl
+        self.organizationType = bookmarkModel.targetType.rawValue
     }
 }
 
@@ -27,6 +29,7 @@ final class BookmarkListViewModel {
     var bookmarkList: [BookmarkListCellViewModel] = []
     let provider = MoyaProvider<SponusAPI>()
     
+    // [GET] 북마크 목록 조회
     func fetchBookmarks(sort: BookmarkTargetType, completion: @escaping (Bool) -> Void) {
         provider.request(.getBookmark(sort: sort)) { response in
             switch response {
@@ -46,6 +49,7 @@ final class BookmarkListViewModel {
         }
     }
     
+    // [POST] 북마크 토글
     func toggleBookmark(target: Int, completion: @escaping (Bool) -> Void) {
         provider.request(.postBookmark(target: target)) { [weak self] result in
             switch result {
