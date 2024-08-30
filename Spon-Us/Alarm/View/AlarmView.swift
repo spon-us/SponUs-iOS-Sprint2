@@ -1,0 +1,168 @@
+//
+//  AlarmUIView.swift
+//  Spon-Us
+//
+//  Created by 김수민 on 8/30/24.
+//
+
+import SwiftUI
+
+enum AlarmColumn {
+    case send
+    case receive
+}
+
+struct AlarmView: View {
+    @State var selectedColumn: AlarmColumn = .send
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            ColumnView(column: $selectedColumn)
+                .frame(height: 56)
+                .padding(20)
+
+            if selectedColumn == .send {
+                SendView()
+            } else {
+                ReceivedView()
+            }
+        }
+    }
+}
+
+struct ColumnView: View {
+    @Binding var column: AlarmColumn
+    var body: some View {
+        HStack(spacing: 17) {
+            Button(action: {column = .send}) {
+                Text("보낸 제안")
+                    .font(.T4KrBd)
+                    .foregroundColor(column == .send ? Color.textPrimary : Color.textDisabled)
+                    .padding(.horizontal, 44)
+                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(column == .send ? Color.white : Color.bgTertiary)
+                    .cornerRadius(12)
+            }
+            Button(action: {column = .receive}) {
+                Text("받은 제안")
+                    .font(.T4KrBd)
+                    .foregroundColor(column == .receive ? Color.textPrimary : Color.textDisabled)
+                    .padding(.horizontal, 44)
+                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(column == .receive ? Color.white : Color.bgTertiary)
+                    .cornerRadius(12)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.bgTertiary)
+        .cornerRadius(20)
+    }
+}
+
+enum SendResult {
+    case success
+    case reject
+}
+
+
+struct SendView: View {
+    var body: some View {
+        ScrollView {
+            SendAlarmCell(result: .success, name: "무신사", email: "")
+            SendAlarmCell(result: .reject, name: "무신사", email: "")
+            SendAlarmCell(result: .reject, name: "무신사", email: "")
+            SendAlarmCell(result: .success, name: "무신사", email: "")
+        }.padding(.horizontal, 20)
+    }
+}
+
+struct SendAlarmCell: View {
+    let result: SendResult
+    let name: String
+    let email: String?
+    let image: String = "Image"
+    var isRead: Bool = false
+    
+    var body: some View {
+        if result == .success {
+            HStack(alignment: .top, spacing: 0) {
+                Image(image)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .padding(.top, 12)
+                    .padding(.trailing, 20)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(name)
+                        .font(.B2KrMd)
+                        .foregroundColor(.textSecondary)
+                    Text("제안이 수락됐어요")
+                        .font(.T4KrBd)
+                        .foregroundColor(isRead == true ? .textPrimary : .textBrand)
+                    Text("이메일을 확인하고 기업과 컨택해 보세요.")
+                        .font(.B4KrMd)
+                        .foregroundColor(.textTertiary)
+                }
+                .frame(width: .infinity)
+                Spacer()
+                Button(action: {/*이메일 창 이동*/}) {
+                    Text("이메일 확인")
+                        .font(.B2KrMd)
+                        .foregroundColor(.textSecondary)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color.bgTertiary)
+                        .cornerRadius(12)
+                        .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                        .inset(by: 0.5)
+                        .stroke(Color.line200, lineWidth: 1))
+                }
+                .padding(.top, 18)
+            }
+        } else {
+            HStack(alignment: .top, spacing: 0) {
+                Image(image)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .padding(.top, 12)
+                    .padding(.trailing, 20)
+                
+                VStack(alignment: .leading) {
+                    Text(name)
+                        .font(.B2KrMd)
+                        .foregroundColor(Color.textDisabled)
+                    Text("제안이 거절됐어요")
+                        .font(.T4KrBd)
+                        .foregroundColor(Color.textDisabled)
+                }
+                .frame(width: .infinity, height: .infinity)
+                .padding(.vertical, 12)
+                Spacer()
+            }
+        }
+    }
+}
+struct ReceivedView: View {
+    var body: some View {
+        EmptyView()
+    }
+}
+
+struct EmptyView: View {
+    var body: some View {
+        VStack() {
+            Spacer()
+            Text("제안 여부가 없어요")
+                .font(.T4KrMd)
+                .foregroundColor(.textDisabled)
+            Spacer()
+        }
+    }
+}
+#Preview {
+    AlarmView()
+}

@@ -54,6 +54,7 @@
 		804F99B52C80CA48005D286F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 804F99B42C80CA48005D286F /* FirebaseStorage */; };
 		804F99B72C80CA48005D286F /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 804F99B62C80CA48005D286F /* FirebaseStorageCombine-Community */; };
 		804F99B92C80D45A005D286F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 804F99B82C80D45A005D286F /* GoogleService-Info.plist */; };
+		804F99BD2C8190D8005D286F /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804F99BC2C8190D8005D286F /* AlarmView.swift */; };
 		8065E24D2C332A63001B35DD /* NavigationBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24C2C332A63001B35DD /* NavigationBackBar.swift */; };
 		8065E24F2C333070001B35DD /* SignUpIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24E2C333070001B35DD /* SignUpIdView.swift */; };
 		8065E2512C3427AB001B35DD /* SignUpPWView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E2502C3427AB001B35DD /* SignUpPWView.swift */; };
@@ -132,6 +133,7 @@
 		3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
 		804F99B82C80D45A005D286F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../김수민대학교/프로젝트/스포너스 Security/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		804F99BA2C80DE2C005D286F /* Spon-UsDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Spon-UsDebug.entitlements"; sourceTree = "<group>"; };
+		804F99BC2C8190D8005D286F /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
 		8065E24C2C332A63001B35DD /* NavigationBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackBar.swift; sourceTree = "<group>"; };
 		8065E24E2C333070001B35DD /* SignUpIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpIdView.swift; sourceTree = "<group>"; };
 		8065E2502C3427AB001B35DD /* SignUpPWView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPWView.swift; sourceTree = "<group>"; };
@@ -287,6 +289,22 @@
 			path = Company;
 			sourceTree = "<group>";
 		};
+		804F99BB2C8190B5005D286F /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				804F99BE2C8190F0005D286F /* View */,
+			);
+			path = Alarm;
+			sourceTree = "<group>";
+		};
+		804F99BE2C8190F0005D286F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				804F99BC2C8190D8005D286F /* AlarmView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		8065E24B2C332A1F001B35DD /* Componenet */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +398,7 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				804F99BB2C8190B5005D286F /* Alarm */,
 				804F99BA2C80DE2C005D286F /* Spon-UsDebug.entitlements */,
 				804F99B82C80D45A005D286F /* GoogleService-Info.plist */,
 				8065E24B2C332A1F001B35DD /* Componenet */,
@@ -637,6 +656,7 @@
 			files = (
 				80CF29E62C29943C00CACA53 /* DetailAgreeView.swift in Sources */,
 				3B0927342C3CC20E00777EEC /* TermsOfUseView.swift in Sources */,
+				804F99BD2C8190D8005D286F /* AlarmView.swift in Sources */,
 				DFBE0BAA2BF2F81C00246814 /* CompanyProfileView.swift in Sources */,
 				DFBE0B9E2BEB14F000246814 /* HomeViewModel.swift in Sources */,
 				DFBE0BDC2BF5B60C00246814 /* ClubProfileView.swift in Sources */,
