@@ -256,7 +256,7 @@ struct HomeListCell: View {
                 AsyncImage(url: URL(string: organizationData.imageUrl ?? "")) { image in
                     image.resizable().aspectRatio(1, contentMode: .fit)
                 } placeholder: {
-                    Image(.rectangle1363).resizable().aspectRatio(1, contentMode: .fit)
+                    Image(systemName: "photo").resizable().aspectRatio(1, contentMode: .fit)
                 }
 
                 VStack(spacing: 0) {

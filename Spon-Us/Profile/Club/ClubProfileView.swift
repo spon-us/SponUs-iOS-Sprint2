@@ -72,7 +72,7 @@ struct ClubProfileCardView: View {
             AsyncImage(url: URL(string: clubProfileViewModel.clubModel.imageUrl ?? "")) { image in
                 image.resizable().aspectRatio(1, contentMode: .fit)
             } placeholder: {
-                Image(.rectangle1363)
+                Image(systemName: "photo")
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
             }

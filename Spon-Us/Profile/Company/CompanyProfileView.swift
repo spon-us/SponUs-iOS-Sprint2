@@ -66,7 +66,7 @@ struct CompanyProfileCardView: View {
             AsyncImage(url: URL(string: companyProfileViewModel.companyModel.imageUrl ?? "")) { image in
                 image.resizable().aspectRatio(1, contentMode: .fit)
             } placeholder: {
-                Image(.rectangle1363)
+                Image(systemName: "photo")
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
             }
