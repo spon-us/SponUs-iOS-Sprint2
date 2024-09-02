@@ -26,6 +26,8 @@ final class ClubProfileViewModel {
 
     let cardnewsDummyData = [PortfolioCardNewsDummyModel(), PortfolioCardNewsDummyModel()]
 
+    var proposeExceptionCase: ProposeExceptionCase?
+
     init(clubModel: ClubModel, isBookmarked: Bool) {
         self.clubModel = clubModel
         self.isBookmarked = isBookmarked
@@ -123,6 +125,36 @@ final class ClubProfileViewModel {
             case .failure(let err):
                 debugPrint(err)
             }
+        }
+    }
+
+    func makeProposal() {
+        provider.request(.postPropose(target: clubModel.id)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                break
+            case .failure(let err):
+                let exceptionResponse: ProposeExceptionResponse
+                do {
+                    exceptionResponse = try JSONDecoder().decode(ProposeExceptionResponse.self, from: err.response?.data ?? Data())
+
+                    switch exceptionResponse.statusCode {
+                    case "PROP4009":
+                        self?.proposeExceptionCase = .exceeded
+                    case "PROP4010":
+                        self?.proposeExceptionCase = .hasNoProfile
+                    case "PROP4011":
+                        self?.proposeExceptionCase = .selfProposed
+                    default:
+                        self?.proposeExceptionCase = .networking
+                    }
+                } catch {
+                    self?.proposeExceptionCase = .networking
+                    debugPrint(error.localizedDescription)
+                }
+            }
+
+            self?.isSuggestModalPresented = true
         }
     }
 }

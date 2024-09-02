@@ -39,10 +39,28 @@ struct ClubProfileView: View {
             }
         }
         .sheet(isPresented: $clubProfileViewModel.isSuggestModalPresented) {
-            ClubExceededModal()
+            proposalModal
                 .presentationDetents( [.height(310.69)] )
                 .presentationCornerRadius(32)
                 .presentationDragIndicator(.hidden)
+        }
+    }
+}
+
+extension ClubProfileView {
+    @ViewBuilder
+    private var proposalModal:some View {
+        switch clubProfileViewModel.proposeExceptionCase {
+        case .exceeded:
+            ClubExceededModal()
+        case .hasNoProfile:
+            ClubUnavailableModal()
+        case .selfProposed:
+            EmptyView()
+        case .networking:
+            EmptyView()
+        case nil:
+            ClubCompletedModal()
         }
     }
 }
@@ -440,9 +458,7 @@ struct ClubProfileProposeButton: View {
         VStack(spacing: 0) {
             Divider().foregroundStyle(Color.line200)
             Button {
-                withAnimation {
-                    clubProfileViewModel.isSuggestModalPresented = true
-                }
+                clubProfileViewModel.makeProposal()
             } label: {
                 Text("제안하기")
                     .korFont(.But1KrBd)

@@ -80,6 +80,7 @@
 		DFBE0BE92BF70B8200246814 /* ClubCompletedModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BE82BF70B8200246814 /* ClubCompletedModal.swift */; };
 		DFBE0BEB2BF70BB900246814 /* ClubExceededModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BEA2BF70BB900246814 /* ClubExceededModal.swift */; };
 		DFBE0BED2BF70BE200246814 /* ClubUnvailableModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBE0BEC2BF70BE200246814 /* ClubUnvailableModal.swift */; };
+		DFC3B3B62C857C90006EC63D /* Propose.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC3B3B52C857C90006EC63D /* Propose.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -149,6 +150,7 @@
 		DFBE0BE82BF70B8200246814 /* ClubCompletedModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubCompletedModal.swift; sourceTree = "<group>"; };
 		DFBE0BEA2BF70BB900246814 /* ClubExceededModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubExceededModal.swift; sourceTree = "<group>"; };
 		DFBE0BEC2BF70BE200246814 /* ClubUnvailableModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClubUnvailableModal.swift; sourceTree = "<group>"; };
+		DFC3B3B52C857C90006EC63D /* Propose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Propose.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +302,7 @@
 				1E97271D2C2FE10400252CA6 /* Search.swift */,
 				1E9727212C2FFD9100252CA6 /* Keyword.swift */,
 				DFAFD1DC2C6FAB2D00F0B61E /* Portfolio.swift */,
+				DFC3B3B52C857C90006EC63D /* Propose.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				DFBE0BD42BF4922500246814 /* CompanyCompletedModal.swift in Sources */,
 				1EFADD6B2BF6251C00E333AD /* BookmarkViewModel.swift in Sources */,
 				DFBE0B852BE60B4100246814 /* FontManager.swift in Sources */,
+				DFC3B3B62C857C90006EC63D /* Propose.swift in Sources */,
 				3B82D8B02C32536F008E0138 /* WriteClubPortfolioView.swift in Sources */,
 				8065E24D2C332A63001B35DD /* NavigationBackBar.swift in Sources */,
 				DFBE0BA72BF1A6B200246814 /* ContentView.swift in Sources */,

@@ -34,6 +34,8 @@ struct OrganizationModel: Codable, Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(imageUrl)
         hasher.combine(isBookmarked)
     }
 }

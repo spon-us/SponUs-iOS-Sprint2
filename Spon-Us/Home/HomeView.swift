@@ -114,7 +114,7 @@ struct HomeCardGuestView: View {
             }.frame(height: 70)
                 .padding(.bottom, 20)
             Button {
-                // 작성하기
+                //TODO: - 작성하기
             } label: {
                 Text("작성하기")
                     .foregroundStyle(Color.textWhite)

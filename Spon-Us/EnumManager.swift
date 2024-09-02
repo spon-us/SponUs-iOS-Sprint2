@@ -42,3 +42,7 @@ enum CoworkCategory: String {
 enum ProfileStatus {
     case available, exceeded, unavailable
 }
+
+enum ProposeExceptionCase {
+    case exceeded, hasNoProfile, selfProposed, networking
+}

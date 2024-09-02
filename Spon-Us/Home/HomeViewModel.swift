@@ -37,6 +37,9 @@ final class HomeViewModel {
     var filteredCompanies: [OrganizationModel] = []
     var filteredClubs: [OrganizationModel] = []
     
+    var page: Int = 0
+    let size: Int = 100
+
     var selectedCompany: CompanyModel = .init(
         id: 0,
         name: "",
@@ -88,7 +91,7 @@ final class HomeViewModel {
     var currentBookmarkStatus = false
     
     func fetchOrganizations(type: CompanyClubSelection, completion: @escaping (Bool) -> Void) {
-        provider.request(.getOrganizations(organizationType: type.rawValue)) {[weak self] response in
+        provider.request(.getOrganizations(organizationType: type.rawValue, page: page, size: size)) {[weak self] response in
             switch response {
             case .success(let result):
                 do {
@@ -103,17 +106,17 @@ final class HomeViewModel {
                     }
                     completion(true)
                 } catch {
-                    print("fetch org decode error", error.localizedDescription)
+                    debugPrint("getOrg decode error", error.localizedDescription)
                     completion(false)
                 }
                 
             case .failure(let err):
-                print("getOrg API error", err.localizedDescription)
+                debugPrint("getOrg API error", err.localizedDescription)
                 completion(false)
             }
         }
     }
-    
+
     func fetchCompany(companyId: Int, completion: @escaping (Bool) -> Void) {
         provider.request(.getCompany(companyId: companyId)) {[weak self] response in
             switch response {
@@ -125,11 +128,11 @@ final class HomeViewModel {
                     }
                     completion(true)
                 } catch {
-                    print("fetch company decode error", error.localizedDescription)
+                    debugPrint("getCompany decode error", error.localizedDescription)
                     completion(false)
                 }
             case .failure(let err):
-                print("getCompany API error", err.localizedDescription)
+                debugPrint("getCompany API error", err.localizedDescription)
                 completion(false)
             }
         }
@@ -146,11 +149,11 @@ final class HomeViewModel {
                     }
                     completion(true)
                 } catch {
-                    print("fetch club decode error", error.localizedDescription)
+                    debugPrint("getClub decode error", error.localizedDescription)
                     completion(false)
                 }
             case .failure(let err):
-                print("getClub API error", err.localizedDescription)
+                debugPrint("getClub API error", err.localizedDescription)
                 completion(false)
             }
         }
@@ -282,13 +285,9 @@ final class HomeViewModel {
     func onHomeViewAppear() {
         fetchOrganizations(type: .company) { [weak self] success in
             if success {
-                self?.fetchOrganizations(type: .club) { [weak self] success in
-                    if success {
-                        self?.filterCompanies(.all)
-                        self?.filterClubs(.all)
-                        self?.setTopID()
-                    }
-                }
+                self?.filterCompanies(.all)
+                self?.filterClubs(.all)
+                self?.setTopID()
             }
         }
     }
