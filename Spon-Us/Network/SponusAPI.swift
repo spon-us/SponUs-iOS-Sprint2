@@ -10,7 +10,7 @@ import Moya
 import UIKit
 
 enum SponusAPI {
-    case getOrganizations(organizationType: String)
+    case getOrganizations(organizationType: String, page: Int, size: Int)
     case getCompany(companyId: Int)
     case getClub(clubId: Int)
     case getBookmark(sort: BookmarkTargetType)
@@ -29,6 +29,7 @@ enum SponusAPI {
     case patchMyClubProfile(clubProfile: ClubProfile)
     case postProfileImage(image: UIImage, fileName: String)
     case getPortfolios(page: Int, size: Int, clubId: Int)
+    case postPropose(target: Int)
 }
 
 extension SponusAPI: TargetType {
@@ -76,6 +77,8 @@ extension SponusAPI: TargetType {
             return "/api/v2/organizations/me/profileImage"
         case .getPortfolios:
             return "/api/v2/portfolio"
+        case .postPropose:
+            return "/api/v2/proposes"
         }
     }
     
@@ -119,58 +122,23 @@ extension SponusAPI: TargetType {
             return .post
         case .getPortfolios:
             return .get
+        case .postPropose:
+            return .post
         }
     }
     
     var sampleData: Data {
-        switch self {
-        case .getOrganizations:
-            return Data()
-        case .getCompany:
-            return Data()
-        case .getClub:
-            return Data()
-        case .getBookmark:
-            return Data()
-        case .postBookmark:
-            return Data()
-        case .getSearch:
-            return Data()
-        case .getKeyword:
-            return Data()
-        case .postKeyword:
-            return Data()
-        case .deleteKeyword:
-            return Data()
-        case .deleteSearch:
-            return Data()
-        case .postEmail:
-            return Data()
-        case .postSignUp:
-            return Data()
-        case .postLogin:
-            return Data()
-        case .getVerifyEmail:
-            return Data()
-        case .getReissue:
-            return Data()
-        case .getMyOrganization:
-            return Data()
-        case .patchMyClubProfile:
-            return Data()
-        case .postProfileImage:
-            return Data()
-        case .getPortfolios:
-            return Data()
-        }
+        return Data()
     }
     
     var task: Task {
         switch self {
-        case let .getOrganizations(organizationType):
+        case let .getOrganizations(organizationType, page, size):
             let param = [
-                "organizationType": organizationType
-            ]
+                "organizationType": organizationType,
+                "page": page,
+                "size": size
+            ] as [String : Any]
             return .requestParameters(
                 parameters: param,
                 encoding: URLEncoding.default
@@ -220,11 +188,12 @@ extension SponusAPI: TargetType {
                 "clubId": clubId
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case .postPropose(let target):
+            let param = ["target" : target]
+            return .requestParameters(parameters: param, encoding: JSONEncoding.default)
         }
     }
-    
 
-    
     var validationType: ValidationType {
         return .successAndRedirectCodes
     }
@@ -271,6 +240,8 @@ extension SponusAPI: TargetType {
         case .postProfileImage:
             return auth
         case .getPortfolios:
+            return auth
+        case .postPropose:
             return auth
         }
     }

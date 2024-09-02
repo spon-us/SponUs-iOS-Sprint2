@@ -33,10 +33,28 @@ struct CompanyProfileView: View {
             }
         }
         .sheet(isPresented: $companyProfileViewModel.isSuggestModalPresented) {
-            CompanyUnavailableModal()
+            proposalModal
                 .presentationDetents( [.height(307.69)] )
                 .presentationCornerRadius(32)
                 .presentationDragIndicator(.hidden)
+        }
+    }
+}
+
+extension CompanyProfileView {
+    @ViewBuilder
+    private var proposalModal: some View {
+        switch companyProfileViewModel.proposeExceptionCase {
+        case .exceeded:
+            CompanyExceededModal()
+        case .hasNoProfile:
+            CompanyUnavailableModal()
+        case .selfProposed:
+            EmptyView()
+        case .networking:
+            EmptyView()
+        case nil:
+            CompanyCompletedModal()
         }
     }
 }
@@ -139,7 +157,7 @@ struct CompanyProfileCardView: View {
                         }
                     Button {
                         withAnimation {
-                            companyProfileViewModel.isSuggestModalPresented = true
+                            companyProfileViewModel.makeProposal()
                         }
                     } label: {
                         Text("제안하기")
@@ -157,7 +175,7 @@ struct CompanyProfileCardView: View {
             else {
                 Button {
                     withAnimation {
-                        companyProfileViewModel.isSuggestModalPresented = true
+                        companyProfileViewModel.makeProposal()
                     }
                 } label: {
                     Text("제안하기")

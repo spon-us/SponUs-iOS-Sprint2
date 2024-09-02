@@ -23,7 +23,8 @@ final class CompanyProfileViewModel {
     
     var isSuggestModalPresented = false
     var profileStatus: ProfileStatus = .available
-    
+    var proposeExceptionCase: ProposeExceptionCase?
+
     func toggleBookmark(target: Int){
         provider.request(.postBookmark(target: target)) { [weak self] result in
             switch result {
@@ -74,6 +75,38 @@ final class CompanyProfileViewModel {
             return "협찬"
         default:
             return "Unexpected Collaboration Type"
+        }
+    }
+
+    func makeProposal() {
+        provider.request(.postPropose(target: companyModel.id)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                debugPrint(String(data: response.data, encoding: String.Encoding.utf8) ?? "")
+                break
+            case .failure(let err):
+                let exceptionResponse: ProposeExceptionResponse
+                debugPrint(String(data: err.response?.data ?? Data(), encoding: String.Encoding.utf8) ?? "")
+                do {
+                    exceptionResponse = try JSONDecoder().decode(ProposeExceptionResponse.self, from: err.response?.data ?? Data())
+
+                    switch exceptionResponse.statusCode {
+                    case "PROP4009":
+                        self?.proposeExceptionCase = .exceeded
+                    case "PROP4010":
+                        self?.proposeExceptionCase = .hasNoProfile
+                    case "PROP4011":
+                        self?.proposeExceptionCase = .selfProposed
+                    default:
+                        self?.proposeExceptionCase = .networking
+                    }
+                } catch {
+                    self?.proposeExceptionCase = .networking
+                    debugPrint(error.localizedDescription)
+                }
+            }
+
+            self?.isSuggestModalPresented = true
         }
     }
 }
