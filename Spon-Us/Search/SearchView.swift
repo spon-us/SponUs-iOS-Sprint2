@@ -231,9 +231,9 @@ struct SearchView: View {
     
     func navigateToDetail(for search: SearchListViewModel) {
         if search.organizationType == "COMPANY" {
-            homeViewModel.onTapCompany(companyId: search.id)
+            homeViewModel.onTapCompanyCell(companyId: search.id)
         } else if search.organizationType == "CLUB" {
-            homeViewModel.onTapClub(clubId: search.id)
+            homeViewModel.onTapClubCell(clubId: search.id)
         }
     }
 }

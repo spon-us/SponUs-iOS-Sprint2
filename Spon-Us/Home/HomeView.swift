@@ -13,6 +13,9 @@ struct HomeView: View {
     @State var homeViewModel = HomeViewModel()
     var body: some View {
         VStack(spacing: 0) {
+            Button("add fet") {
+                homeViewModel.fetchAdditionalOrgs(type: homeViewModel.companyClubSelection)
+            }
             Button(action: {loginVM.logout()}) {
                 Text("로그아웃 Test 버튼!!")
             }
@@ -246,6 +249,69 @@ struct HomeCategorySelectionTab: View {
     }
 }
 
+struct HomeListView: View {
+    @Bindable var homeViewModel: HomeViewModel
+
+    let columns: [GridItem] = [
+        GridItem(.flexible(), spacing: 15),
+        GridItem(.flexible()),
+    ]
+
+    var body: some View {
+        ZStack {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 16) {
+                    if homeViewModel.companyClubSelection == .company {
+                        ForEach(homeViewModel.filteredCompanies, id: \.hashValue) { org in
+                            HomeListCell(
+                                organizationData: org,
+                                homeViewModel: homeViewModel
+                            )
+                            .onAppear {
+                                homeViewModel.fetchAdditionalOrgIfLast(id: org.id)
+                            }
+                        }
+                    }
+                    else {
+                        ForEach(homeViewModel.filteredClubs, id: \.hashValue) { org in
+                            HomeListCell(
+                                organizationData: org,
+                                homeViewModel: homeViewModel
+                            )
+                            .onAppear {
+                                homeViewModel.fetchAdditionalOrgIfLast(id: org.id)
+                            }
+                        }
+                    }
+                }.scrollTargetLayout()
+            }.scrollIndicators(.hidden)
+                .scrollPosition(id: $homeViewModel.scrollID)
+
+            if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
+                VStack(spacing: 0) {
+                    Spacer()
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                homeViewModel.scrollToTop()
+                            }
+                        } label: {
+                            Image(.arrowUp5)
+                                .renderingMode(.template)
+                                .padding(10)
+                                .foregroundStyle(Color.textWhite)
+                                .background(Color.textBrand)
+                                .clipShape(Ellipse())
+                        }
+                    }.padding(.bottom, 15)
+                }
+            }
+        }.padding(.top, 15)
+            .padding(.horizontal, 20)
+    }
+}
+
 struct HomeListCell: View {
     @State var organizationData: OrganizationModel
     var homeViewModel: HomeViewModel
@@ -314,72 +380,14 @@ struct HomeListCell: View {
                 switch organizationData.organizationType {
                 case "COMPANY":
                     homeViewModel.currentBookmarkStatus = organizationData.isBookmarked
-                    homeViewModel.onTapCompany(companyId: organizationData.id)
+                    homeViewModel.onTapCompanyCell(companyId: organizationData.id)
                 case "CLUB":
                     homeViewModel.currentBookmarkStatus = organizationData.isBookmarked
-                    homeViewModel.onTapClub(clubId: organizationData.id)
+                    homeViewModel.onTapClubCell(clubId: organizationData.id)
                 default:
                     return
                 }
             }
-    }
-}
-
-
-struct HomeListView: View {
-    @Bindable var homeViewModel: HomeViewModel
-
-    let columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 15),
-        GridItem(.flexible()),
-    ]
-
-    var body: some View {
-        ZStack {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    if homeViewModel.companyClubSelection == .company {
-                        ForEach(homeViewModel.filteredCompanies, id: \.hashValue) { org in
-                            HomeListCell(
-                                organizationData: org,
-                                homeViewModel: homeViewModel
-                            )
-                        }
-                    }
-                    else {
-                        ForEach(homeViewModel.filteredClubs, id: \.hashValue) { org in
-                            HomeListCell(
-                                organizationData: org,
-                                homeViewModel: homeViewModel
-                            )
-                        }
-                    }
-                }.scrollTargetLayout()
-            }.scrollIndicators(.hidden)
-                .scrollPosition(id: $homeViewModel.scrollID)
-
-            if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
-                VStack(spacing: 0) {
-                    Spacer()
-                    HStack(spacing: 0) {
-                        Spacer()
-                        Button {
-                            withAnimation {
-                                homeViewModel.scrollToTop()
-                            }
-                        } label: {
-                            Image(.arrowUp5)
-                                .renderingMode(.template)
-                                .padding(10)
-                                .foregroundStyle(Color.textWhite)
-                                .background(Color.textBrand)
-                                .clipShape(Ellipse())
-                        }
-                    }.padding(.bottom, 15)
-                }
-            }
-        }.padding(.top, 15)
-            .padding(.horizontal, 20)
     }
 }
 

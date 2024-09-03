@@ -218,9 +218,9 @@ struct BookmarkListCell: View {
 
     private func navigateToDetail(for cellViewModel: BookmarkListCellViewModel) {
         if cellViewModel.organizationType == "COMPANY" {
-            homeViewModel.onTapCompany(companyId: cellViewModel.target)
+            homeViewModel.onTapCompanyCell(companyId: cellViewModel.target)
         } else if cellViewModel.organizationType == "CLUB" {
-            homeViewModel.onTapClub(clubId: cellViewModel.target)
+            homeViewModel.onTapClubCell(clubId: cellViewModel.target)
         }
     }
 }
