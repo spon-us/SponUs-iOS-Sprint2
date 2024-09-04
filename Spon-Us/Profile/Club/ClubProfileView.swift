@@ -38,7 +38,12 @@ struct ClubProfileView: View {
                 }
             }
         }
-        .sheet(isPresented: $clubProfileViewModel.isSuggestModalPresented) {
+        .sheet(
+            isPresented: $clubProfileViewModel.isSuggestModalPresented,
+            onDismiss: {
+                clubProfileViewModel.isProposeButtonTapped = false
+            }
+        ) {
             proposalModal
                 .presentationDetents( [.height(310.69)] )
                 .presentationCornerRadius(32)
@@ -468,6 +473,7 @@ struct ClubProfileProposeButton: View {
                     .background(Color.textBrand)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }.padding(20)
+                .disabled(clubProfileViewModel.isProposeButtonTapped)
         }.background(Color.bgWhite)
     }
 }
