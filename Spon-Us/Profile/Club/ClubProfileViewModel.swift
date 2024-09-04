@@ -28,6 +28,8 @@ final class ClubProfileViewModel {
 
     var proposeExceptionCase: ProposeExceptionCase?
 
+    var isProposeButtonTapped: Bool = false
+    
     init(clubModel: ClubModel, isBookmarked: Bool) {
         self.clubModel = clubModel
         self.isBookmarked = isBookmarked
@@ -129,6 +131,8 @@ final class ClubProfileViewModel {
     }
 
     func makeProposal() {
+        print("proposal")
+        isProposeButtonTapped = true
         provider.request(.postPropose(target: clubModel.id)) { [weak self] result in
             switch result {
             case .success(let response):

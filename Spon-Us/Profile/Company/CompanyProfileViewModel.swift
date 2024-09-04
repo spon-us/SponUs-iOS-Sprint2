@@ -25,6 +25,8 @@ final class CompanyProfileViewModel {
     var profileStatus: ProfileStatus = .available
     var proposeExceptionCase: ProposeExceptionCase?
 
+    var isProposeButtonTapped: Bool = false
+
     func toggleBookmark(target: Int){
         provider.request(.postBookmark(target: target)) { [weak self] result in
             switch result {
@@ -79,6 +81,7 @@ final class CompanyProfileViewModel {
     }
 
     func makeProposal() {
+        isProposeButtonTapped = true
         provider.request(.postPropose(target: companyModel.id)) { [weak self] result in
             switch result {
             case .success(let response):

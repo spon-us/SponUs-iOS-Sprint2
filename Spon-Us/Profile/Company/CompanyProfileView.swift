@@ -32,7 +32,12 @@ struct CompanyProfileView: View {
                 }
             }
         }
-        .sheet(isPresented: $companyProfileViewModel.isSuggestModalPresented) {
+        .sheet(
+            isPresented: $companyProfileViewModel.isSuggestModalPresented,
+            onDismiss: {
+                companyProfileViewModel.isProposeButtonTapped = false
+            }
+        ) {
             proposalModal
                 .presentationDetents( [.height(307.69)] )
                 .presentationCornerRadius(32)
@@ -169,6 +174,7 @@ struct CompanyProfileCardView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                     }.padding(.leading, 8)
                         .padding(.trailing, 28)
+                        .disabled(companyProfileViewModel.isProposeButtonTapped)
                 }
                 .padding([.vertical, .leading], 28)
             }
@@ -187,6 +193,7 @@ struct CompanyProfileCardView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                 }.padding(.leading, 8)
                     .padding(28)
+                    .disabled(companyProfileViewModel.isProposeButtonTapped)
             }
         }.background(Color.bgWhite)
             .clipShape(RoundedRectangle(cornerRadius: 40))
