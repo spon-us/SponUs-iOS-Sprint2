@@ -38,7 +38,7 @@ final class HomeViewModel {
     var filteredClubs: [OrganizationModel] = []
     
     var page: Int = 1
-    let size: Int = 20
+    let size: Int = 6
 
     var selectedCompany: CompanyModel = .init(
         id: 0,
