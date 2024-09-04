@@ -13,9 +13,6 @@ struct HomeView: View {
     @State var homeViewModel = HomeViewModel()
     var body: some View {
         VStack(spacing: 0) {
-            Button("add fet") {
-                homeViewModel.fetchAdditionalOrgs(type: homeViewModel.companyClubSelection)
-            }
             Button(action: {loginVM.logout()}) {
                 Text("로그아웃 Test 버튼!!")
             }
