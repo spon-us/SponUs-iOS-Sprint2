@@ -95,14 +95,22 @@ struct HomeCardGuestView: View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 VStack(spacing: 0) {
-                    AsyncImage(url: URL(string: "https://www.example.com"))
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
+                    AsyncImage(url: URL(string: homeViewModel.myImageUrlStr)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        Image(systemName: "person")
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                    }
                     Spacer()
                 }.padding(.trailing, 16)
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
-                        Text("Guest님")
+                        Text("\(homeViewModel.myOrgName)님")
                             .korFont(.T3KrBd)
                         Spacer()
                     }.padding(.bottom, 4)

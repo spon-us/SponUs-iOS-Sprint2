@@ -41,6 +41,9 @@ final class HomeViewModel {
     let size: Int = 20
 
     var myOrgId: Int?
+    var myImageUrlStr: String = ""
+    var myOrgType: CompanyClubSelection = .company
+    var myOrgName: String = "Guest"
 
     var selectedCompany: CompanyModel = .init(
         id: 0,
@@ -354,7 +357,7 @@ final class HomeViewModel {
         }
     }
 
-    func getMyOrgId(completion: @escaping (Bool) -> Void) {
+    func getMyOrgIdAndImgUrlAndTypeAndName(completion: @escaping (Bool) -> Void) {
         provider.request(.getMyOrganization) { [weak self] result in
             switch result {
             case .success(let response):
@@ -364,7 +367,16 @@ final class HomeViewModel {
                     return
                 }
                 self?.myOrgId = myOrgResp.content.id
-                completion(true)
+                self?.myImageUrlStr = myOrgResp.content.imageUrl ?? ""
+                self?.myOrgName = myOrgResp.content.name
+                if myOrgResp.content.organizationType == "COMPANY" {
+                    self?.myOrgType = .company
+                    completion(false)
+                }
+                else {
+                    self?.myOrgType = .club
+                    completion(true)
+                }
             case .failure:
                 debugPrint("getMyOrgId 네트워크 요청 실패🚨")
                 completion(false)
@@ -373,18 +385,14 @@ final class HomeViewModel {
     }
 
     func verifyPortfolioExist() {
-        getMyOrgId { [weak self] success in
+        getMyOrgIdAndImgUrlAndTypeAndName { [weak self] success in
             if success {
                 guard let myId = self?.myOrgId else { return }
                 self?.provider.request(.getPortfolios(page: 0, size: 1, clubId: myId)) { result in
                     switch result {
                     case .success(let response):
-                        print("hi")
-                        guard let myPortfolioResponse = try? response.map(GetPortfolioResponse.self) else { print("막힘")
-                            return }
-                        print(myPortfolioResponse.content.content.count)
+                        guard let myPortfolioResponse = try? response.map(GetPortfolioResponse.self) else { return }
                         if myPortfolioResponse.content.content.count != 0 {
-                            print("true")
                             self?.isPortfolioExist = true
                         }
                     case .failure(let err):
