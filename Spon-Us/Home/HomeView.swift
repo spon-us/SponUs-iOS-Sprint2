@@ -17,16 +17,21 @@ struct HomeView: View {
                 Text("로그아웃 Test 버튼!!")
             }
             HomeStatusBarView(homeViewModel: homeViewModel)
-            if homeViewModel.isPortfolioUploaded {
+
+            if !homeViewModel.isPortfolioExist {
                 HomeCardGuestView(homeViewModel: homeViewModel)
             }
+
             HomeSelectionTabView(homeViewModel: homeViewModel)
 
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
 
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
-            .onAppear(perform: homeViewModel.onHomeViewAppear)
+            .onAppear {
+                homeViewModel.onHomeViewAppear()
+                homeViewModel.verifyPortfolioExist()
+            }
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
                 CompanyProfileView(
                     companyProfileViewModel: CompanyProfileViewModel(
