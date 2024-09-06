@@ -30,6 +30,8 @@ enum SponusAPI {
     case postProfileImage(image: UIImage, fileName: String)
     case getPortfolios(page: Int, size: Int, clubId: Int)
     case postPropose(target: Int)
+    case getProposeSend(page: Int, size: Int)
+    case getProposeReceive(page: Int, size: Int)
 }
 
 extension SponusAPI: TargetType {
@@ -79,6 +81,10 @@ extension SponusAPI: TargetType {
             return "/api/v2/portfolio"
         case .postPropose:
             return "/api/v2/proposes"
+        case .getProposeSend:
+            return "/api/v2/proposes/send"
+        case .getProposeReceive:
+            return "/api/v2/proposes/receive"
         }
     }
     
@@ -124,6 +130,10 @@ extension SponusAPI: TargetType {
             return .get
         case .postPropose:
             return .post
+        case .getProposeSend:
+            return .get
+        case .getProposeReceive:
+            return .get
         }
     }
     
@@ -191,6 +201,18 @@ extension SponusAPI: TargetType {
         case .postPropose(let target):
             let param = ["target" : target]
             return .requestParameters(parameters: param, encoding: JSONEncoding.default)
+        case let .getProposeSend(page, size):
+            let parameters: [String: Any] = [
+                "page": page,
+                "size": size
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case let .getProposeReceive(page, size):
+            let parameters: [String: Any] = [
+                "page": page,
+                "size": size
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 
@@ -242,6 +264,10 @@ extension SponusAPI: TargetType {
         case .getPortfolios:
             return auth
         case .postPropose:
+            return auth
+        case .getProposeSend:
+            return auth
+        case .getProposeReceive:
             return auth
         }
     }
