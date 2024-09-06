@@ -99,7 +99,7 @@ struct PreviousProposeView: View {
                             
                             Spacer()
                             
-                            Text(getStatusText(propose.status))
+                            Text(getStatusText(propose.status, proposalType: selectedProposal))
                                 .korFont(.B2KrBd)
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 8)
@@ -136,14 +136,20 @@ struct PreviousProposeView: View {
         return dateString
     }
     
-    func getStatusText(_ status: String) -> String {
-        switch status {
-        case "ACCEPTED":
+    func getStatusText(_ status: String, proposalType: ProposalSelection) -> String {
+        switch (status, proposalType) {
+        case ("ACCEPTED", .send):
             return "수락됨"
-        case "WAITING":
-            return "대기중"
-        case "REJECTED":
+        case ("REJECTED", .send):
             return "거절됨"
+        case ("WAITING", .send):
+            return "대기중"
+        case ("ACCEPTED", .receive):
+            return "수락함"
+        case ("REJECTED", .receive):
+            return "거절함"
+        case ("WAITING", .receive):
+            return "대기중"
         default:
             return "알 수 없음"
         }
@@ -153,10 +159,10 @@ struct PreviousProposeView: View {
         switch status {
         case "ACCEPTED":
             return Color.bgBrandSecondary
-        case "WAITING":
-            return Color.statusGreenSub
         case "REJECTED":
             return Color.statusRedSub
+        case "WAITING":
+            return Color.statusGreenSub
         default:
             return Color.gray
         }
@@ -166,10 +172,10 @@ struct PreviousProposeView: View {
         switch status {
         case "ACCEPTED":
             return Color.textBrand
-        case "WAITING":
-            return Color.statusGreen
         case "REJECTED":
             return Color.statusRed
+        case "WAITING":
+            return Color.statusGreen
         default:
             return Color.black
         }
