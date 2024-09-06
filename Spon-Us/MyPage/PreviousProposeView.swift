@@ -55,7 +55,7 @@ struct PreviousProposeView: View {
             .padding(.all, 20)
             
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: 16) {
                     ForEach(proposeListViewModel.proposeList) { propose in
                         HStack {
                             if let imageURL = propose.targetImageUrl, let url = URL(string: imageURL) {
@@ -109,7 +109,7 @@ struct PreviousProposeView: View {
                         }
                         .padding(.all, 20)
                         .background(Color.bgWhite)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                         .overlay(
                             RoundedRectangle(cornerRadius: 24)
                                 .stroke(Color.line200, lineWidth: 1)
