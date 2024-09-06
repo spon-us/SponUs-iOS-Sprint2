@@ -38,11 +38,34 @@ struct ClubProfileView: View {
                 }
             }
         }
-        .sheet(isPresented: $clubProfileViewModel.isSuggestModalPresented) {
-            ClubExceededModal()
+        .sheet(
+            isPresented: $clubProfileViewModel.isSuggestModalPresented,
+            onDismiss: {
+                clubProfileViewModel.isProposeButtonTapped = false
+            }
+        ) {
+            proposalModal
                 .presentationDetents( [.height(310.69)] )
                 .presentationCornerRadius(32)
                 .presentationDragIndicator(.hidden)
+        }
+    }
+}
+
+extension ClubProfileView {
+    @ViewBuilder
+    private var proposalModal:some View {
+        switch clubProfileViewModel.proposeExceptionCase {
+        case .exceeded:
+            ClubExceededModal()
+        case .hasNoProfile:
+            ClubUnavailableModal()
+        case .selfProposed:
+            EmptyView()
+        case .networking:
+            EmptyView()
+        case nil:
+            ClubCompletedModal()
         }
     }
 }
@@ -54,7 +77,7 @@ struct ClubProfileCardView: View {
             AsyncImage(url: URL(string: clubProfileViewModel.clubModel.imageUrl ?? "")) { image in
                 image.resizable().aspectRatio(1, contentMode: .fit)
             } placeholder: {
-                Image(.rectangle1363)
+                Image(systemName: "photo")
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
             }
@@ -440,9 +463,7 @@ struct ClubProfileProposeButton: View {
         VStack(spacing: 0) {
             Divider().foregroundStyle(Color.line200)
             Button {
-                withAnimation {
-                    clubProfileViewModel.isSuggestModalPresented = true
-                }
+                clubProfileViewModel.makeProposal()
             } label: {
                 Text("제안하기")
                     .korFont(.But1KrBd)
@@ -452,6 +473,7 @@ struct ClubProfileProposeButton: View {
                     .background(Color.textBrand)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }.padding(20)
+                .disabled(clubProfileViewModel.isProposeButtonTapped)
         }.background(Color.bgWhite)
     }
 }

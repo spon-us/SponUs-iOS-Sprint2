@@ -56,11 +56,11 @@ struct MyOrganizationCompanyResponse: Codable {
 }
 
 struct MyOrganization: Codable {
-//    let id: Int
-//    let name: String
+    let id: Int
+    let name: String
 //    let email: String
 //    let description: String?
-//    let imageURL: String?
+    let imageUrl: String?
 //    let bookmarkCount: Int
 //    let viewCount: Int
     let organizationType: String

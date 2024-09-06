@@ -14,8 +14,8 @@ final class HomeViewModel {
     private var provider: MoyaProvider<SponusAPI>!
     
     init() {
-            setupProvider()
-            setupAuthPluginCallbacks()
+        setupProvider()
+        setupAuthPluginCallbacks()
     }
     
     private func setupProvider() {
@@ -37,6 +37,14 @@ final class HomeViewModel {
     var filteredCompanies: [OrganizationModel] = []
     var filteredClubs: [OrganizationModel] = []
     
+    var page: Int = 1
+    let size: Int = 20
+
+    var myOrgId: Int?
+    var myImageUrlStr: String = ""
+    var myOrgType: CompanyClubSelection = .company
+    var myOrgName: String = "Guest"
+
     var selectedCompany: CompanyModel = .init(
         id: 0,
         name: "",
@@ -77,8 +85,8 @@ final class HomeViewModel {
     
     var scrollID: Int?
     var topID: Int = -1
-    
-    var isPortfolioUploaded = true
+    var lastID: Int = -1
+
     var companyClubSelection = CompanyClubSelection.company
     var companyCategory = CompanyCategory.all
     var clubCategory = ClubCategory.all
@@ -86,34 +94,65 @@ final class HomeViewModel {
     var goToClubProfileView = false
     
     var currentBookmarkStatus = false
-    
+
+    var isPortfolioExist = false
+
     func fetchOrganizations(type: CompanyClubSelection, completion: @escaping (Bool) -> Void) {
-        provider.request(.getOrganizations(organizationType: type.rawValue)) {[weak self] response in
+        provider.request(.getOrganizations(organizationType: type.rawValue, page: page, size: size)) {[weak self] response in
             switch response {
             case .success(let result):
                 do {
                     let orgResponse = try JSONDecoder().decode(OrganizationResponseModel.self, from: result.data)
-                    withAnimation {
-                        switch type {
-                        case .company:
-                            self?.companies = orgResponse.content.content
-                        case .club:
-                            self?.clubs = orgResponse.content.content
-                        }
+                    switch type {
+                    case .company:
+                        self?.companies = orgResponse.content.content
+                    case .club:
+                        self?.clubs = orgResponse.content.content
                     }
                     completion(true)
                 } catch {
-                    print("fetch org decode error", error.localizedDescription)
+                    debugPrint("getOrg decode error", error.localizedDescription)
                     completion(false)
                 }
                 
             case .failure(let err):
-                print("getOrg API error", err.localizedDescription)
+                debugPrint("getOrg API error", err.localizedDescription)
                 completion(false)
             }
         }
     }
-    
+
+    func fetchAdditionalOrgs(type: CompanyClubSelection) {
+        page += 1
+        provider.request(.getOrganizations(organizationType: type.rawValue, page: page, size: size)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                do {
+                    let orgResponse = try JSONDecoder().decode(OrganizationResponseModel.self, from: response.data)
+                    switch type {
+                    case .club:
+                        self?.clubs += orgResponse.content.content
+                        self?.filterClubs(.all)
+                    case .company:
+                        self?.companies += orgResponse.content.content
+                        self?.filterCompanies(.all)
+                    }
+                } catch {
+                    debugPrint(error)
+                }
+            case .failure(let err):
+                debugPrint(err)
+            }
+            self?.setLastID()
+        }
+    }
+
+    func fetchAdditionalOrgIfLast(id: Int) {
+        if id == lastID {
+            fetchAdditionalOrgs(type: companyClubSelection)
+        }
+    }
+
     func fetchCompany(companyId: Int, completion: @escaping (Bool) -> Void) {
         provider.request(.getCompany(companyId: companyId)) {[weak self] response in
             switch response {
@@ -125,11 +164,11 @@ final class HomeViewModel {
                     }
                     completion(true)
                 } catch {
-                    print("fetch company decode error", error.localizedDescription)
+                    debugPrint("getCompany decode error", error.localizedDescription)
                     completion(false)
                 }
             case .failure(let err):
-                print("getCompany API error", err.localizedDescription)
+                debugPrint("getCompany API error", err.localizedDescription)
                 completion(false)
             }
         }
@@ -146,55 +185,67 @@ final class HomeViewModel {
                     }
                     completion(true)
                 } catch {
-                    print("fetch club decode error", error.localizedDescription)
+                    debugPrint("getClub decode error", error.localizedDescription)
                     completion(false)
                 }
             case .failure(let err):
-                print("getClub API error", err.localizedDescription)
+                debugPrint("getClub API error", err.localizedDescription)
                 completion(false)
             }
         }
     }
-    
-    func filterCompanies(_ type: CompanyCategory) {
-        withAnimation {
-            switch type {
-            case .all:
-                filteredCompanies = companies
-            case .beauty:
-                filteredCompanies = companies.filter { $0.subTypes.contains("BEAUTY") }
-            case .education:
-                filteredCompanies = companies.filter { $0.subTypes.contains("EDUCATION") }
-            case .food:
-                filteredCompanies = companies.filter { $0.subTypes.contains("FOOD") }
-            case .health:
-                filteredCompanies = companies.filter { $0.subTypes.contains("HEALTH") }
-            case .lifestyle:
-                filteredCompanies = companies.filter { $0.subTypes.contains("LIFESTYLE") }
-            case .others:
-                filteredCompanies = companies.filter { $0.subTypes.contains("ETC") }
+
+    func onTapCompanyCell(companyId: Int) {
+        fetchCompany(companyId: companyId) { [weak self] complete in
+            if complete {
+                self?.goToCompanyProfileView = true
             }
+        }
+    }
+
+    func onTapClubCell(clubId: Int) {
+        fetchClub(clubId: clubId) { [weak self] complete in
+            if complete {
+                self?.goToClubProfileView = true
+            }
+        }
+    }
+
+    func filterCompanies(_ type: CompanyCategory) {
+        switch type {
+        case .all:
+            filteredCompanies = companies
+        case .beauty:
+            filteredCompanies = companies.filter { $0.subTypes.contains("BEAUTY") }
+        case .education:
+            filteredCompanies = companies.filter { $0.subTypes.contains("EDUCATION") }
+        case .food:
+            filteredCompanies = companies.filter { $0.subTypes.contains("FOOD") }
+        case .health:
+            filteredCompanies = companies.filter { $0.subTypes.contains("HEALTH") }
+        case .lifestyle:
+            filteredCompanies = companies.filter { $0.subTypes.contains("LIFESTYLE") }
+        case .others:
+            filteredCompanies = companies.filter { $0.subTypes.contains("ETC") }
         }
     }
     
     func filterClubs(_ type: ClubCategory) {
-        withAnimation {
-            switch type {
-            case .all:
-                filteredClubs = clubs
-            case .advertisingAndMarketing:
-                filteredClubs = clubs.filter { $0.subTypes.contains("AD_MARKETING") }
-            case .design:
-                filteredClubs = clubs.filter { $0.subTypes.contains("DESIGN") }
-            case .iTAndSoftware:
-                filteredClubs = clubs.filter { $0.subTypes.contains("IT_SOFTWARE") }
-            case .photographyAndVideo:
-                filteredClubs = clubs.filter { $0.subTypes.contains("PHOTO_VIDEO") }
-            case .planningAndIdeas:
-                filteredClubs = clubs.filter { $0.subTypes.contains("PLANNING_IDEA") }
-            case .others:
-                filteredClubs = clubs.filter { $0.subTypes.contains("ETC") }
-            }
+        switch type {
+        case .all:
+            filteredClubs = clubs
+        case .advertisingAndMarketing:
+            filteredClubs = clubs.filter { $0.subTypes.contains("AD_MARKETING") }
+        case .design:
+            filteredClubs = clubs.filter { $0.subTypes.contains("DESIGN") }
+        case .iTAndSoftware:
+            filteredClubs = clubs.filter { $0.subTypes.contains("IT_SOFTWARE") }
+        case .photographyAndVideo:
+            filteredClubs = clubs.filter { $0.subTypes.contains("PHOTO_VIDEO") }
+        case .planningAndIdeas:
+            filteredClubs = clubs.filter { $0.subTypes.contains("PLANNING_IDEA") }
+        case .others:
+            filteredClubs = clubs.filter { $0.subTypes.contains("ETC") }
         }
     }
     
@@ -206,7 +257,20 @@ final class HomeViewModel {
             topID = filteredCompanies.min { $0.id < $1.id }?.hashValue ?? -1
         }
     }
-    
+
+    func setLastID() {
+        switch companyClubSelection {
+        case .club:
+            lastID = filteredClubs.max { $0.id < $1.id }?.id ?? -1
+        case .company:
+            lastID = filteredCompanies.max { $0.id < $1.id }?.id ?? -1
+        }
+    }
+
+    func resetPage() {
+        page = 1
+    }
+
     func scrollToTop() {
         setTopID()
         withAnimation {
@@ -216,11 +280,13 @@ final class HomeViewModel {
     }
     
     func onSelectCompany() {
+        resetPage()
         fetchOrganizations(type: .company) {[weak self] success in
             if success {
                 self?.filterCompanies(self?.companyCategory ?? .all)
                 self?.companyClubSelection = .company
                 self?.setTopID()
+                self?.setLastID()
                 self?.scrollID = nil
                 self?.scrollID = self?.topID
             }
@@ -228,11 +294,13 @@ final class HomeViewModel {
     }
     
     func onSelectClub() {
+        resetPage()
         fetchOrganizations(type: .club) { [weak self] success in
             if success {
                 self?.filterClubs(self?.clubCategory ?? .all)
                 self?.companyClubSelection = .club
                 self?.setTopID()
+                self?.setLastID()
                 self?.scrollID = nil
                 self?.scrollID = self?.topID
             }
@@ -240,55 +308,32 @@ final class HomeViewModel {
     }
     
     func onSelectCompanyCategory(category: CompanyCategory) {
-        fetchOrganizations(type: .company) { [weak self] completed in
-            if completed {
-                self?.filterCompanies(category)
-                self?.companyCategory = category
-                self?.setTopID()
-                self?.scrollID = nil
-                self?.scrollID = self?.topID
-            }
-        }
+        filterCompanies(category)
+        companyCategory = category
+        setTopID()
+        setLastID()
+        scrollID = nil
+        scrollID = topID
     }
     
     func onSelectClubCategory(category: ClubCategory) {
-        fetchOrganizations(type: .club) { [weak self] completed in
-            if completed {
-                self?.filterClubs(category)
-                self?.clubCategory = category
-                self?.setTopID()
-                self?.scrollID = nil
-                self?.scrollID = self?.topID
-            }
-        }
-    }
-    
-    func onTapCompany(companyId: Int) {
-        fetchCompany(companyId: companyId) { [weak self] complete in
-            if complete {
-                self?.goToCompanyProfileView = true
-            }
-        }
-    }
-    
-    func onTapClub(clubId: Int) {
-        fetchClub(clubId: clubId) { [weak self] complete in
-            if complete {
-                self?.goToClubProfileView = true
-            }
-        }
+        filterClubs(category)
+        clubCategory = category
+        setTopID()
+        setLastID()
+        scrollID = nil
+        scrollID = topID
     }
     
     func onHomeViewAppear() {
+        resetPage()
         fetchOrganizations(type: .company) { [weak self] success in
             if success {
-                self?.fetchOrganizations(type: .club) { [weak self] success in
-                    if success {
-                        self?.filterCompanies(.all)
-                        self?.filterClubs(.all)
-                        self?.setTopID()
-                    }
-                }
+                self?.filterCompanies(.all)
+                self?.filterClubs(.all)
+                self?.setTopID()
+                self?.setLastID()
+                self?.scrollToTop()
             }
         }
     }
@@ -311,4 +356,51 @@ final class HomeViewModel {
             }
         }
     }
+
+    func getMyOrgIdAndImgUrlAndTypeAndName(completion: @escaping (Bool) -> Void) {
+        provider.request(.getMyOrganization) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let myOrgResp = try? response.map(MyOrganizationTypeResponse.self)
+                else {
+                    completion(false)
+                    return
+                }
+                self?.myOrgId = myOrgResp.content.id
+                self?.myImageUrlStr = myOrgResp.content.imageUrl ?? ""
+                self?.myOrgName = myOrgResp.content.name
+                if myOrgResp.content.organizationType == "COMPANY" {
+                    self?.myOrgType = .company
+                    completion(false)
+                }
+                else {
+                    self?.myOrgType = .club
+                    completion(true)
+                }
+            case .failure:
+                debugPrint("getMyOrgId 네트워크 요청 실패🚨")
+                completion(false)
+            }
+        }
+    }
+
+    func verifyPortfolioExist() {
+        getMyOrgIdAndImgUrlAndTypeAndName { [weak self] success in
+            if success {
+                guard let myId = self?.myOrgId else { return }
+                self?.provider.request(.getPortfolios(page: 0, size: 1, clubId: myId)) { result in
+                    switch result {
+                    case .success(let response):
+                        guard let myPortfolioResponse = try? response.map(GetPortfolioResponse.self) else { return }
+                        if myPortfolioResponse.content.content.count != 0 {
+                            self?.isPortfolioExist = true
+                        }
+                    case .failure(let err):
+                        debugPrint(err.localizedDescription)
+                    }
+                }
+            }
+        }
+    }
+
 }

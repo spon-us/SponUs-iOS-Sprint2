@@ -17,16 +17,21 @@ struct HomeView: View {
                 Text("로그아웃 Test 버튼!!")
             }
             HomeStatusBarView(homeViewModel: homeViewModel)
-            if homeViewModel.isPortfolioUploaded {
+
+            if !homeViewModel.isPortfolioExist {
                 HomeCardGuestView(homeViewModel: homeViewModel)
             }
+
             HomeSelectionTabView(homeViewModel: homeViewModel)
 
             HomeCategorySelectionTab(homeViewModel: homeViewModel)
 
             HomeListView(homeViewModel: homeViewModel)
         }.background(Color.bgSecondary)
-            .onAppear(perform: homeViewModel.onHomeViewAppear)
+            .onAppear {
+                homeViewModel.onHomeViewAppear()
+                homeViewModel.verifyPortfolioExist()
+            }
             .navigationDestination(isPresented: $homeViewModel.goToCompanyProfileView) {
                 CompanyProfileView(
                     companyProfileViewModel: CompanyProfileViewModel(
@@ -90,14 +95,22 @@ struct HomeCardGuestView: View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 VStack(spacing: 0) {
-                    AsyncImage(url: URL(string: "https://www.example.com"))
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
+                    AsyncImage(url: URL(string: homeViewModel.myImageUrlStr)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                    } placeholder: {
+                        Image(systemName: "person")
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                    }
                     Spacer()
                 }.padding(.trailing, 16)
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
-                        Text("Guest님")
+                        Text("\(homeViewModel.myOrgName)님")
                             .korFont(.T3KrBd)
                         Spacer()
                     }.padding(.bottom, 4)
@@ -114,7 +127,7 @@ struct HomeCardGuestView: View {
             }.frame(height: 70)
                 .padding(.bottom, 20)
             Button {
-                // 작성하기
+                //TODO: - 작성하기
             } label: {
                 Text("작성하기")
                     .foregroundStyle(Color.textWhite)
@@ -246,6 +259,69 @@ struct HomeCategorySelectionTab: View {
     }
 }
 
+struct HomeListView: View {
+    @Bindable var homeViewModel: HomeViewModel
+
+    let columns: [GridItem] = [
+        GridItem(.flexible(), spacing: 15),
+        GridItem(.flexible()),
+    ]
+
+    var body: some View {
+        ZStack {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 16) {
+                    if homeViewModel.companyClubSelection == .company {
+                        ForEach(homeViewModel.filteredCompanies, id: \.hashValue) { org in
+                            HomeListCell(
+                                organizationData: org,
+                                homeViewModel: homeViewModel
+                            )
+                            .onAppear {
+                                homeViewModel.fetchAdditionalOrgIfLast(id: org.id)
+                            }
+                        }
+                    }
+                    else {
+                        ForEach(homeViewModel.filteredClubs, id: \.hashValue) { org in
+                            HomeListCell(
+                                organizationData: org,
+                                homeViewModel: homeViewModel
+                            )
+                            .onAppear {
+                                homeViewModel.fetchAdditionalOrgIfLast(id: org.id)
+                            }
+                        }
+                    }
+                }.scrollTargetLayout()
+            }.scrollIndicators(.hidden)
+                .scrollPosition(id: $homeViewModel.scrollID)
+
+            if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
+                VStack(spacing: 0) {
+                    Spacer()
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                homeViewModel.scrollToTop()
+                            }
+                        } label: {
+                            Image(.arrowUp5)
+                                .renderingMode(.template)
+                                .padding(10)
+                                .foregroundStyle(Color.textWhite)
+                                .background(Color.textBrand)
+                                .clipShape(Ellipse())
+                        }
+                    }.padding(.bottom, 15)
+                }
+            }
+        }.padding(.top, 15)
+            .padding(.horizontal, 20)
+    }
+}
+
 struct HomeListCell: View {
     @State var organizationData: OrganizationModel
     var homeViewModel: HomeViewModel
@@ -256,7 +332,7 @@ struct HomeListCell: View {
                 AsyncImage(url: URL(string: organizationData.imageUrl ?? "")) { image in
                     image.resizable().aspectRatio(1, contentMode: .fit)
                 } placeholder: {
-                    Image(.rectangle1363).resizable().aspectRatio(1, contentMode: .fit)
+                    Image(systemName: "photo").resizable().aspectRatio(1, contentMode: .fit)
                 }
 
                 VStack(spacing: 0) {
@@ -314,72 +390,14 @@ struct HomeListCell: View {
                 switch organizationData.organizationType {
                 case "COMPANY":
                     homeViewModel.currentBookmarkStatus = organizationData.isBookmarked
-                    homeViewModel.onTapCompany(companyId: organizationData.id)
+                    homeViewModel.onTapCompanyCell(companyId: organizationData.id)
                 case "CLUB":
                     homeViewModel.currentBookmarkStatus = organizationData.isBookmarked
-                    homeViewModel.onTapClub(clubId: organizationData.id)
+                    homeViewModel.onTapClubCell(clubId: organizationData.id)
                 default:
                     return
                 }
             }
-    }
-}
-
-
-struct HomeListView: View {
-    @Bindable var homeViewModel: HomeViewModel
-
-    let columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 15),
-        GridItem(.flexible()),
-    ]
-
-    var body: some View {
-        ZStack {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    if homeViewModel.companyClubSelection == .company {
-                        ForEach(homeViewModel.filteredCompanies, id: \.hashValue) { org in
-                            HomeListCell(
-                                organizationData: org,
-                                homeViewModel: homeViewModel
-                            )
-                        }
-                    }
-                    else {
-                        ForEach(homeViewModel.filteredClubs, id: \.hashValue) { org in
-                            HomeListCell(
-                                organizationData: org,
-                                homeViewModel: homeViewModel
-                            )
-                        }
-                    }
-                }.scrollTargetLayout()
-            }.scrollIndicators(.hidden)
-                .scrollPosition(id: $homeViewModel.scrollID)
-
-            if homeViewModel.scrollID != nil && homeViewModel.scrollID != homeViewModel.topID {
-                VStack(spacing: 0) {
-                    Spacer()
-                    HStack(spacing: 0) {
-                        Spacer()
-                        Button {
-                            withAnimation {
-                                homeViewModel.scrollToTop()
-                            }
-                        } label: {
-                            Image(.arrowUp5)
-                                .renderingMode(.template)
-                                .padding(10)
-                                .foregroundStyle(Color.textWhite)
-                                .background(Color.textBrand)
-                                .clipShape(Ellipse())
-                        }
-                    }.padding(.bottom, 15)
-                }
-            }
-        }.padding(.top, 15)
-            .padding(.horizontal, 20)
     }
 }
 

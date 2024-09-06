@@ -32,11 +32,34 @@ struct CompanyProfileView: View {
                 }
             }
         }
-        .sheet(isPresented: $companyProfileViewModel.isSuggestModalPresented) {
-            CompanyUnavailableModal()
+        .sheet(
+            isPresented: $companyProfileViewModel.isSuggestModalPresented,
+            onDismiss: {
+                companyProfileViewModel.isProposeButtonTapped = false
+            }
+        ) {
+            proposalModal
                 .presentationDetents( [.height(307.69)] )
                 .presentationCornerRadius(32)
                 .presentationDragIndicator(.hidden)
+        }
+    }
+}
+
+extension CompanyProfileView {
+    @ViewBuilder
+    private var proposalModal: some View {
+        switch companyProfileViewModel.proposeExceptionCase {
+        case .exceeded:
+            CompanyExceededModal()
+        case .hasNoProfile:
+            CompanyUnavailableModal()
+        case .selfProposed:
+            EmptyView()
+        case .networking:
+            EmptyView()
+        case nil:
+            CompanyCompletedModal()
         }
     }
 }
@@ -48,7 +71,7 @@ struct CompanyProfileCardView: View {
             AsyncImage(url: URL(string: companyProfileViewModel.companyModel.imageUrl ?? "")) { image in
                 image.resizable().aspectRatio(1, contentMode: .fit)
             } placeholder: {
-                Image(.rectangle1363)
+                Image(systemName: "photo")
                     .resizable()
                     .aspectRatio(1, contentMode: .fit)
             }
@@ -139,7 +162,7 @@ struct CompanyProfileCardView: View {
                         }
                     Button {
                         withAnimation {
-                            companyProfileViewModel.isSuggestModalPresented = true
+                            companyProfileViewModel.makeProposal()
                         }
                     } label: {
                         Text("제안하기")
@@ -151,13 +174,14 @@ struct CompanyProfileCardView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                     }.padding(.leading, 8)
                         .padding(.trailing, 28)
+                        .disabled(companyProfileViewModel.isProposeButtonTapped)
                 }
                 .padding([.vertical, .leading], 28)
             }
             else {
                 Button {
                     withAnimation {
-                        companyProfileViewModel.isSuggestModalPresented = true
+                        companyProfileViewModel.makeProposal()
                     }
                 } label: {
                     Text("제안하기")
@@ -169,6 +193,7 @@ struct CompanyProfileCardView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                 }.padding(.leading, 8)
                     .padding(28)
+                    .disabled(companyProfileViewModel.isProposeButtonTapped)
             }
         }.background(Color.bgWhite)
             .clipShape(RoundedRectangle(cornerRadius: 40))
