@@ -18,7 +18,7 @@ struct HomeView: View {
             }
             HomeStatusBarView(homeViewModel: homeViewModel)
 
-            if !homeViewModel.isPortfolioExist {
+            if !homeViewModel.isPortfolioExist && homeViewModel.myOrgType == .club {
                 HomeCardGuestView(homeViewModel: homeViewModel)
             }
 
