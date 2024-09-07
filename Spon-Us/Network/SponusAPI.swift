@@ -29,6 +29,8 @@ enum SponusAPI {
     case patchMyClubProfile(clubProfile: ClubProfile)
     case postProfileImage(image: UIImage, fileName: String)
     case getPortfolios(page: Int, size: Int, clubId: Int)
+    case getSendAlarm
+    case getReceivedAlarm
 }
 
 extension SponusAPI: TargetType {
@@ -76,6 +78,10 @@ extension SponusAPI: TargetType {
             return "/api/v2/organizations/me/profileImage"
         case .getPortfolios:
             return "/api/v2/portfolio"
+        case .getSendAlarm:
+            return "/api/v2/organizations/notifications/send"
+        case .getReceivedAlarm:
+            return "/api/v2/organizations/notifications/receive"
         }
     }
     
@@ -119,6 +125,10 @@ extension SponusAPI: TargetType {
             return .post
         case .getPortfolios:
             return .get
+        case .getSendAlarm:
+            return .get
+        case .getReceivedAlarm:
+            return .get
         }
     }
     
@@ -161,6 +171,10 @@ extension SponusAPI: TargetType {
         case .postProfileImage:
             return Data()
         case .getPortfolios:
+            return Data()
+        case .getSendAlarm:
+            return Data()
+        case .getReceivedAlarm:
             return Data()
         }
     }
@@ -220,6 +234,10 @@ extension SponusAPI: TargetType {
                 "clubId": clubId
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case .getSendAlarm:
+            return .requestPlain
+        case .getReceivedAlarm:
+            return .requestPlain
         }
     }
     
@@ -271,6 +289,10 @@ extension SponusAPI: TargetType {
         case .postProfileImage:
             return auth
         case .getPortfolios:
+            return auth
+        case .getSendAlarm:
+            return auth
+        case .getReceivedAlarm:
             return auth
         }
     }

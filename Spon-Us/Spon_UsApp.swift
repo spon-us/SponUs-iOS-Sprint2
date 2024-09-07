@@ -91,6 +91,7 @@ struct Spon_UsApp: App {
             if (vm.loginSuccess ||  UserDefaults.standard.bool(forKey: "isAutoLogin")) && !TokenManager.shared.isRefreshTokenExpired() {
                 ContentView().onAppear(perform: {
                     print("\(vm.loginSuccess), \(TokenManager.shared.isAutoLogin ?? false), \(!TokenManager.shared.isRefreshTokenExpired())")
+                    print("accessToken : \(TokenManager.shared.accessToken)")
                 }).environmentObject(vm)
             } else {
                 OnBoardingView().onAppear(perform: {
