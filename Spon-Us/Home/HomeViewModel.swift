@@ -84,6 +84,7 @@ final class HomeViewModel {
     var clubCategory = ClubCategory.all
     var goToCompanyProfileView = false
     var goToClubProfileView = false
+    var goToAlarmView = false
     
     var currentBookmarkStatus = false
     
@@ -277,6 +278,10 @@ final class HomeViewModel {
                 self?.goToClubProfileView = true
             }
         }
+    }
+    
+    func onTapAlarm() {
+        self.goToAlarmView = true
     }
     
     func onHomeViewAppear() {

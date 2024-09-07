@@ -27,6 +27,15 @@ struct AlarmView: View {
                 ReceivedView()
             }
         }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                HStack(spacing: 0) {
+                    CustomBackButton()
+                    CustomNavigationTitle(title: "제안여부")
+                }
+            }
+        }
     }
 }
 
@@ -106,7 +115,7 @@ struct SendAlarmCell: View {
                         .font(.B4KrMd)
                         .foregroundColor(.textTertiary)
                 }
-                .frame(width: .infinity)
+                .frame(maxWidth: .infinity)
                 Spacer()
                 Button(action: {/*이메일 창 이동*/}) {
                     Text("이메일 확인")
@@ -139,7 +148,6 @@ struct SendAlarmCell: View {
                         .font(.T4KrBd)
                         .foregroundColor(Color.textDisabled)
                 }
-                .frame(width: .infinity, height: .infinity)
                 .padding(.vertical, 12)
                 Spacer()
             }

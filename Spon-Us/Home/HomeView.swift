@@ -45,6 +45,10 @@ struct HomeView: View {
                 )
                 .onDisappear(perform: homeViewModel.onHomeViewAppear)
             }
+            .navigationDestination(isPresented: $homeViewModel.goToAlarmView) {
+                AlarmView()
+                .onDisappear(perform: homeViewModel.onHomeViewAppear)
+            }
     }
 }
 
@@ -57,7 +61,7 @@ struct HomeStatusBarView: View {
                 .padding([.top, .leading], 20)
             Spacer()
             Button {
-                // 알림 View로 이동
+                homeViewModel.onTapAlarm()
             } label: {
                 ZStack {
                     Image(.notification)

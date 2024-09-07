@@ -53,7 +53,6 @@
 		804F99B32C80CA48005D286F /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 804F99B22C80CA48005D286F /* FirebaseRemoteConfigSwift */; };
 		804F99B52C80CA48005D286F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 804F99B42C80CA48005D286F /* FirebaseStorage */; };
 		804F99B72C80CA48005D286F /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 804F99B62C80CA48005D286F /* FirebaseStorageCombine-Community */; };
-		804F99B92C80D45A005D286F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 804F99B82C80D45A005D286F /* GoogleService-Info.plist */; };
 		804F99BD2C8190D8005D286F /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804F99BC2C8190D8005D286F /* AlarmView.swift */; };
 		8065E24D2C332A63001B35DD /* NavigationBackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24C2C332A63001B35DD /* NavigationBackBar.swift */; };
 		8065E24F2C333070001B35DD /* SignUpIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E24E2C333070001B35DD /* SignUpIdView.swift */; };
@@ -65,6 +64,7 @@
 		8065E25C2C354353001B35DD /* SuccessSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8065E25B2C354353001B35DD /* SuccessSignUpView.swift */; };
 		80C320AA2C284CE7004C0882 /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320A92C284CE7004C0882 /* OnBoardingView.swift */; };
 		80C320AC2C284CFE004C0882 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C320AB2C284CFE004C0882 /* LoginView.swift */; };
+		80CD25462C8C493900259091 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80CD25452C8C493900259091 /* GoogleService-Info.plist */; };
 		80CF29E22C29851600CACA53 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E12C29851600CACA53 /* LoginViewModel.swift */; };
 		80CF29E42C298B8D00CACA53 /* AgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E32C298B8D00CACA53 /* AgreeView.swift */; };
 		80CF29E62C29943C00CACA53 /* DetailAgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */; };
@@ -131,7 +131,6 @@
 		3B82D8B12C32538D008E0138 /* WriteCompanyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteCompanyProfileView.swift; sourceTree = "<group>"; };
 		3B82D8B42C3253CE008E0138 /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
 		3B82D8B62C3253E3008E0138 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
-		804F99B82C80D45A005D286F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../김수민대학교/프로젝트/스포너스 Security/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		804F99BA2C80DE2C005D286F /* Spon-UsDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Spon-UsDebug.entitlements"; sourceTree = "<group>"; };
 		804F99BC2C8190D8005D286F /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
 		8065E24C2C332A63001B35DD /* NavigationBackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBackBar.swift; sourceTree = "<group>"; };
@@ -143,6 +142,7 @@
 		8065E25B2C354353001B35DD /* SuccessSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessSignUpView.swift; sourceTree = "<group>"; };
 		80C320A92C284CE7004C0882 /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		80C320AB2C284CFE004C0882 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		80CD25452C8C493900259091 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../스포너스 Security/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		80CF29E12C29851600CACA53 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		80CF29E32C298B8D00CACA53 /* AgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeView.swift; sourceTree = "<group>"; };
 		80CF29E52C29943C00CACA53 /* DetailAgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAgreeView.swift; sourceTree = "<group>"; };
@@ -398,9 +398,9 @@
 		DFBE0B742BE601C400246814 /* Spon-Us */ = {
 			isa = PBXGroup;
 			children = (
+				80CD25452C8C493900259091 /* GoogleService-Info.plist */,
 				804F99BB2C8190B5005D286F /* Alarm */,
 				804F99BA2C80DE2C005D286F /* Spon-UsDebug.entitlements */,
-				804F99B82C80D45A005D286F /* GoogleService-Info.plist */,
 				8065E24B2C332A1F001B35DD /* Componenet */,
 				80CF29E82C29AB6200CACA53 /* Auth */,
 				DF4074932C286FA100321E05 /* Network */,
@@ -643,7 +643,7 @@
 				DFBE0B7A2BE601C500246814 /* Assets.xcassets in Resources */,
 				DFBE0BA02BEB570B00246814 /* SUIT-Bold.otf in Resources */,
 				DFBE0B912BE61A4800246814 /* SUIT-Regular.otf in Resources */,
-				804F99B92C80D45A005D286F /* GoogleService-Info.plist in Resources */,
+				80CD25462C8C493900259091 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
